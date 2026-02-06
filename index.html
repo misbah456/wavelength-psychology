@@ -3,23 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dr. Zainub Mallick, PsyD - Licensed psychologist specializing in anxiety, trauma, and relationships. Compassionate, evidence-based therapy in a safe, supportive environment.">
+    <meta name="description" content="Dr. Zainub Mallick, PsyD - Relational therapist specializing in children, families, and diverse populations. Creating spaces where healing happens through connection.">
     <title>Wavelength Psychology | Dr. Zainub Mallick, PsyD</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="nav">
+    <nav class="nav" id="mainNav">
         <div class="nav-container">
-            <a href="#home" class="logo">Wavelength Psychology</a>
+            <a href="#home" class="logo">
+                <span class="logo-wave">~</span> Wavelength
+            </a>
             <div class="nav-links">
-                <a href="#about">About</a>
-                <a href="#specialties">Specialties</a>
-                <a href="#approach">Approach</a>
-                <a href="#contact" class="nav-cta">Get Started</a>
+                <a href="#meet-zainub">Meet Zainub</a>
+                <a href="#who-i-help">Who I Help</a>
+                <a href="#my-approach">My Approach</a>
+                <a href="#journey">My Journey</a>
+                <a href="#connect" class="nav-cta">Let's Connect</a>
             </div>
             <button class="mobile-menu-toggle" aria-label="Toggle menu">
                 <span></span>
@@ -31,298 +34,484 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
+        <div class="hero-grain"></div>
         <div class="hero-content">
-            <h1 class="hero-title">Find Your Wavelength</h1>
-            <p class="hero-subtitle">Compassionate, evidence-based therapy to help you navigate life's challenges</p>
+            <div class="hero-badge">Dr. Zainub Mallick, PsyD</div>
+            <h1 class="hero-title">
+                <span class="title-line">Finding Your</span>
+                <span class="title-line highlight">Wavelength</span>
+            </h1>
+            <p class="hero-subtitle">Where healing happens through connection, understanding, and the courage to explore all parts of who you are.</p>
             <div class="hero-cta">
-                <a href="#contact" class="btn btn-primary">Schedule a Consultation</a>
-                <a href="#about" class="btn btn-secondary">Learn More</a>
+                <a href="#connect" class="btn btn-primary">
+                    <span>Start Your Journey</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+                <a href="#meet-zainub" class="btn btn-secondary">Learn My Story</a>
+            </div>
+            <div class="hero-scroll">
+                <span>Scroll to explore</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M19 12l-7 7-7-7"/>
+                </svg>
             </div>
         </div>
-        <div class="hero-background"></div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="about-grid">
-                <div class="about-image">
-                    <div class="image-placeholder">
-                        <!-- Add your professional headshot here -->
-                        <img src="headshot.jpg" alt="Dr. Zainub Mallick" onerror="this.style.display='none'">
-                    </div>
-                </div>
-                <div class="about-content">
-                    <h2>Dr. Zainub Mallick, PsyD</h2>
-                    <p class="about-subtitle">Licensed Clinical Psychologist</p>
-
-                    <p>Welcome! I'm Dr. Zainub Mallick, and I believe therapy is most effective when you feel truly understood. My approach is warm, collaborative, and tailored to your unique needs.</p>
-
-                    <p>With specialized training in anxiety, trauma, and relationship issues, I work with adolescents and adults seeking meaningful change. Whether you're struggling with overwhelming emotions, past experiences, or relationship patterns, I'm here to help you find clarity and healing.</p>
-
-                    <p>I create a safe, non-judgmental space where we can explore what brings you to therapy and work together toward your goals. My style is direct yet compassionate, integrating evidence-based approaches with genuine human connection.</p>
-
-                    <div class="credentials">
-                        <h3>Credentials & Training</h3>
-                        <ul>
-                            <li>Doctor of Psychology (PsyD)</li>
-                            <li>Licensed Clinical Psychologist</li>
-                            <li>Specialized training in trauma-informed care</li>
-                            <li>Evidence-based treatment approaches</li>
-                        </ul>
-                    </div>
-                </div>
+        <div class="hero-visual">
+            <div class="wave-animation">
+                <svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+                    <path class="wave-path wave-1" d="M0,300 Q300,100 600,300 T1200,300 L1200,600 L0,600 Z"/>
+                    <path class="wave-path wave-2" d="M0,350 Q300,150 600,350 T1200,350 L1200,600 L0,600 Z"/>
+                    <path class="wave-path wave-3" d="M0,400 Q300,200 600,400 T1200,400 L1200,600 L0,600 Z"/>
+                </svg>
             </div>
         </div>
     </section>
 
-    <!-- Specialties Section -->
-    <section id="specialties" class="specialties">
+    <!-- Philosophy Banner -->
+    <section class="philosophy-banner">
         <div class="container">
-            <h2 class="section-title">Areas of Specialty</h2>
-            <p class="section-subtitle">I provide specialized support for a range of challenges</p>
+            <p class="banner-text">"I believe healing happens within relationships. Rather than approaching therapy from a place of judgment or discipline, I see us as a team tackling challenges together."</p>
+        </div>
+    </section>
 
-            <div class="specialties-grid">
-                <div class="specialty-card">
-                    <div class="specialty-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
-                        </svg>
+    <!-- Meet Zainub Section -->
+    <section id="meet-zainub" class="meet-section">
+        <div class="container">
+            <div class="meet-grid">
+                <div class="meet-image-container">
+                    <div class="image-frame">
+                        <img src="headshot.jpg" alt="Dr. Zainub Mallick" class="profile-image">
+                        <div class="image-decoration"></div>
                     </div>
-                    <h3>Anxiety & Stress</h3>
-                    <p>Navigate overwhelming worry, panic, social anxiety, and the pressures of daily life with evidence-based strategies.</p>
+                    <div class="fun-facts">
+                        <h4>Beyond the Office</h4>
+                        <div class="fact-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                            </svg>
+                            <span>Constantly updating my GoodReads</span>
+                        </div>
+                        <div class="fact-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2v6M2 12h6M12 16v6M16 12h6"/>
+                            </svg>
+                            <span>Love crafting in my spare time</span>
+                        </div>
+                        <div class="fact-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 6.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM12 19.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                            </svg>
+                            <span>Learning American Sign Language!</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="specialty-card">
-                    <div class="specialty-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M12 6v6l4 2"/>
-                        </svg>
-                    </div>
-                    <h3>Trauma & PTSD</h3>
-                    <p>Heal from past experiences with trauma-informed, compassionate care that honors your resilience and supports your recovery.</p>
-                </div>
+                <div class="meet-content">
+                    <div class="section-label">Meet Zainub</div>
+                    <h2>Creating Spaces for Connection & Growth</h2>
 
-                <div class="specialty-card">
-                    <div class="specialty-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                        </svg>
+                    <div class="intro-text">
+                        <p class="lead">Hi, I'm Dr. Zainub Mallick. From a young age, I've been fascinated by the brain, the mind, and the beautiful complexity of human connection.</p>
                     </div>
-                    <h3>Relationships</h3>
-                    <p>Improve communication, navigate conflicts, and build healthier patterns in your relationships with yourself and others.</p>
-                </div>
 
-                <div class="specialty-card">
-                    <div class="specialty-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <p>My journey started at the University of Houston (Go Coogs!), took me to New York for graduate school, California for my internship, and brought me back home to Houston for my post-doctoral fellowship. I'm overjoyed to give back to the community that raised me.</p>
+
+                    <p>What drives me? Creating a space where you can safely explore <strong>all the parts of who you are</strong>—without judgment, with full acceptance of your experiences. I believe therapy is where healing begins by exploring what you're carrying: both the burdens <em>and</em> the strengths.</p>
+
+                    <div class="approach-highlight">
+                        <h3>My Core Belief</h3>
+                        <p>I take a <strong>relational, strengths-based approach</strong>, always looking for what you're doing right and building upon those successes. By combining our strengths, we create a supportive environment where real change can occur.</p>
+                    </div>
+
+                    <div class="credentials-compact">
+                        <div class="cred-item">
+                            <strong>Education</strong>
+                            <p>PsyD, School-Child Clinical Psychology<br>Ferkauf Graduate School of Psychology</p>
+                        </div>
+                        <div class="cred-item">
+                            <strong>Internship</strong>
+                            <p>Through the Looking Glass<br>Berkeley, CA</p>
+                        </div>
+                        <div class="cred-item">
+                            <strong>Undergraduate</strong>
+                            <p>University of Houston<br>Psychology, Medicine & Society</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who I Help Section -->
+    <section id="who-i-help" class="who-i-help">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Who I Help</div>
+                <h2>Bridging Gaps, Building Connections</h2>
+                <p class="section-intro">I work with children, families, and adults—with a particular passion for diverse populations, especially South Asian clients.</p>
+            </div>
+
+            <div class="help-categories">
+                <!-- Children & Families -->
+                <div class="help-card featured">
+                    <div class="card-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                             <circle cx="9" cy="7" r="4"/>
                             <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
                             <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                         </svg>
                     </div>
-                    <h3>Life Transitions</h3>
-                    <p>Find your footing during major changes, whether personal, professional, or developmental.</p>
+                    <h3>Children & Families</h3>
+                    <p class="card-question">Do you feel like you and your child can't connect? Are you struggling to understand your teen's world?</p>
+                    <p>Using <strong>play-based and behavioral models</strong>, I help bridge communication gaps and give families practical skills to support each other during difficult times. For parents feeling overwhelmed or children feeling misunderstood, we can find common ground and build stronger bonds.</p>
+                    <div class="card-tags">
+                        <span>Play Therapy</span>
+                        <span>Parent-Child Work</span>
+                        <span>Family Dynamics</span>
+                    </div>
                 </div>
 
-                <div class="specialty-card">
-                    <div class="specialty-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                <!-- Adults -->
+                <div class="help-card">
+                    <div class="card-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="12" cy="8" r="5"/>
+                            <path d="M20 21a8 8 0 1 0-16 0"/>
                         </svg>
                     </div>
-                    <h3>Depression</h3>
-                    <p>Work through feelings of sadness, emptiness, and loss of motivation with compassionate, evidence-based support.</p>
+                    <h3>Adults & Young Adults</h3>
+                    <p>Life's challenges don't end with childhood. Whether you're a parent seeking to create a healthier family dynamic or working through personal challenges—depression, anxiety, trauma, or grief—I'm here to support you in gaining peace and confidence.</p>
+                    <div class="card-tags">
+                        <span>Trauma & PTSD</span>
+                        <span>Anxiety & Depression</span>
+                        <span>Relationship Dynamics</span>
+                        <span>Life Transitions</span>
+                    </div>
                 </div>
 
-                <div class="specialty-card">
-                    <div class="specialty-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
-                            <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
-                            <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
-                            <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+                <!-- Diverse Populations -->
+                <div class="help-card">
+                    <div class="card-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                         </svg>
                     </div>
-                    <h3>Self-Esteem & Identity</h3>
-                    <p>Explore who you are, build confidence, and develop a stronger sense of self.</p>
+                    <h3>Culturally-Informed Care</h3>
+                    <p>I have a particular interest in working with <strong>diverse populations, especially South Asian clients</strong>. Your cultural background and identity are honored and integrated into our work—this is a space where all parts of you belong.</p>
+                    <div class="card-tags">
+                        <span>South Asian Community</span>
+                        <span>Cultural Identity</span>
+                        <span>Immigrant Experiences</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Who I Work With Grid -->
+            <div class="demographics">
+                <h3>I Work With:</h3>
+                <div class="demo-grid">
+                    <div class="demo-item">Children</div>
+                    <div class="demo-item">Adolescents</div>
+                    <div class="demo-item">Young Adults</div>
+                    <div class="demo-item">Adults</div>
+                    <div class="demo-item">Families</div>
+                    <div class="demo-item">Women</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Approach Section -->
-    <section id="approach" class="approach">
+    <!-- My Approach Section -->
+    <section id="my-approach" class="approach-section">
         <div class="container">
-            <h2 class="section-title">My Approach</h2>
-            <p class="section-subtitle">Collaborative, evidence-based therapy tailored to you</p>
+            <div class="section-header centered">
+                <div class="section-label">My Approach</div>
+                <h2>How We'll Work Together</h2>
+                <p class="section-intro">Therapy is a space where healing begins—not through judgment, but through collaboration, strength-building, and genuine connection.</p>
+            </div>
 
-            <div class="approach-content">
-                <div class="approach-text">
-                    <h3>Therapy That Works</h3>
-                    <p>I believe effective therapy combines proven techniques with a genuine therapeutic relationship. My approach is integrative, drawing from multiple evidence-based modalities to create a treatment plan that fits your unique needs.</p>
-
-                    <div class="approach-methods">
-                        <div class="method">
-                            <h4>Cognitive Behavioral Therapy (CBT)</h4>
-                            <p>Identify and shift unhelpful thought patterns that impact your emotions and behaviors.</p>
-                        </div>
-
-                        <div class="method">
-                            <h4>Trauma-Focused Approaches</h4>
-                            <p>Process difficult experiences safely with specialized trauma-informed techniques.</p>
-                        </div>
-
-                        <div class="method">
-                            <h4>Mindfulness-Based Strategies</h4>
-                            <p>Develop present-moment awareness and emotional regulation skills.</p>
-                        </div>
-
-                        <div class="method">
-                            <h4>Relational & Psychodynamic Work</h4>
-                            <p>Understand patterns and gain insight into how past experiences shape your present.</p>
-                        </div>
-                    </div>
+            <div class="approach-grid">
+                <div class="approach-card">
+                    <div class="approach-number">01</div>
+                    <h3>Team Approach</h3>
+                    <p>We're partners in this journey. Rather than judgment or discipline, I see us as a team tackling challenges together. Your input shapes everything we do.</p>
                 </div>
 
-                <div class="approach-philosophy">
-                    <div class="philosophy-card">
-                        <h3>What You Can Expect</h3>
-                        <ul>
-                            <li><strong>Collaborative Partnership:</strong> Therapy is a team effort. Your input shapes our work together.</li>
-                            <li><strong>Safe, Non-Judgmental Space:</strong> Bring your whole self without fear of criticism.</li>
-                            <li><strong>Practical Tools:</strong> Leave sessions with actionable strategies you can use in daily life.</li>
-                            <li><strong>Cultural Sensitivity:</strong> Your background and identity are honored and integrated into our work.</li>
-                            <li><strong>Goal-Oriented:</strong> We'll regularly check in on progress and adjust as needed.</li>
-                        </ul>
+                <div class="approach-card">
+                    <div class="approach-number">02</div>
+                    <h3>Strengths-Based</h3>
+                    <p>I'm always looking for what you're doing <em>right</em> and building upon those successes. We combine our strengths to create real, lasting change.</p>
+                </div>
+
+                <div class="approach-card">
+                    <div class="approach-number">03</div>
+                    <h3>Tailored to You</h3>
+                    <p>Whether through traditional talk therapy, play-based interventions, or behavioral techniques, I adjust my methods to best serve you and your family's unique needs.</p>
+                </div>
+
+                <div class="approach-card">
+                    <div class="approach-number">04</div>
+                    <h3>Full Acceptance</h3>
+                    <p>This is a space to safely explore the many parts of who you are—without judgment, with full acceptance of your experiences and identity.</p>
+                </div>
+            </div>
+
+            <!-- Evidence-Based Methods -->
+            <div class="methods-section">
+                <h3>Evidence-Based Approaches I Use:</h3>
+                <div class="methods-grid">
+                    <div class="method-item">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                        <h4>Cognitive Behavioral Therapy (CBT)</h4>
+                    </div>
+                    <div class="method-item">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        <h4>Dialectical Behavioral Therapy (DBT)</h4>
+                    </div>
+                    <div class="method-item">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                        <h4>Relational Psychotherapy</h4>
+                    </div>
+                    <div class="method-item">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/>
+                        </svg>
+                        <h4>Play Therapy</h4>
+                    </div>
+                    <div class="method-item">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                        </svg>
+                        <h4>Child-Parent Psychotherapy</h4>
+                    </div>
+                    <div class="method-item">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        </svg>
+                        <h4>Psychodynamic Psychotherapy</h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- What to Expect -->
+            <div class="expect-section">
+                <h3>After Our Work Together</h3>
+                <p class="expect-intro">Clients who work with me often experience a profound shift:</p>
+                <div class="expect-grid">
+                    <div class="expect-item">
+                        <span class="check">✓</span>
+                        <p><strong>Parents and children</strong> learn to communicate more effectively, reducing misunderstanding and building connection</p>
+                    </div>
+                    <div class="expect-item">
+                        <span class="check">✓</span>
+                        <p><strong>Teens and adults</strong> gain confidence in exploring relationship dynamics and processing emotions</p>
+                    </div>
+                    <div class="expect-item">
+                        <span class="check">✓</span>
+                        <p><strong>Most importantly</strong>, you'll develop a deeper comfort with who you are, prepared to face life's challenges with persistence and hope</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section class="faq">
+    <!-- Journey Section -->
+    <section id="journey" class="journey-section">
         <div class="container">
-            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="section-header centered">
+                <div class="section-label">My Journey</div>
+                <h2>From Houston to New York to California—and Back Home</h2>
+            </div>
 
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>Who do you work with?</h3>
-                    <p>I work with adolescents (ages 14+) and adults facing a variety of challenges including anxiety, trauma, depression, relationship issues, and life transitions.</p>
+            <div class="journey-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>The Beginning</h4>
+                        <p>University of Houston</p>
+                        <span>Where my passion for psychology took off as a humanities student. Go Coogs!</span>
+                    </div>
                 </div>
 
-                <div class="faq-item">
-                    <h3>Do you accept insurance?</h3>
-                    <p>Please contact me directly to discuss insurance options and out-of-network benefits. I'm happy to provide documentation for reimbursement.</p>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Graduate Studies</h4>
+                        <p>Ferkauf Graduate School of Psychology, New York</p>
+                        <span>Doctorate in School-Child Clinical Psychology</span>
+                    </div>
                 </div>
 
-                <div class="faq-item">
-                    <h3>How long is each session?</h3>
-                    <p>Standard sessions are 50 minutes. We'll meet weekly initially, with the option to adjust frequency as we progress.</p>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Internship</h4>
+                        <p>Through the Looking Glass, Berkeley, CA</p>
+                        <span>Specialized training in child and family work</span>
+                    </div>
                 </div>
 
-                <div class="faq-item">
-                    <h3>Is therapy confidential?</h3>
-                    <p>Yes, everything discussed in therapy is confidential with limited exceptions (risk of harm to self or others, child/elder abuse, court order).</p>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Coming Home</h4>
+                        <p>Houston, Texas</p>
+                        <span>Post-doctoral fellowship, giving back to the community that raised me</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="journey-quote">
+                <p>"Taking the first step towards therapy is an act of bravery. If you're ready to start this journey of self-discovery and growth, I'm here to walk alongside you."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services & Practical Info -->
+    <section class="practical-info">
+        <div class="container">
+            <div class="practical-grid">
+                <div class="practical-card">
+                    <h3>Services I Offer</h3>
+                    <ul>
+                        <li>Individual Therapy</li>
+                        <li>Family Therapy</li>
+                        <li>Parent Coaching Sessions</li>
+                        <li>Psychological Testing</li>
+                    </ul>
                 </div>
 
-                <div class="faq-item">
-                    <h3>How do I know if we're a good fit?</h3>
-                    <p>The therapeutic relationship is crucial to success. I offer a free consultation call so we can discuss your needs and see if we'd work well together.</p>
+                <div class="practical-card">
+                    <h3>Insurance Accepted</h3>
+                    <ul>
+                        <li>Aetna</li>
+                        <li>Cigna</li>
+                        <li>BCBS</li>
+                        <li>Quest</li>
+                        <li>Ascension</li>
+                        <li>Carelon</li>
+                    </ul>
                 </div>
 
-                <div class="faq-item">
-                    <h3>Do you offer virtual sessions?</h3>
-                    <p>Yes, I offer secure telehealth sessions for clients who prefer meeting virtually or need that flexibility.</p>
+                <div class="practical-card">
+                    <h3>Session Details</h3>
+                    <p><strong>Rate:</strong> $210/hour</p>
+                    <p><strong>Availability:</strong><br>
+                    Mon-Thu: 10 AM – 5 PM<br>
+                    Fri: 10 AM – 2 PM</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="contact">
+    <section id="connect" class="connect-section">
         <div class="container">
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h2>Ready to Get Started?</h2>
-                    <p class="contact-intro">Taking the first step toward therapy can feel daunting. I offer a free 15-minute consultation call to answer your questions and see if we're a good fit.</p>
-
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                                <polyline points="22,6 12,13 2,6"/>
-                            </svg>
-                            <div>
-                                <h4>Email</h4>
-                                <a href="mailto:dr.mallick@wavelengthpsychology.com">dr.mallick@wavelengthpsychology.com</a>
-                            </div>
-                        </div>
-
-                        <div class="contact-item">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                            </svg>
-                            <div>
-                                <h4>Phone</h4>
-                                <a href="tel:+1234567890">(XXX) XXX-XXXX</a>
-                                <p class="small-text">Call or text for appointment inquiries</p>
-                            </div>
-                        </div>
-
-                        <div class="contact-item">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                <circle cx="12" cy="10" r="3"/>
-                            </svg>
-                            <div>
-                                <h4>Location</h4>
-                                <p>Serving clients in [State/Region]</p>
-                                <p class="small-text">In-person and telehealth options available</p>
-                            </div>
-                        </div>
-                    </div>
+            <div class="connect-content">
+                <div class="connect-header">
+                    <h2>Let's Connect</h2>
+                    <p class="connect-intro">Taking the first step is an act of bravery. Whether you're dealing with childhood trauma, parenting challenges, or the difficulties of young adulthood, I'm here to help you and your family thrive, just as you are.</p>
                 </div>
 
-                <div class="contact-form-container">
-                    <h3>Request a Consultation</h3>
-                    <form class="contact-form" id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Name *</label>
-                            <input type="text" id="name" name="name" required>
+                <div class="connect-grid">
+                    <div class="connect-info">
+                        <h3>Get in Touch</h3>
+
+                        <div class="contact-methods">
+                            <div class="contact-method">
+                                <div class="method-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                        <polyline points="22,6 12,13 2,6"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Email</h4>
+                                    <a href="mailto:dr.mallick@wavelengthpsychology.com">dr.mallick@wavelengthpsychology.com</a>
+                                </div>
+                            </div>
+
+                            <div class="contact-method">
+                                <div class="method-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                        <circle cx="12" cy="10" r="3"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Location</h4>
+                                    <p>Houston, Texas</p>
+                                    <p class="small">In-person & telehealth available</p>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="email">Email *</label>
-                            <input type="email" id="email" name="email" required>
+                        <div class="crisis-info">
+                            <p><strong>In Crisis?</strong></p>
+                            <p>Call or text <a href="tel:988">988</a> for 24/7 support</p>
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <label for="phone">Phone</label>
-                            <input type="tel" id="phone" name="phone">
-                        </div>
+                    <div class="connect-form-container">
+                        <h3>Request a Consultation</h3>
+                        <form class="connect-form" id="contactForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">Name *</label>
+                                    <input type="text" id="name" name="name" required>
+                                </div>
 
-                        <div class="form-group">
-                            <label for="message">Tell me a bit about what brings you to therapy *</label>
-                            <textarea id="message" name="message" rows="5" required></textarea>
-                        </div>
+                                <div class="form-group">
+                                    <label for="email">Email *</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                            </div>
 
-                        <div class="form-group">
-                            <label for="preference">Preferred Contact Method</label>
-                            <select id="preference" name="preference">
-                                <option value="email">Email</option>
-                                <option value="phone">Phone</option>
-                                <option value="either">Either</option>
-                            </select>
-                        </div>
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
 
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                        <p class="form-note">I'll respond within 24-48 hours. For urgent matters, please contact your local crisis line.</p>
-                    </form>
+                            <div class="form-group">
+                                <label for="message">What brings you to therapy? *</label>
+                                <textarea id="message" name="message" rows="4" required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="type">I'm seeking support for:</label>
+                                <select id="type" name="type">
+                                    <option value="">Select an option</option>
+                                    <option value="child">My child</option>
+                                    <option value="family">My family</option>
+                                    <option value="myself">Myself</option>
+                                    <option value="teen">My teen</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-full">
+                                <span>Send Message</span>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                            <p class="form-note">I'll respond within 24-48 hours</p>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -332,33 +521,34 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Wavelength Psychology</h3>
-                    <p>Dr. Zainub Mallick, PsyD<br>
-                    Licensed Clinical Psychologist</p>
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span class="logo-wave">~</span> Wavelength Psychology
+                    </div>
+                    <p>Dr. Zainub Mallick, PsyD<br>Houston, Texas</p>
                 </div>
 
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <a href="#about">About</a>
-                    <a href="#specialties">Specialties</a>
-                    <a href="#approach">Approach</a>
-                    <a href="#contact">Contact</a>
-                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Navigation</h4>
+                        <a href="#meet-zainub">Meet Zainub</a>
+                        <a href="#who-i-help">Who I Help</a>
+                        <a href="#my-approach">My Approach</a>
+                        <a href="#journey">My Journey</a>
+                    </div>
 
-                <div class="footer-section">
-                    <h4>Resources</h4>
-                    <a href="https://988lifeline.org" target="_blank">Crisis Support: 988</a>
-                    <a href="https://www.psychologytoday.com" target="_blank">Psychology Today</a>
+                    <div class="footer-col">
+                        <h4>Resources</h4>
+                        <a href="https://988lifeline.org" target="_blank">Crisis Support: 988</a>
+                        <a href="https://www.psychologytoday.com" target="_blank">Psychology Today</a>
+                        <a href="https://www.goodreads.com" target="_blank">GoodReads</a>
+                    </div>
                 </div>
             </div>
 
             <div class="footer-bottom">
                 <p>&copy; 2024 Wavelength Psychology. All rights reserved.</p>
-                <div class="footer-legal">
-                    <a href="#privacy">Privacy Policy</a>
-                    <a href="#terms">Terms of Service</a>
-                </div>
+                <p class="footer-tagline">Creating spaces where healing happens through connection.</p>
             </div>
         </div>
     </footer>
