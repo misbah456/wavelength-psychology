@@ -136,11 +136,6 @@ body {
     background: var(--background);
     overflow-x: hidden;
     position: relative;
-    cursor: none;
-}
-
-body.loaded {
-    cursor: none;
 }
 
 /* Grain Texture Overlay */
@@ -158,42 +153,6 @@ body::before {
     mix-blend-mode: overlay;
 }
 
-/* ============================================
-   CUSTOM CURSOR
-   ============================================ */
-.custom-cursor {
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--teal-600);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 10000;
-    transition: transform 0.15s ease, opacity 0.15s ease;
-    opacity: 0;
-}
-
-.custom-cursor-follower {
-    width: 8px;
-    height: 8px;
-    background: var(--teal-600);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 10001;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    opacity: 0;
-}
-
-body.loaded .custom-cursor,
-body.loaded .custom-cursor-follower {
-    opacity: 1;
-}
-
-.custom-cursor.cursor-hover {
-    transform: scale(1.5);
-    background: rgba(26, 159, 173, 0.1);
-}
 
 /* ============================================
    LOADING SCREEN
@@ -594,75 +553,6 @@ a:hover {
     flex-wrap: wrap;
 }
 
-/* Scroll Indicator */
-.hero-scroll {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    opacity: 1;
-    animation: bounce 2s ease-in-out 2s infinite;
-    z-index: 10;
-}
-
-.hero-scroll:hover {
-    color: var(--teal-700);
-    transform: translateX(-50%) translateY(5px);
-}
-
-@keyframes bounce {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(-10px); }
-}
-
-.hero-scroll svg {
-    opacity: 0.6;
-}
-
-/* Wave Animation */
-.hero-visual {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 30%;
-    z-index: 1;
-}
-
-.wave-animation {
-    width: 100%;
-    height: 100%;
-    opacity: 0.3;
-}
-
-.wave-path {
-    fill: var(--teal-400);
-    animation: waveMove 12s ease-in-out infinite;
-}
-
-.wave-path.wave-2 {
-    fill: var(--teal-300);
-    animation: waveMove 15s ease-in-out infinite reverse;
-}
-
-.wave-path.wave-3 {
-    fill: var(--teal-200);
-    animation: waveMove 18s ease-in-out infinite;
-}
-
-@keyframes waveMove {
-    0%, 100% { transform: translateX(0) translateY(0); }
-    50% { transform: translateX(-25px) translateY(-10px); }
-}
 
 /* ============================================
    BUTTONS - MAGNETIC & RIPPLE EFFECTS
@@ -839,20 +729,10 @@ a:hover {
 }
 
 /* ============================================
-   TILT CARD EFFECT (3D)
+   HOVER EFFECTS - SIMPLE
    ============================================ */
-.tilt-card {
-    transform-style: preserve-3d;
-    transition: transform 0.3s ease;
-}
-
-.tilt-card:hover {
-    transform: perspective(1000px) rotateX(var(--tilt-x, 0)) rotateY(var(--tilt-y, 0));
-}
-
-.tilt-card-subtle {
-    transform-style: preserve-3d;
-    transition: transform 0.3s ease;
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .hover-lift:hover {
@@ -860,17 +740,17 @@ a:hover {
     box-shadow: var(--shadow-xl);
 }
 
-.hover-glow:hover {
-    box-shadow: var(--shadow-glow);
+.tilt-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* ============================================
-   MAGNETIC ELEMENTS
-   ============================================ */
-.magnetic-btn,
-.magnetic-element {
-    position: relative;
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+.tilt-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.hover-glow:hover {
+    box-shadow: var(--shadow-glow);
 }
 
 /* ============================================
@@ -2190,16 +2070,6 @@ textarea.animated-input {
     }
 }
 
-/* Show cursor on mobile/tablet */
-@media (max-width: 1024px) {
-    body {
-        cursor: auto !important;
-    }
-    .custom-cursor,
-    .custom-cursor-follower {
-        display: none !important;
-    }
-}
 
 /* ============================================
    END OF STYLES

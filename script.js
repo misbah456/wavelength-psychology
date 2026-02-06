@@ -1,9 +1,8 @@
 // ============================================
-// WAVELENGTH PSYCHOLOGY - ULTRA DYNAMIC JS
-// Award-Winning Interactive Features
+// WAVELENGTH PSYCHOLOGY - ORGANIC & CLEAN
 // ============================================
 
-// Initialize AOS (Animate On Scroll) - Organic & Slow
+// Initialize AOS (Animate On Scroll)
 AOS.init({
     duration: 1200,
     easing: 'ease-out-quart',
@@ -16,50 +15,12 @@ AOS.init({
 // ============================================
 window.addEventListener('load', () => {
     const loadingScreen = document.querySelector('.loading-screen');
-    setTimeout(() => {
-        loadingScreen.classList.add('hidden');
-        document.body.classList.add('loaded');
-    }, 1200);
-});
-
-// ============================================
-// CUSTOM CURSOR
-// ============================================
-const cursor = document.querySelector('.custom-cursor');
-const cursorFollower = document.querySelector('.custom-cursor-follower');
-
-let mouseX = 0, mouseY = 0;
-let followerX = 0, followerY = 0;
-
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-
-    cursor.style.transform = `translate(${mouseX - 10}px, ${mouseY - 10}px)`;
-});
-
-// Smooth follower animation
-function animateFollower() {
-    const dx = mouseX - followerX;
-    const dy = mouseY - followerY;
-
-    followerX += dx * 0.1;
-    followerY += dy * 0.1;
-
-    cursorFollower.style.transform = `translate(${followerX - 4}px, ${followerY - 4}px)`;
-
-    requestAnimationFrame(animateFollower);
-}
-animateFollower();
-
-// Cursor hover effects
-document.querySelectorAll('a, button, .magnetic-btn, .magnetic-element').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-        cursor.classList.add('cursor-hover');
-    });
-    el.addEventListener('mouseleave', () => {
-        cursor.classList.remove('cursor-hover');
-    });
+    if (loadingScreen) {
+        setTimeout(() => {
+            loadingScreen.classList.add('hidden');
+            document.body.classList.add('loaded');
+        }, 1200);
+    }
 });
 
 // ============================================
@@ -67,126 +28,12 @@ document.querySelectorAll('a, button, .magnetic-btn, .magnetic-element').forEach
 // ============================================
 window.addEventListener('scroll', () => {
     const scrollProgress = document.querySelector('.scroll-progress-bar');
-    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrolled = (window.pageYOffset / scrollHeight) * 100;
-    scrollProgress.style.width = scrolled + '%';
+    if (scrollProgress) {
+        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = (window.pageYOffset / scrollHeight) * 100;
+        scrollProgress.style.width = scrolled + '%';
+    }
 });
-
-// ============================================
-// PARTICLE CANVAS BACKGROUND
-// ============================================
-const particleCanvas = document.getElementById('particleCanvas');
-if (particleCanvas) {
-    const ctx = particleCanvas.getContext('2d');
-
-    particleCanvas.width = window.innerWidth;
-    particleCanvas.height = window.innerHeight;
-
-    const particles = [];
-    const particleCount = 50;
-
-    class Particle {
-        constructor() {
-            this.x = Math.random() * particleCanvas.width;
-            this.y = Math.random() * particleCanvas.height;
-            this.size = Math.random() * 3 + 1;
-            this.speedX = Math.random() * 0.5 - 0.25;
-            this.speedY = Math.random() * 0.5 - 0.25;
-            this.opacity = Math.random() * 0.5 + 0.2;
-        }
-
-        update() {
-            this.x += this.speedX;
-            this.y += this.speedY;
-
-            if (this.x > particleCanvas.width) this.x = 0;
-            if (this.x < 0) this.x = particleCanvas.width;
-            if (this.y > particleCanvas.height) this.y = 0;
-            if (this.y < 0) this.y = particleCanvas.height;
-        }
-
-        draw() {
-            ctx.fillStyle = `rgba(26, 159, 173, ${this.opacity})`;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    }
-
-    for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
-    }
-
-    function animateParticles() {
-        ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
-
-        particles.forEach(particle => {
-            particle.update();
-            particle.draw();
-        });
-
-        // Draw connections
-        particles.forEach((a, i) => {
-            particles.slice(i + 1).forEach(b => {
-                const dx = a.x - b.x;
-                const dy = a.y - b.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-
-                if (distance < 100) {
-                    ctx.strokeStyle = `rgba(26, 159, 173, ${0.15 * (1 - distance / 100)})`;
-                    ctx.lineWidth = 1;
-                    ctx.beginPath();
-                    ctx.moveTo(a.x, a.y);
-                    ctx.lineTo(b.x, b.y);
-                    ctx.stroke();
-                }
-            });
-        });
-
-        requestAnimationFrame(animateParticles);
-    }
-
-    animateParticles();
-
-    window.addEventListener('resize', () => {
-        particleCanvas.width = window.innerWidth;
-        particleCanvas.height = window.innerHeight;
-    });
-}
-
-// ============================================
-// GRADIENT BLOB FOLLOWS MOUSE
-// ============================================
-const gradientBlob = document.getElementById('gradientBlob');
-if (gradientBlob) {
-    document.addEventListener('mousemove', (e) => {
-        const x = e.clientX;
-        const y = e.clientY;
-
-        gradientBlob.style.transform = `translate(${x - 300}px, ${y - 300}px)`;
-    });
-}
-
-// ============================================
-// TYPING ANIMATION
-// ============================================
-const typingText = document.getElementById('typingText');
-if (typingText) {
-    const text = typingText.textContent;
-    typingText.textContent = '';
-    let index = 0;
-
-    setTimeout(() => {
-        function type() {
-            if (index < text.length) {
-                typingText.textContent += text.charAt(index);
-                index++;
-                setTimeout(type, 100);
-            }
-        }
-        type();
-    }, 1500);
-}
 
 // ============================================
 // ANIMATED COUNTERS
@@ -219,69 +66,6 @@ document.querySelectorAll('.stat-number').forEach(stat => {
 });
 
 // ============================================
-// TILT CARD EFFECT (3D)
-// ============================================
-document.querySelectorAll('.tilt-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        const rotateX = (y - centerY) / 10;
-        const rotateY = (centerX - x) / 10;
-
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-    });
-
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
-    });
-});
-
-// ============================================
-// MAGNETIC BUTTONS
-// ============================================
-document.querySelectorAll('.magnetic-btn, .magnetic-element').forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-        const rect = btn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-
-        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-    });
-
-    btn.addEventListener('mouseleave', () => {
-        btn.style.transform = 'translate(0, 0)';
-    });
-});
-
-// ============================================
-// RIPPLE EFFECT ON BUTTONS
-// ============================================
-document.querySelectorAll('.ripple-btn').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-        const ripple = document.createElement('span');
-        ripple.classList.add('ripple');
-
-        const rect = this.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = x + 'px';
-        ripple.style.top = y + 'px';
-
-        this.appendChild(ripple);
-
-        setTimeout(() => ripple.remove(), 600);
-    });
-});
-
-// ============================================
 // METHODS TABS - INTERACTIVE
 // ============================================
 const methodTabs = document.querySelectorAll('.method-tab');
@@ -297,7 +81,8 @@ methodTabs.forEach(tab => {
 
         // Add active to clicked
         tab.classList.add('active');
-        document.getElementById(method).classList.add('active');
+        const panel = document.getElementById(method);
+        if (panel) panel.classList.add('active');
     });
 });
 
@@ -330,7 +115,7 @@ const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
 const navLinks = document.querySelector('.nav-links');
 const nav = document.querySelector('.nav');
 
-if (mobileMenuToggle) {
+if (mobileMenuToggle && navLinks) {
     mobileMenuToggle.addEventListener('click', () => {
         navLinks.classList.toggle('active');
         mobileMenuToggle.classList.toggle('active');
@@ -346,7 +131,7 @@ if (mobileMenuToggle) {
     });
 
     document.addEventListener('click', (e) => {
-        if (!nav.contains(e.target) && navLinks.classList.contains('active')) {
+        if (nav && !nav.contains(e.target) && navLinks.classList.contains('active')) {
             navLinks.classList.remove('active');
             mobileMenuToggle.classList.remove('active');
             document.body.style.overflow = '';
@@ -357,17 +142,16 @@ if (mobileMenuToggle) {
 // ============================================
 // NAVIGATION SCROLL EFFECTS
 // ============================================
-let lastScroll = 0;
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
 
-    if (currentScroll > 50) {
-        nav.classList.add('scrolled');
-    } else {
-        nav.classList.remove('scrolled');
+    if (nav) {
+        if (currentScroll > 50) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
     }
-
-    lastScroll = currentScroll;
 });
 
 // ============================================
@@ -392,24 +176,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
-
-// ============================================
-// PARALLAX SCROLL EFFECT
-// ============================================
-const hero = document.querySelector('.hero');
-const heroContent = document.querySelector('.hero-content');
-
-if (hero && heroContent) {
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const parallaxSpeed = 0.5;
-
-        if (scrolled < hero.offsetHeight) {
-            heroContent.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
-            heroContent.style.opacity = 1 - (scrolled / hero.offsetHeight) * 0.8;
-        }
-    });
-}
 
 // ============================================
 // CONTACT FORM
@@ -519,16 +285,6 @@ function highlightNavigation() {
 window.addEventListener('scroll', highlightNavigation);
 
 // ============================================
-// HERO SCROLL INDICATOR
-// ============================================
-const heroScroll = document.querySelector('.hero-scroll');
-if (heroScroll) {
-    window.addEventListener('scroll', () => {
-        heroScroll.style.opacity = window.pageYOffset > 100 ? '0' : '1';
-    });
-}
-
-// ============================================
 // LAZY LOAD IMAGES
 // ============================================
 if ('IntersectionObserver' in window) {
@@ -551,14 +307,7 @@ if ('IntersectionObserver' in window) {
 }
 
 // ============================================
-// CONSOLE MESSAGE
-// ============================================
-console.log('%c✨ Wavelength Psychology', 'font-size: 24px; font-weight: bold; color: #1a9fad;');
-console.log('%cCreating spaces where healing happens through connection.', 'font-size: 14px; color: #6d7782; font-style: italic;');
-console.log('%c🌊 Built with care', 'font-size: 12px; color: #e68a52;');
-
-// ============================================
-// REFRESH AOS ON DYNAMIC CONTENT
+// REFRESH AOS ON LOAD
 // ============================================
 window.addEventListener('load', () => {
     setTimeout(() => {
