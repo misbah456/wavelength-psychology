@@ -1,5 +1,5 @@
 // ============================================
-// WAVELENGTH PSYCHOLOGY - ORGANIC & CLEAN
+// WAVELENGTH PSYCHOLOGY - V2 ENHANCED
 // ============================================
 
 // Initialize AOS (Animate On Scroll)
@@ -9,6 +9,84 @@ AOS.init({
     once: true,
     offset: 50
 });
+
+// ============================================
+// HERO DOTS CANVAS - SUBTLE INTERACTIVE
+// ============================================
+const heroDots = document.getElementById('heroDots');
+if (heroDots) {
+    const ctx = heroDots.getContext('2d');
+    let dotsArray = [];
+    let mouseX = 0;
+    let mouseY = 0;
+
+    function resizeCanvas() {
+        heroDots.width = heroDots.offsetWidth;
+        heroDots.height = heroDots.offsetHeight;
+        initDots();
+    }
+
+    function initDots() {
+        dotsArray = [];
+        const spacing = 80;
+        const cols = Math.floor(heroDots.width / spacing);
+        const rows = Math.floor(heroDots.height / spacing);
+
+        for (let i = 0; i < cols; i++) {
+            for (let j = 0; j < rows; j++) {
+                dotsArray.push({
+                    x: i * spacing + spacing / 2,
+                    y: j * spacing + spacing / 2,
+                    baseX: i * spacing + spacing / 2,
+                    baseY: j * spacing + spacing / 2,
+                    size: 2
+                });
+            }
+        }
+    }
+
+    function drawDots() {
+        ctx.clearRect(0, 0, heroDots.width, heroDots.height);
+
+        dotsArray.forEach(dot => {
+            const dx = mouseX - dot.x;
+            const dy = mouseY - dot.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            const maxDistance = 150;
+
+            if (distance < maxDistance) {
+                const force = (maxDistance - distance) / maxDistance;
+                dot.x += dx * force * 0.03;
+                dot.y += dy * force * 0.03;
+            } else {
+                dot.x += (dot.baseX - dot.x) * 0.05;
+                dot.y += (dot.baseY - dot.y) * 0.05;
+            }
+
+            ctx.fillStyle = 'rgba(26, 159, 173, 0.4)';
+            ctx.beginPath();
+            ctx.arc(dot.x, dot.y, dot.size, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        requestAnimationFrame(drawDots);
+    }
+
+    heroDots.addEventListener('mousemove', (e) => {
+        const rect = heroDots.getBoundingClientRect();
+        mouseX = e.clientX - rect.left;
+        mouseY = e.clientY - rect.top;
+    });
+
+    heroDots.addEventListener('mouseleave', () => {
+        mouseX = -1000;
+        mouseY = -1000;
+    });
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    drawDots();
+}
 
 // ============================================
 // LOADING SCREEN
@@ -176,6 +254,77 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+// ============================================
+// PARALLAX SCROLL EFFECTS
+// ============================================
+const hero = document.querySelector('.hero');
+const heroContent = document.querySelector('.hero-content');
+const heroBackground = document.querySelector('.hero-background-flow');
+
+if (hero && heroContent) {
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const parallaxSpeed = 0.5;
+
+        if (scrolled < hero.offsetHeight) {
+            if (heroContent) {
+                heroContent.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
+                heroContent.style.opacity = 1 - (scrolled / hero.offsetHeight) * 0.7;
+            }
+            if (heroBackground) {
+                heroBackground.style.transform = `translateY(${scrolled * 0.3}px) scale(1.1)`;
+            }
+        }
+    });
+}
+
+// ============================================
+// SCROLL REVEAL ANIMATIONS
+// ============================================
+const revealElements = document.querySelectorAll('.help-card, .approach-card, .timeline-content');
+
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+});
+
+revealElements.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+    revealObserver.observe(el);
+});
+
+// ============================================
+// HIDE SCROLL INDICATOR ON SCROLL
+// ============================================
+const scrollIndicator = document.querySelector('.hero-scroll-indicator');
+if (scrollIndicator) {
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 100) {
+            scrollIndicator.style.opacity = '0';
+            scrollIndicator.style.pointerEvents = 'none';
+        } else {
+            scrollIndicator.style.opacity = '1';
+            scrollIndicator.style.pointerEvents = 'auto';
+        }
+    });
+
+    scrollIndicator.addEventListener('click', () => {
+        window.scrollTo({
+            top: window.innerHeight,
+            behavior: 'smooth'
+        });
+    });
+}
 
 // ============================================
 // CONTACT FORM

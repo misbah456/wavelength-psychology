@@ -35,6 +35,7 @@
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-background-flow"></div>
+        <canvas class="hero-dots" id="heroDots"></canvas>
         <div class="hero-content">
             <div class="hero-badge" data-aos="fade-down">Dr. Zainub Mallick, PsyD</div>
             <h1 class="hero-title">
@@ -43,9 +44,18 @@
             </h1>
             <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">A space where healing happens through connection, understanding, and the courage to explore all parts of who you are.</p>
             <div class="hero-cta" data-aos="fade-up" data-aos-delay="300">
-                <a href="#connect" class="btn btn-primary">Start Your Journey</a>
-                <a href="#meet-zainub" class="btn btn-secondary">Learn My Story</a>
+                <a href="#connect" class="btn btn-primary btn-float">
+                    <span>Start Your Journey</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+                <a href="#meet-zainub" class="btn btn-secondary btn-float">Learn My Story</a>
             </div>
+        </div>
+        <div class="hero-scroll-indicator" data-aos="fade-up" data-aos-delay="400">
+            <span>Scroll to explore</span>
+            <div class="scroll-arrow"></div>
         </div>
         <div class="scroll-progress-bar"></div>
     </section>
@@ -92,15 +102,33 @@
                     <p>My journey started at the University of Houston (Go Coogs!), took me to New York for graduate school, California for my internship, and brought me back home to Houston for my post-doctoral fellowship. I'm overjoyed to give back to the community that raised me.</p>
                     <p>What drives me? Creating a space where you can safely explore <strong>all the parts of who you are</strong>—without judgment, with full acceptance of your experiences.</p>
 
+                    <div class="credentials-mini" data-aos="fade-up" data-aos-delay="100">
+                        <div class="cred-badge">
+                            <span class="cred-icon">🎓</span>
+                            <div>
+                                <strong>PsyD</strong>
+                                <p>Ferkauf Graduate School</p>
+                            </div>
+                        </div>
+                        <div class="cred-badge">
+                            <span class="cred-icon">📍</span>
+                            <div>
+                                <strong>Houston, TX</strong>
+                                <p>In-Person & Telehealth</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="vibe-tags">
-                        <span>☕ Tea Drinker</span>
-                        <span>📚 GoodReads Updater</span>
-                        <span>🌿 Farmers Market Regular</span>
+                        <span class="vibe-tag">☕ Tea Drinker</span>
+                        <span class="vibe-tag">📚 GoodReads Updater</span>
+                        <span class="vibe-tag">🌿 Farmers Market Regular</span>
                     </div>
                 </div>
                 <div class="bio-image-editorial" data-aos="fade-left">
                     <div class="image-frame-organic">
                         <img src="headshot.jpg" alt="Dr. Zainub Mallick">
+                        <div class="image-accent"></div>
                     </div>
                 </div>
             </div>
