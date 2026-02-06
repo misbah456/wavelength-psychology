@@ -3,13 +3,12 @@
 // Award-Winning Interactive Features
 // ============================================
 
-// Initialize AOS (Animate On Scroll)
+// Initialize AOS (Animate On Scroll) - Organic & Slow
 AOS.init({
-    duration: 800,
-    easing: 'ease-out-cubic',
-    once: false,
-    offset: 100,
-    delay: 100
+    duration: 1200,
+    easing: 'ease-out-quart',
+    once: true,
+    offset: 50
 });
 
 // ============================================
