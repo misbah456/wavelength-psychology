@@ -1,7 +1,328 @@
 // ============================================
-// WAVELENGTH PSYCHOLOGY - INTERACTIVE JS
-// Advanced Micro-interactions & Animations
+// WAVELENGTH PSYCHOLOGY - ULTRA DYNAMIC JS
+// Award-Winning Interactive Features
 // ============================================
+
+// Initialize AOS (Animate On Scroll)
+AOS.init({
+    duration: 800,
+    easing: 'ease-out-cubic',
+    once: false,
+    offset: 100,
+    delay: 100
+});
+
+// ============================================
+// LOADING SCREEN
+// ============================================
+window.addEventListener('load', () => {
+    const loadingScreen = document.querySelector('.loading-screen');
+    setTimeout(() => {
+        loadingScreen.classList.add('hidden');
+        document.body.classList.add('loaded');
+    }, 1200);
+});
+
+// ============================================
+// CUSTOM CURSOR
+// ============================================
+const cursor = document.querySelector('.custom-cursor');
+const cursorFollower = document.querySelector('.custom-cursor-follower');
+
+let mouseX = 0, mouseY = 0;
+let followerX = 0, followerY = 0;
+
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+
+    cursor.style.transform = `translate(${mouseX - 10}px, ${mouseY - 10}px)`;
+});
+
+// Smooth follower animation
+function animateFollower() {
+    const dx = mouseX - followerX;
+    const dy = mouseY - followerY;
+
+    followerX += dx * 0.1;
+    followerY += dy * 0.1;
+
+    cursorFollower.style.transform = `translate(${followerX - 4}px, ${followerY - 4}px)`;
+
+    requestAnimationFrame(animateFollower);
+}
+animateFollower();
+
+// Cursor hover effects
+document.querySelectorAll('a, button, .magnetic-btn, .magnetic-element').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+        cursor.classList.add('cursor-hover');
+    });
+    el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('cursor-hover');
+    });
+});
+
+// ============================================
+// SCROLL PROGRESS BAR
+// ============================================
+window.addEventListener('scroll', () => {
+    const scrollProgress = document.querySelector('.scroll-progress-bar');
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrolled = (window.pageYOffset / scrollHeight) * 100;
+    scrollProgress.style.width = scrolled + '%';
+});
+
+// ============================================
+// PARTICLE CANVAS BACKGROUND
+// ============================================
+const particleCanvas = document.getElementById('particleCanvas');
+if (particleCanvas) {
+    const ctx = particleCanvas.getContext('2d');
+
+    particleCanvas.width = window.innerWidth;
+    particleCanvas.height = window.innerHeight;
+
+    const particles = [];
+    const particleCount = 50;
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * particleCanvas.width;
+            this.y = Math.random() * particleCanvas.height;
+            this.size = Math.random() * 3 + 1;
+            this.speedX = Math.random() * 0.5 - 0.25;
+            this.speedY = Math.random() * 0.5 - 0.25;
+            this.opacity = Math.random() * 0.5 + 0.2;
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+
+            if (this.x > particleCanvas.width) this.x = 0;
+            if (this.x < 0) this.x = particleCanvas.width;
+            if (this.y > particleCanvas.height) this.y = 0;
+            if (this.y < 0) this.y = particleCanvas.height;
+        }
+
+        draw() {
+            ctx.fillStyle = `rgba(26, 159, 173, ${this.opacity})`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+
+        particles.forEach(particle => {
+            particle.update();
+            particle.draw();
+        });
+
+        // Draw connections
+        particles.forEach((a, i) => {
+            particles.slice(i + 1).forEach(b => {
+                const dx = a.x - b.x;
+                const dy = a.y - b.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 100) {
+                    ctx.strokeStyle = `rgba(26, 159, 173, ${0.15 * (1 - distance / 100)})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(a.x, a.y);
+                    ctx.lineTo(b.x, b.y);
+                    ctx.stroke();
+                }
+            });
+        });
+
+        requestAnimationFrame(animateParticles);
+    }
+
+    animateParticles();
+
+    window.addEventListener('resize', () => {
+        particleCanvas.width = window.innerWidth;
+        particleCanvas.height = window.innerHeight;
+    });
+}
+
+// ============================================
+// GRADIENT BLOB FOLLOWS MOUSE
+// ============================================
+const gradientBlob = document.getElementById('gradientBlob');
+if (gradientBlob) {
+    document.addEventListener('mousemove', (e) => {
+        const x = e.clientX;
+        const y = e.clientY;
+
+        gradientBlob.style.transform = `translate(${x - 300}px, ${y - 300}px)`;
+    });
+}
+
+// ============================================
+// TYPING ANIMATION
+// ============================================
+const typingText = document.getElementById('typingText');
+if (typingText) {
+    const text = typingText.textContent;
+    typingText.textContent = '';
+    let index = 0;
+
+    setTimeout(() => {
+        function type() {
+            if (index < text.length) {
+                typingText.textContent += text.charAt(index);
+                index++;
+                setTimeout(type, 100);
+            }
+        }
+        type();
+    }, 1500);
+}
+
+// ============================================
+// ANIMATED COUNTERS
+// ============================================
+const observeCounters = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const statNumber = entry.target;
+            const target = parseInt(statNumber.dataset.count);
+            let current = 0;
+            const increment = target / 60;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    statNumber.textContent = target + (target === 100 ? '%' : '+');
+                    clearInterval(timer);
+                } else {
+                    statNumber.textContent = Math.floor(current) + (target === 100 ? '%' : '+');
+                }
+            }, 30);
+
+            observeCounters.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.stat-number').forEach(stat => {
+    observeCounters.observe(stat);
+});
+
+// ============================================
+// TILT CARD EFFECT (3D)
+// ============================================
+document.querySelectorAll('.tilt-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = (y - centerY) / 10;
+        const rotateY = (centerX - x) / 10;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+    });
+});
+
+// ============================================
+// MAGNETIC BUTTONS
+// ============================================
+document.querySelectorAll('.magnetic-btn, .magnetic-element').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+    });
+
+    btn.addEventListener('mouseleave', () => {
+        btn.style.transform = 'translate(0, 0)';
+    });
+});
+
+// ============================================
+// RIPPLE EFFECT ON BUTTONS
+// ============================================
+document.querySelectorAll('.ripple-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple');
+
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+
+        this.appendChild(ripple);
+
+        setTimeout(() => ripple.remove(), 600);
+    });
+});
+
+// ============================================
+// METHODS TABS - INTERACTIVE
+// ============================================
+const methodTabs = document.querySelectorAll('.method-tab');
+const methodPanels = document.querySelectorAll('.method-panel');
+
+methodTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        const method = tab.dataset.method;
+
+        // Remove active from all
+        methodTabs.forEach(t => t.classList.remove('active'));
+        methodPanels.forEach(p => p.classList.remove('active'));
+
+        // Add active to clicked
+        tab.classList.add('active');
+        document.getElementById(method).classList.add('active');
+    });
+});
+
+// ============================================
+// ACCORDION - ANIMATED
+// ============================================
+const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+accordionHeaders.forEach(header => {
+    header.addEventListener('click', () => {
+        const accordionItem = header.parentElement;
+        const isActive = accordionItem.classList.contains('active');
+
+        // Close all accordions
+        document.querySelectorAll('.accordion-item').forEach(item => {
+            item.classList.remove('active');
+        });
+
+        // Open clicked accordion if it wasn't active
+        if (!isActive) {
+            accordionItem.classList.add('active');
+        }
+    });
+});
 
 // ============================================
 // MOBILE NAVIGATION
@@ -17,7 +338,6 @@ if (mobileMenuToggle) {
         document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
     });
 
-    // Close menu when clicking on a link
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', () => {
             navLinks.classList.remove('active');
@@ -26,7 +346,6 @@ if (mobileMenuToggle) {
         });
     });
 
-    // Close menu when clicking outside
     document.addEventListener('click', (e) => {
         if (!nav.contains(e.target) && navLinks.classList.contains('active')) {
             navLinks.classList.remove('active');
@@ -40,13 +359,10 @@ if (mobileMenuToggle) {
 // NAVIGATION SCROLL EFFECTS
 // ============================================
 let lastScroll = 0;
-const scrollThreshold = 50;
-
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
 
-    // Add/remove scrolled class for styling
-    if (currentScroll > scrollThreshold) {
+    if (currentScroll > 50) {
         nav.classList.add('scrolled');
     } else {
         nav.classList.remove('scrolled');
@@ -56,20 +372,18 @@ window.addEventListener('scroll', () => {
 });
 
 // ============================================
-// SMOOTH SCROLL WITH OFFSET
+// SMOOTH SCROLL
 // ============================================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
-
-        // Skip if it's just "#"
         if (href === '#') return;
 
         e.preventDefault();
         const target = document.querySelector(href);
 
         if (target) {
-            const offset = 80; // Height of fixed nav
+            const offset = 80;
             const targetPosition = target.offsetTop - offset;
 
             window.scrollTo({
@@ -81,53 +395,25 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ============================================
-// INTERSECTION OBSERVER - FADE IN ON SCROLL
+// PARALLAX SCROLL EFFECT
 // ============================================
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
+const hero = document.querySelector('.hero');
+const heroContent = document.querySelector('.hero-content');
 
-const fadeInObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in');
-            // Optional: unobserve after animation
-            fadeInObserver.unobserve(entry.target);
+if (hero && heroContent) {
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const parallaxSpeed = 0.5;
+
+        if (scrolled < hero.offsetHeight) {
+            heroContent.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
+            heroContent.style.opacity = 1 - (scrolled / hero.offsetHeight) * 0.8;
         }
-    });
-}, observerOptions);
-
-// Observe elements for fade-in animation
-const fadeElements = document.querySelectorAll('.help-card, .approach-card, .timeline-item, .meet-content, .meet-sidebar');
-fadeElements.forEach(el => {
-    fadeInObserver.observe(el);
-});
-
-// ============================================
-// WAVE ANIMATION
-// ============================================
-const waveAnimation = document.querySelector('.wave-animation');
-if (waveAnimation) {
-    const wavePaths = waveAnimation.querySelectorAll('.wave-path');
-
-    wavePaths.forEach((path, index) => {
-        // Animate wave paths
-        let offset = 0;
-        const speed = 0.5 + (index * 0.2);
-
-        function animateWave() {
-            offset += speed;
-            path.style.transform = `translateX(${offset % 100}px)`;
-            requestAnimationFrame(animateWave);
-        }
-
-        animateWave();
     });
 }
 
 // ============================================
-// CONTACT FORM HANDLING
+// CONTACT FORM
 // ============================================
 const contactForm = document.getElementById('contactForm');
 
@@ -138,30 +424,21 @@ if (contactForm) {
         const submitButton = contactForm.querySelector('button[type="submit"]');
         const originalButtonHTML = submitButton.innerHTML;
 
-        // Disable button and show loading state
         submitButton.disabled = true;
         submitButton.innerHTML = '<span>Sending...</span>';
 
-        // Get form data
         const formData = new FormData(contactForm);
         const data = Object.fromEntries(formData);
 
-        // Simulate form submission (replace with actual backend)
         try {
-            // TODO: Replace with actual form handling service
-            // Options: Formspree, Netlify Forms, Cloudflare Workers, etc.
-
             await new Promise(resolve => setTimeout(resolve, 1500));
 
-            // Show success message
             showFormMessage('success', 'Thank you! Your message has been sent. I\'ll respond within 24-48 hours.');
             contactForm.reset();
 
         } catch (error) {
-            // Show error message
             showFormMessage('error', 'Oops! Something went wrong. Please try emailing directly at dr.mallick@wavelengthpsychology.com');
         } finally {
-            // Re-enable button
             submitButton.disabled = false;
             submitButton.innerHTML = originalButtonHTML;
         }
@@ -170,9 +447,7 @@ if (contactForm) {
 
 function showFormMessage(type, message) {
     const existingMessage = document.querySelector('.form-message');
-    if (existingMessage) {
-        existingMessage.remove();
-    }
+    if (existingMessage) existingMessage.remove();
 
     const messageDiv = document.createElement('div');
     messageDiv.className = `form-message form-message-${type}`;
@@ -192,7 +467,6 @@ function showFormMessage(type, message) {
 
     contactForm.appendChild(messageDiv);
 
-    // Remove message after 6 seconds
     setTimeout(() => {
         messageDiv.style.opacity = '0';
         messageDiv.style.transform = 'translateY(-10px)';
@@ -201,12 +475,9 @@ function showFormMessage(type, message) {
 }
 
 // ============================================
-// FORM VALIDATION ENHANCEMENTS
+// FORM INPUT ENHANCEMENTS
 // ============================================
-const formInputs = document.querySelectorAll('.form-group input, .form-group textarea, .form-group select');
-
-formInputs.forEach(input => {
-    // Show success state on valid input
+document.querySelectorAll('.animated-input').forEach(input => {
     input.addEventListener('blur', function() {
         if (this.value.trim() !== '' && this.checkValidity()) {
             this.style.borderColor = '#92a88f';
@@ -214,17 +485,9 @@ formInputs.forEach(input => {
         }
     });
 
-    // Reset border on focus
     input.addEventListener('focus', function() {
         this.style.borderColor = '#2ab4c3';
         this.style.background = 'white';
-    });
-
-    // Real-time validation
-    input.addEventListener('input', function() {
-        if (this.validity.valid) {
-            this.style.borderColor = '#c7cfd8';
-        }
     });
 });
 
@@ -257,899 +520,17 @@ function highlightNavigation() {
 window.addEventListener('scroll', highlightNavigation);
 
 // ============================================
-// PARALLAX SCROLL EFFECT
-// ============================================
-const hero = document.querySelector('.hero');
-const heroContent = document.querySelector('.hero-content');
-
-if (hero && heroContent) {
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const parallaxSpeed = 0.5;
-
-        if (scrolled < hero.offsetHeight) {
-            heroContent.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
-            heroContent.style.opacity = 1 - (scrolled / hero.offsetHeight) * 0.8;
-        }
-    });
-}
-
-// ============================================
-// TIMELINE ANIMATION
-// ============================================
-const timelineItems = document.querySelectorAll('.timeline-item');
-
-const timelineObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, {
-    threshold: 0.2,
-    rootMargin: '0px 0px -50px 0px'
-});
-
-timelineItems.forEach(item => {
-    item.style.opacity = '0';
-    item.style.transform = 'translateY(30px)';
-    item.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-    timelineObserver.observe(item);
-});
-
-// ============================================
 // HERO SCROLL INDICATOR
 // ============================================
 const heroScroll = document.querySelector('.hero-scroll');
 if (heroScroll) {
-    // Hide scroll indicator after scrolling
     window.addEventListener('scroll', () => {
-        if (window.pageYOffset > 100) {
-            heroScroll.style.opacity = '0';
-        } else {
-            heroScroll.style.opacity = '1';
-        }
+        heroScroll.style.opacity = window.pageYOffset > 100 ? '0' : '1';
     });
-
-    // Animate scroll indicator
-    heroScroll.style.animation = 'fadeInUp 1s ease 1s both, bounce 2s ease-in-out 2s infinite';
 }
 
-// Add bounce animation
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes bounce {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
-    }
-
-    .hero-scroll {
-        position: absolute;
-        bottom: 40px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.5rem;
-        color: var(--text-secondary);
-        font-size: 0.875rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        opacity: 1;
-    }
-
-    .hero-scroll:hover {
-        color: var(--teal-700);
-        transform: translateX(-50%) translateY(5px);
-    }
-
-    .hero-scroll svg {
-        opacity: 0.6;
-    }
-
-    .hero-badge {
-        display: inline-block;
-        padding: 0.5rem 1.25rem;
-        background: rgba(255, 255, 255, 0.9);
-        border: 1px solid var(--teal-200);
-        border-radius: 50px;
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: var(--teal-800);
-        margin-bottom: 1.5rem;
-        letter-spacing: 0.02em;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 2px 8px rgba(26, 159, 173, 0.1);
-    }
-
-    .title-line {
-        display: block;
-    }
-
-    .title-line.highlight {
-        background: linear-gradient(135deg, var(--teal-700), var(--terracotta-600));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    .hero-grain {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0.03;
-        z-index: 0;
-        pointer-events: none;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");
-    }
-
-    .btn svg {
-        margin-left: 0.5rem;
-        transition: transform 0.3s ease;
-    }
-
-    .btn:hover svg {
-        transform: translateX(5px);
-    }
-
-    .btn-full {
-        width: 100%;
-    }
-
-    .form-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-    }
-
-    @media (max-width: 640px) {
-        .form-row {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    .philosophy-banner {
-        padding: 3rem 1.5rem;
-        background: linear-gradient(135deg, var(--teal-700), var(--teal-800));
-        color: white;
-        text-align: center;
-    }
-
-    .banner-text {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(1.25rem, 3vw, 1.75rem);
-        font-style: italic;
-        max-width: 900px;
-        margin: 0 auto;
-        line-height: 1.7;
-        color: rgba(255, 255, 255, 0.95);
-        font-weight: 400;
-    }
-
-    .logo-wave {
-        font-size: 1.75rem;
-        margin-right: 0.25rem;
-        display: inline-block;
-        color: var(--teal-600);
-        animation: wave-wiggle 3s ease-in-out infinite;
-    }
-
-    @keyframes wave-wiggle {
-        0%, 100% { transform: rotate(0deg); }
-        25% { transform: rotate(-10deg); }
-        75% { transform: rotate(10deg); }
-    }
-
-    .meet-section {
-        padding: var(--space-4xl) 0;
-        background: var(--surface);
-    }
-
-    .meet-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: var(--space-3xl);
-        align-items: start;
-    }
-
-    @media (min-width: 1024px) {
-        .meet-grid {
-            grid-template-columns: 1.3fr 1fr;
-        }
-    }
-
-    .meet-content {
-        order: 2;
-    }
-
-    .meet-image-container {
-        order: 1;
-        position: relative;
-    }
-
-    @media (min-width: 1024px) {
-        .meet-content {
-            order: 1;
-        }
-
-        .meet-image-container {
-            order: 2;
-        }
-    }
-
-    .profile-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .image-decoration {
-        position: absolute;
-        inset: -8px;
-        background: linear-gradient(135deg, var(--teal-400), var(--terracotta-400));
-        border-radius: var(--radius-2xl);
-        z-index: -1;
-        opacity: 0.3;
-    }
-
-    .intro-text {
-        margin-bottom: var(--space-lg);
-    }
-
-    .lead {
-        font-size: var(--text-xl);
-        font-weight: 400;
-        color: var(--text-primary);
-        line-height: 1.7;
-    }
-
-    .approach-highlight {
-        background: linear-gradient(135deg, var(--teal-100), var(--cream-200));
-        padding: var(--space-xl);
-        border-radius: var(--radius-xl);
-        margin: var(--space-xl) 0;
-        border-left: 4px solid var(--teal-600);
-    }
-
-    .approach-highlight h3 {
-        font-size: var(--text-xl);
-        margin-bottom: var(--space-sm);
-        color: var(--teal-800);
-    }
-
-    .credentials-compact {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: var(--space-md);
-        margin-top: var(--space-xl);
-    }
-
-    @media (min-width: 640px) {
-        .credentials-compact {
-            grid-template-columns: repeat(3, 1fr);
-        }
-    }
-
-    .cred-item {
-        padding: var(--space-md);
-        background: var(--cream-100);
-        border-radius: var(--radius-lg);
-    }
-
-    .cred-item strong {
-        display: block;
-        font-size: var(--text-sm);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--terracotta-600);
-        margin-bottom: 0.5rem;
-    }
-
-    .cred-item p {
-        font-size: var(--text-sm);
-        line-height: 1.6;
-        color: var(--text-secondary);
-    }
-
-    .fact-item {
-        display: flex;
-        align-items: center;
-        gap: var(--space-sm);
-        padding: var(--space-xs) 0;
-    }
-
-    .fact-item svg {
-        color: var(--terracotta-500);
-        flex-shrink: 0;
-    }
-
-    .fact-item span {
-        font-size: var(--text-sm);
-        color: var(--text-secondary);
-        line-height: 1.5;
-    }
-
-    .help-categories {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: var(--space-xl);
-        margin-bottom: var(--space-3xl);
-    }
-
-    @media (min-width: 768px) {
-        .help-categories {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @media (min-width: 1024px) {
-        .help-categories {
-            grid-template-columns: repeat(3, 1fr);
-        }
-    }
-
-    .help-card.featured {
-        border: 2px solid var(--teal-300);
-        background: linear-gradient(135deg, var(--surface), var(--teal-50));
-    }
-
-    .card-icon {
-        color: var(--teal-600);
-        margin-bottom: var(--space-md);
-    }
-
-    .card-question {
-        font-style: italic;
-        color: var(--teal-700);
-        margin-bottom: var(--space-md);
-        font-size: var(--text-base);
-    }
-
-    .card-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--space-xs);
-        margin-top: var(--space-md);
-    }
-
-    .card-tags span {
-        display: inline-block;
-        padding: 0.35rem 0.85rem;
-        font-size: var(--text-xs);
-        font-weight: 500;
-        background: var(--teal-100);
-        color: var(--teal-800);
-        border-radius: var(--radius-full);
-        transition: all 0.2s ease;
-    }
-
-    .help-card:hover .card-tags span {
-        background: var(--teal-600);
-        color: white;
-    }
-
-    .demographics {
-        text-align: center;
-        padding: var(--space-xl);
-        background: var(--cream-100);
-        border-radius: var(--radius-2xl);
-    }
-
-    .demographics h3 {
-        font-size: var(--text-2xl);
-        margin-bottom: var(--space-lg);
-        color: var(--text-primary);
-    }
-
-    .demo-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--space-sm);
-        justify-content: center;
-    }
-
-    .demo-item {
-        padding: 0.5rem 1.25rem;
-        background: var(--surface);
-        border: 2px solid var(--teal-200);
-        border-radius: var(--radius-full);
-        font-size: var(--text-sm);
-        font-weight: 500;
-        color: var(--teal-800);
-        transition: all 0.2s ease;
-    }
-
-    .demo-item:hover {
-        background: var(--teal-600);
-        color: white;
-        border-color: var(--teal-600);
-        transform: translateY(-2px);
-    }
-
-    .approach-section {
-        padding: var(--space-4xl) 0;
-        background: linear-gradient(180deg, var(--surface), var(--cream-100));
-    }
-
-    .section-header.centered {
-        text-align: center;
-    }
-
-    .methods-section {
-        margin-top: var(--space-3xl);
-        padding: var(--space-2xl);
-        background: var(--surface);
-        border-radius: var(--radius-2xl);
-        border: 2px solid var(--teal-100);
-    }
-
-    .methods-section h3 {
-        text-align: center;
-        font-size: var(--text-2xl);
-        margin-bottom: var(--space-xl);
-        color: var(--text-primary);
-    }
-
-    .methods-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: var(--space-lg);
-    }
-
-    @media (min-width: 640px) {
-        .methods-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @media (min-width: 1024px) {
-        .methods-grid {
-            grid-template-columns: repeat(3, 1fr);
-        }
-    }
-
-    .method-item {
-        display: flex;
-        align-items: center;
-        gap: var(--space-md);
-        padding: var(--space-md);
-        background: var(--cream-100);
-        border-radius: var(--radius-lg);
-        transition: all 0.3s ease;
-    }
-
-    .method-item:hover {
-        background: var(--teal-100);
-        transform: translateX(5px);
-    }
-
-    .method-item svg {
-        color: var(--teal-600);
-        flex-shrink: 0;
-    }
-
-    .method-item h4 {
-        font-size: var(--text-base);
-        color: var(--text-primary);
-        font-weight: 500;
-    }
-
-    .expect-section {
-        margin-top: var(--space-3xl);
-        padding: var(--space-2xl);
-        background: linear-gradient(135deg, var(--teal-700), var(--teal-800));
-        border-radius: var(--radius-2xl);
-        color: white;
-    }
-
-    .expect-section h3 {
-        font-size: var(--text-3xl);
-        color: white;
-        text-align: center;
-        margin-bottom: var(--space-md);
-    }
-
-    .expect-intro {
-        text-align: center;
-        font-size: var(--text-lg);
-        color: rgba(255, 255, 255, 0.9);
-        margin-bottom: var(--space-xl);
-    }
-
-    .expect-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: var(--space-lg);
-    }
-
-    .expect-item {
-        display: flex;
-        gap: var(--space-md);
-        align-items: start;
-    }
-
-    .expect-item .check {
-        flex-shrink: 0;
-        width: 32px;
-        height: 32px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.25rem;
-        color: var(--terracotta-300);
-    }
-
-    .expect-item p {
-        color: rgba(255, 255, 255, 0.95);
-        line-height: 1.7;
-        font-size: var(--text-base);
-    }
-
-    .journey-section {
-        padding: var(--space-4xl) 0;
-        background: linear-gradient(180deg, var(--cream-100), var(--teal-50));
-    }
-
-    .journey-timeline {
-        max-width: 900px;
-        margin: var(--space-3xl) auto;
-        position: relative;
-    }
-
-    .journey-timeline::before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        top: 0;
-        bottom: 0;
-        width: 2px;
-        background: linear-gradient(180deg, transparent, var(--teal-400) 10%, var(--teal-400) 90%, transparent);
-        transform: translateX(-50%);
-    }
-
-    @media (max-width: 768px) {
-        .journey-timeline::before {
-            left: 30px;
-        }
-    }
-
-    .timeline-marker {
-        position: absolute;
-        left: 50%;
-        top: 30px;
-        width: 20px;
-        height: 20px;
-        background: var(--surface);
-        border: 4px solid var(--teal-600);
-        border-radius: 50%;
-        transform: translateX(-50%);
-        z-index: 10;
-        box-shadow: 0 0 0 8px rgba(26, 159, 173, 0.1);
-        transition: all 0.3s ease;
-    }
-
-    @media (max-width: 768px) {
-        .timeline-marker {
-            left: 30px;
-        }
-    }
-
-    .timeline-item:hover .timeline-marker {
-        background: var(--teal-600);
-        transform: translateX(-50%) scale(1.3);
-        box-shadow: 0 0 0 12px rgba(26, 159, 173, 0.15);
-    }
-
-    .timeline-content {
-        background: var(--surface);
-        padding: var(--space-xl);
-        border-radius: var(--radius-xl);
-        box-shadow: var(--shadow-md);
-        transition: all 0.3s ease;
-    }
-
-    .timeline-content:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-xl);
-    }
-
-    .timeline-content h4 {
-        font-size: var(--text-xl);
-        color: var(--teal-800);
-        margin-bottom: 0.5rem;
-    }
-
-    .timeline-content p {
-        font-size: var(--text-base);
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: 0.5rem;
-    }
-
-    .timeline-content span {
-        font-size: var(--text-sm);
-        color: var(--text-secondary);
-        font-weight: 400;
-    }
-
-    .journey-quote {
-        margin-top: var(--space-3xl);
-        text-align: center;
-        padding: var(--space-2xl);
-        background: var(--surface);
-        border-radius: var(--radius-2xl);
-        border-left: 4px solid var(--terracotta-500);
-    }
-
-    .journey-quote p {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: var(--text-2xl);
-        font-style: italic;
-        color: var(--text-primary);
-        line-height: 1.6;
-    }
-
-    .practical-info {
-        padding: var(--space-4xl) 0;
-        background: var(--cream-100);
-    }
-
-    .practical-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: var(--space-lg);
-    }
-
-    @media (min-width: 768px) {
-        .practical-grid {
-            grid-template-columns: repeat(3, 1fr);
-        }
-    }
-
-    .practical-card {
-        background: var(--surface);
-        padding: var(--space-xl);
-        border-radius: var(--radius-xl);
-        box-shadow: var(--shadow-sm);
-        border: 2px solid var(--teal-100);
-    }
-
-    .practical-card h3 {
-        font-size: var(--text-xl);
-        margin-bottom: var(--space-md);
-        color: var(--teal-800);
-    }
-
-    .practical-card ul {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-xs);
-    }
-
-    .practical-card li {
-        padding-left: var(--space-md);
-        position: relative;
-        font-size: var(--text-base);
-        color: var(--text-secondary);
-    }
-
-    .practical-card li::before {
-        content: '•';
-        position: absolute;
-        left: 0;
-        color: var(--teal-600);
-        font-weight: 700;
-    }
-
-    .practical-card p {
-        font-size: var(--text-base);
-        color: var(--text-secondary);
-        margin-bottom: var(--space-sm);
-    }
-
-    .practical-card strong {
-        color: var(--teal-700);
-    }
-
-    .connect-section {
-        padding: var(--space-4xl) 0;
-        background: var(--surface);
-    }
-
-    .connect-header {
-        text-align: center;
-        margin-bottom: var(--space-3xl);
-    }
-
-    .connect-header h2 {
-        margin-bottom: var(--space-md);
-    }
-
-    .connect-intro {
-        font-size: var(--text-xl);
-        max-width: 800px;
-        margin: 0 auto;
-        color: var(--text-secondary);
-        line-height: 1.7;
-    }
-
-    .connect-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: var(--space-3xl);
-    }
-
-    @media (min-width: 1024px) {
-        .connect-grid {
-            grid-template-columns: 1fr 1.3fr;
-        }
-    }
-
-    .contact-methods {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-lg);
-        margin-bottom: var(--space-xl);
-    }
-
-    .contact-method {
-        display: flex;
-        gap: var(--space-md);
-        align-items: start;
-    }
-
-    .method-icon {
-        width: 48px;
-        height: 48px;
-        background: linear-gradient(135deg, var(--teal-500), var(--teal-600));
-        border-radius: var(--radius-lg);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        flex-shrink: 0;
-        box-shadow: var(--shadow-md);
-    }
-
-    .contact-method h4 {
-        font-size: var(--text-lg);
-        margin-bottom: 0.25rem;
-        color: var(--text-primary);
-    }
-
-    .contact-method a {
-        color: var(--teal-700);
-        font-weight: 500;
-        transition: color 0.2s ease;
-    }
-
-    .contact-method a:hover {
-        color: var(--teal-900);
-    }
-
-    .contact-method p {
-        font-size: var(--text-base);
-        color: var(--text-secondary);
-        margin: 0;
-    }
-
-    .contact-method .small {
-        font-size: var(--text-sm);
-        color: var(--text-tertiary);
-    }
-
-    .crisis-info {
-        padding: var(--space-md);
-        background: var(--terracotta-100);
-        border-radius: var(--radius-lg);
-        border-left: 4px solid var(--terracotta-600);
-    }
-
-    .crisis-info p {
-        font-size: var(--text-sm);
-        color: var(--text-secondary);
-        margin: 0;
-    }
-
-    .crisis-info strong {
-        color: var(--terracotta-800);
-    }
-
-    .crisis-info a {
-        color: var(--terracotta-700);
-        font-weight: 600;
-    }
-
-    .connect-form-container {
-        background: rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(20px) saturate(180%);
-        border-radius: var(--radius-2xl);
-        padding: var(--space-2xl);
-        box-shadow: var(--shadow-xl);
-        border: 1px solid rgba(255, 255, 255, 0.5);
-    }
-
-    .connect-form h3 {
-        font-size: var(--text-2xl);
-        margin-bottom: var(--space-xl);
-        color: var(--text-primary);
-    }
-
-    .footer-logo {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: var(--text-2xl);
-        font-weight: 600;
-        color: white;
-        margin-bottom: var(--space-md);
-    }
-
-    .footer-brand {
-        max-width: 400px;
-    }
-
-    .footer-links {
-        display: flex;
-        gap: var(--space-3xl);
-    }
-
-    .footer-col {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .footer-col h4 {
-        color: white;
-        margin-bottom: var(--space-md);
-        font-size: var(--text-lg);
-    }
-
-    .footer-col a {
-        color: rgba(255, 255, 255, 0.7);
-        text-decoration: none;
-        font-size: var(--text-base);
-        margin-bottom: var(--space-xs);
-        transition: all 0.2s ease;
-    }
-
-    .footer-col a:hover {
-        color: var(--teal-300);
-        transform: translateX(5px);
-    }
-
-    .footer-tagline {
-        font-style: italic;
-        color: rgba(255, 255, 255, 0.5);
-        font-size: var(--text-sm);
-    }
-`;
-document.head.appendChild(style);
-
 // ============================================
-// PAGE LOAD ANIMATIONS
-// ============================================
-window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
-
-    // Trigger initial animations
-    highlightNavigation();
-
-    // Add stagger effect to hero elements
-    const heroElements = document.querySelectorAll('.hero-badge, .hero-title, .hero-subtitle, .hero-cta');
-    heroElements.forEach((el, index) => {
-        el.style.animationDelay = `${index * 0.2}s`;
-    });
-});
-
-// ============================================
-// PERFORMANCE: LAZY LOAD IMAGES
+// LAZY LOAD IMAGES
 // ============================================
 if ('IntersectionObserver' in window) {
     const imageObserver = new IntersectionObserver((entries) => {
@@ -1175,8 +556,13 @@ if ('IntersectionObserver' in window) {
 // ============================================
 console.log('%c✨ Wavelength Psychology', 'font-size: 24px; font-weight: bold; color: #1a9fad;');
 console.log('%cCreating spaces where healing happens through connection.', 'font-size: 14px; color: #6d7782; font-style: italic;');
-console.log('%c🌊 Built with care by Claude', 'font-size: 12px; color: #e68a52;');
+console.log('%c🌊 Built with care', 'font-size: 12px; color: #e68a52;');
 
 // ============================================
-// END OF SCRIPT
+// REFRESH AOS ON DYNAMIC CONTENT
 // ============================================
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        AOS.refresh();
+    }, 500);
+});

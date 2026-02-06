@@ -35,23 +35,25 @@
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-grain"></div>
+        <canvas id="particleCanvas" class="particle-canvas"></canvas>
+        <div class="gradient-blob" id="gradientBlob"></div>
         <div class="hero-content">
-            <div class="hero-badge">Dr. Zainub Mallick, PsyD</div>
+            <div class="hero-badge" data-aos="fade-down">Dr. Zainub Mallick, PsyD</div>
             <h1 class="hero-title">
-                <span class="title-line">Finding Your</span>
-                <span class="title-line highlight">Wavelength</span>
+                <span class="title-line" data-aos="fade-up" data-aos-delay="100">Finding Your</span>
+                <span class="title-line highlight typing-text" data-aos="fade-up" data-aos-delay="200" id="typingText">Wavelength</span>
             </h1>
-            <p class="hero-subtitle">Where healing happens through connection, understanding, and the courage to explore all parts of who you are.</p>
-            <div class="hero-cta">
-                <a href="#connect" class="btn btn-primary">
+            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="400">Where healing happens through connection, understanding, and the courage to explore all parts of who you are.</p>
+            <div class="hero-cta" data-aos="fade-up" data-aos-delay="600">
+                <a href="#connect" class="btn btn-primary magnetic-btn">
                     <span>Start Your Journey</span>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M5 12h14M12 5l7 7-7 7"/>
                     </svg>
                 </a>
-                <a href="#meet-zainub" class="btn btn-secondary">Learn My Story</a>
+                <a href="#meet-zainub" class="btn btn-secondary magnetic-btn">Learn My Story</a>
             </div>
-            <div class="hero-scroll">
+            <div class="hero-scroll" data-aos="fade-up" data-aos-delay="800">
                 <span>Scroll to explore</span>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 5v14M19 12l-7 7-7-7"/>
@@ -67,12 +69,37 @@
                 </svg>
             </div>
         </div>
+        <div class="scroll-progress-bar"></div>
     </section>
 
     <!-- Philosophy Banner -->
     <section class="philosophy-banner">
         <div class="container">
-            <p class="banner-text">"I believe healing happens within relationships. Rather than approaching therapy from a place of judgment or discipline, I see us as a team tackling challenges together."</p>
+            <p class="banner-text reveal-on-scroll">"I believe healing happens within relationships. Rather than approaching therapy from a place of judgment or discipline, I see us as a team tackling challenges together."</p>
+        </div>
+    </section>
+
+    <!-- Stats Counter Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-number" data-count="10">0</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-number" data-count="500">0</div>
+                    <div class="stat-label">Clients Helped</div>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-number" data-count="6">0</div>
+                    <div class="stat-label">Therapeutic Approaches</div>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="400">
+                    <div class="stat-number" data-count="100">0</div>
+                    <div class="stat-label">% Dedicated</div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -80,27 +107,27 @@
     <section id="meet-zainub" class="meet-section">
         <div class="container">
             <div class="meet-grid">
-                <div class="meet-image-container">
-                    <div class="image-frame">
+                <div class="meet-image-container" data-aos="fade-right">
+                    <div class="image-frame tilt-card">
                         <img src="headshot.jpg" alt="Dr. Zainub Mallick" class="profile-image">
                         <div class="image-decoration"></div>
                     </div>
-                    <div class="fun-facts">
+                    <div class="fun-facts expandable-card">
                         <h4>Beyond the Office</h4>
-                        <div class="fact-item">
+                        <div class="fact-item" data-aos="fade-left" data-aos-delay="100">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
                                 <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
                             </svg>
                             <span>Constantly updating my GoodReads</span>
                         </div>
-                        <div class="fact-item">
+                        <div class="fact-item" data-aos="fade-left" data-aos-delay="200">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M12 2v6M2 12h6M12 16v6M16 12h6"/>
                             </svg>
                             <span>Love crafting in my spare time</span>
                         </div>
-                        <div class="fact-item">
+                        <div class="fact-item" data-aos="fade-left" data-aos-delay="300">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M12 6.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM12 19.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
                             </svg>
@@ -109,33 +136,35 @@
                     </div>
                 </div>
 
-                <div class="meet-content">
+                <div class="meet-content" data-aos="fade-left">
                     <div class="section-label">Meet Zainub</div>
-                    <h2>Creating Spaces for Connection & Growth</h2>
+                    <h2 class="reveal-on-scroll">Creating Spaces for Connection & Growth</h2>
 
-                    <div class="intro-text">
-                        <p class="lead">Hi, I'm Dr. Zainub Mallick. From a young age, I've been fascinated by the brain, the mind, and the beautiful complexity of human connection.</p>
+                    <div class="text-reveal-container">
+                        <div class="intro-text">
+                            <p class="lead">Hi, I'm Dr. Zainub Mallick. From a young age, I've been fascinated by the brain, the mind, and the beautiful complexity of human connection.</p>
+                        </div>
+
+                        <p>My journey started at the University of Houston (Go Coogs!), took me to New York for graduate school, California for my internship, and brought me back home to Houston for my post-doctoral fellowship. I'm overjoyed to give back to the community that raised me.</p>
+
+                        <p>What drives me? Creating a space where you can safely explore <strong>all the parts of who you are</strong>—without judgment, with full acceptance of your experiences. I believe therapy is where healing begins by exploring what you're carrying: both the burdens <em>and</em> the strengths.</p>
                     </div>
 
-                    <p>My journey started at the University of Houston (Go Coogs!), took me to New York for graduate school, California for my internship, and brought me back home to Houston for my post-doctoral fellowship. I'm overjoyed to give back to the community that raised me.</p>
-
-                    <p>What drives me? Creating a space where you can safely explore <strong>all the parts of who you are</strong>—without judgment, with full acceptance of your experiences. I believe therapy is where healing begins by exploring what you're carrying: both the burdens <em>and</em> the strengths.</p>
-
-                    <div class="approach-highlight">
+                    <div class="approach-highlight" data-aos="zoom-in">
                         <h3>My Core Belief</h3>
                         <p>I take a <strong>relational, strengths-based approach</strong>, always looking for what you're doing right and building upon those successes. By combining our strengths, we create a supportive environment where real change can occur.</p>
                     </div>
 
-                    <div class="credentials-compact">
-                        <div class="cred-item">
+                    <div class="credentials-compact stagger-fade">
+                        <div class="cred-item tilt-card-subtle">
                             <strong>Education</strong>
                             <p>PsyD, School-Child Clinical Psychology<br>Ferkauf Graduate School of Psychology</p>
                         </div>
-                        <div class="cred-item">
+                        <div class="cred-item tilt-card-subtle">
                             <strong>Internship</strong>
                             <p>Through the Looking Glass<br>Berkeley, CA</p>
                         </div>
-                        <div class="cred-item">
+                        <div class="cred-item tilt-card-subtle">
                             <strong>Undergraduate</strong>
                             <p>University of Houston<br>Psychology, Medicine & Society</p>
                         </div>
@@ -149,14 +178,14 @@
     <section id="who-i-help" class="who-i-help">
         <div class="container">
             <div class="section-header">
-                <div class="section-label">Who I Help</div>
-                <h2>Bridging Gaps, Building Connections</h2>
-                <p class="section-intro">I work with children, families, and adults—with a particular passion for diverse populations, especially South Asian clients.</p>
+                <div class="section-label" data-aos="fade-down">Who I Help</div>
+                <h2 data-aos="fade-up">Bridging Gaps, Building Connections</h2>
+                <p class="section-intro" data-aos="fade-up" data-aos-delay="100">I work with children, families, and adults—with a particular passion for diverse populations, especially South Asian clients.</p>
             </div>
 
             <div class="help-categories">
                 <!-- Children & Families -->
-                <div class="help-card featured">
+                <div class="help-card featured tilt-card hover-lift" data-aos="flip-up" data-aos-delay="100">
                     <div class="card-icon">
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
@@ -176,7 +205,7 @@
                 </div>
 
                 <!-- Adults -->
-                <div class="help-card">
+                <div class="help-card tilt-card hover-lift" data-aos="flip-up" data-aos-delay="200">
                     <div class="card-icon">
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                             <circle cx="12" cy="8" r="5"/>
@@ -194,7 +223,7 @@
                 </div>
 
                 <!-- Diverse Populations -->
-                <div class="help-card">
+                <div class="help-card tilt-card hover-lift" data-aos="flip-up" data-aos-delay="300">
                     <div class="card-icon">
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
@@ -211,15 +240,15 @@
             </div>
 
             <!-- Who I Work With Grid -->
-            <div class="demographics">
+            <div class="demographics" data-aos="fade-up">
                 <h3>I Work With:</h3>
                 <div class="demo-grid">
-                    <div class="demo-item">Children</div>
-                    <div class="demo-item">Adolescents</div>
-                    <div class="demo-item">Young Adults</div>
-                    <div class="demo-item">Adults</div>
-                    <div class="demo-item">Families</div>
-                    <div class="demo-item">Women</div>
+                    <div class="demo-item magnetic-element">Children</div>
+                    <div class="demo-item magnetic-element">Adolescents</div>
+                    <div class="demo-item magnetic-element">Young Adults</div>
+                    <div class="demo-item magnetic-element">Adults</div>
+                    <div class="demo-item magnetic-element">Families</div>
+                    <div class="demo-item magnetic-element">Women</div>
                 </div>
             </div>
         </div>
@@ -229,146 +258,204 @@
     <section id="my-approach" class="approach-section">
         <div class="container">
             <div class="section-header centered">
-                <div class="section-label">My Approach</div>
-                <h2>How We'll Work Together</h2>
-                <p class="section-intro">Therapy is a space where healing begins—not through judgment, but through collaboration, strength-building, and genuine connection.</p>
+                <div class="section-label" data-aos="fade-down">My Approach</div>
+                <h2 data-aos="fade-up">How We'll Work Together</h2>
+                <p class="section-intro" data-aos="fade-up" data-aos-delay="100">Therapy is a space where healing begins—not through judgment, but through collaboration, strength-building, and genuine connection.</p>
             </div>
 
             <div class="approach-grid">
-                <div class="approach-card">
+                <div class="approach-card tilt-card hover-glow" data-aos="zoom-in" data-aos-delay="100">
                     <div class="approach-number">01</div>
                     <h3>Team Approach</h3>
                     <p>We're partners in this journey. Rather than judgment or discipline, I see us as a team tackling challenges together. Your input shapes everything we do.</p>
+                    <div class="card-progress-bar"></div>
                 </div>
 
-                <div class="approach-card">
+                <div class="approach-card tilt-card hover-glow" data-aos="zoom-in" data-aos-delay="200">
                     <div class="approach-number">02</div>
                     <h3>Strengths-Based</h3>
                     <p>I'm always looking for what you're doing <em>right</em> and building upon those successes. We combine our strengths to create real, lasting change.</p>
+                    <div class="card-progress-bar"></div>
                 </div>
 
-                <div class="approach-card">
+                <div class="approach-card tilt-card hover-glow" data-aos="zoom-in" data-aos-delay="300">
                     <div class="approach-number">03</div>
                     <h3>Tailored to You</h3>
                     <p>Whether through traditional talk therapy, play-based interventions, or behavioral techniques, I adjust my methods to best serve you and your family's unique needs.</p>
+                    <div class="card-progress-bar"></div>
                 </div>
 
-                <div class="approach-card">
+                <div class="approach-card tilt-card hover-glow" data-aos="zoom-in" data-aos-delay="400">
                     <div class="approach-number">04</div>
                     <h3>Full Acceptance</h3>
                     <p>This is a space to safely explore the many parts of who you are—without judgment, with full acceptance of your experiences and identity.</p>
+                    <div class="card-progress-bar"></div>
                 </div>
             </div>
 
-            <!-- Evidence-Based Methods -->
-            <div class="methods-section">
+            <!-- Evidence-Based Methods - Interactive Tabs -->
+            <div class="methods-section" data-aos="fade-up">
                 <h3>Evidence-Based Approaches I Use:</h3>
-                <div class="methods-grid">
-                    <div class="method-item">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M12 6v6l4 2"/>
-                        </svg>
+                <div class="methods-tabs">
+                    <button class="method-tab active" data-method="cbt">CBT</button>
+                    <button class="method-tab" data-method="dbt">DBT</button>
+                    <button class="method-tab" data-method="relational">Relational</button>
+                    <button class="method-tab" data-method="play">Play Therapy</button>
+                    <button class="method-tab" data-method="cpp">Child-Parent</button>
+                    <button class="method-tab" data-method="psychodynamic">Psychodynamic</button>
+                </div>
+                <div class="methods-content">
+                    <div class="method-panel active" id="cbt">
+                        <div class="method-icon-large">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                        </div>
                         <h4>Cognitive Behavioral Therapy (CBT)</h4>
+                        <p>A practical, goal-oriented approach that helps identify and change negative thought patterns and behaviors to improve emotional regulation and develop personal coping strategies.</p>
                     </div>
-                    <div class="method-item">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
-                        </svg>
+                    <div class="method-panel" id="dbt">
+                        <div class="method-icon-large">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
                         <h4>Dialectical Behavioral Therapy (DBT)</h4>
+                        <p>Combines cognitive-behavioral techniques with mindfulness practices to help manage intense emotions, improve relationships, and develop distress tolerance skills.</p>
                     </div>
-                    <div class="method-item">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                        </svg>
+                    <div class="method-panel" id="relational">
+                        <div class="method-icon-large">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                            </svg>
+                        </div>
                         <h4>Relational Psychotherapy</h4>
+                        <p>Focuses on the therapeutic relationship itself as a vehicle for healing, exploring how past relationships influence present patterns and building new ways of connecting.</p>
                     </div>
-                    <div class="method-item">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="3"/>
-                            <path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/>
-                        </svg>
+                    <div class="method-panel" id="play">
+                        <div class="method-icon-large">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3"/>
+                                <path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/>
+                            </svg>
+                        </div>
                         <h4>Play Therapy</h4>
+                        <p>Uses play as the natural language of children to help them express feelings, explore relationships, and work through challenging experiences in a safe, supportive environment.</p>
                     </div>
-                    <div class="method-item">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                        </svg>
+                    <div class="method-panel" id="cpp">
+                        <div class="method-icon-large">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            </svg>
+                        </div>
                         <h4>Child-Parent Psychotherapy</h4>
+                        <p>A relationship-based intervention that works with young children and caregivers together to strengthen attachment, improve communication, and heal from trauma or disruption.</p>
                     </div>
-                    <div class="method-item">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                        </svg>
+                    <div class="method-panel" id="psychodynamic">
+                        <div class="method-icon-large">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            </svg>
+                        </div>
                         <h4>Psychodynamic Psychotherapy</h4>
+                        <p>Explores unconscious patterns and past experiences to understand how they shape current thoughts, feelings, and behaviors, fostering deeper self-awareness and lasting change.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- What to Expect -->
-            <div class="expect-section">
+            <!-- What to Expect - Animated Accordion -->
+            <div class="expect-section" data-aos="fade-up">
                 <h3>After Our Work Together</h3>
                 <p class="expect-intro">Clients who work with me often experience a profound shift:</p>
-                <div class="expect-grid">
-                    <div class="expect-item">
-                        <span class="check">✓</span>
-                        <p><strong>Parents and children</strong> learn to communicate more effectively, reducing misunderstanding and building connection</p>
+                <div class="accordion-container">
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span class="check-animated">✓</span>
+                            <span>Parents and Children</span>
+                            <svg class="accordion-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <p>Learn to communicate more effectively, reducing misunderstanding and building connection. Through our collaborative work, families discover new ways to understand each other and create stronger emotional bonds.</p>
+                        </div>
                     </div>
-                    <div class="expect-item">
-                        <span class="check">✓</span>
-                        <p><strong>Teens and adults</strong> gain confidence in exploring relationship dynamics and processing emotions</p>
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span class="check-animated">✓</span>
+                            <span>Teens and Adults</span>
+                            <svg class="accordion-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <p>Gain confidence in exploring relationship dynamics and processing emotions. You'll develop tools to navigate complex feelings and build healthier patterns of relating to yourself and others.</p>
+                        </div>
                     </div>
-                    <div class="expect-item">
-                        <span class="check">✓</span>
-                        <p><strong>Most importantly</strong>, you'll develop a deeper comfort with who you are, prepared to face life's challenges with persistence and hope</p>
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span class="check-animated">✓</span>
+                            <span>Most Importantly</span>
+                            <svg class="accordion-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <p>You'll develop a deeper comfort with who you are, prepared to face life's challenges with persistence and hope. The journey isn't about becoming someone new—it's about embracing all the parts of who you already are.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Journey Section -->
+    <!-- Journey Section - Animated Timeline -->
     <section id="journey" class="journey-section">
         <div class="container">
             <div class="section-header centered">
-                <div class="section-label">My Journey</div>
-                <h2>From Houston to New York to California—and Back Home</h2>
+                <div class="section-label" data-aos="fade-down">My Journey</div>
+                <h2 data-aos="fade-up">From Houston to New York to California—and Back Home</h2>
             </div>
 
             <div class="journey-timeline">
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="100">
+                    <div class="timeline-marker pulse-dot"></div>
+                    <div class="timeline-content hover-tilt">
+                        <div class="timeline-step">01</div>
                         <h4>The Beginning</h4>
                         <p>University of Houston</p>
                         <span>Where my passion for psychology took off as a humanities student. Go Coogs!</span>
                     </div>
                 </div>
 
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
+                <div class="timeline-item" data-aos="fade-left" data-aos-delay="200">
+                    <div class="timeline-marker pulse-dot"></div>
+                    <div class="timeline-content hover-tilt">
+                        <div class="timeline-step">02</div>
                         <h4>Graduate Studies</h4>
                         <p>Ferkauf Graduate School of Psychology, New York</p>
                         <span>Doctorate in School-Child Clinical Psychology</span>
                     </div>
                 </div>
 
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="300">
+                    <div class="timeline-marker pulse-dot"></div>
+                    <div class="timeline-content hover-tilt">
+                        <div class="timeline-step">03</div>
                         <h4>Internship</h4>
                         <p>Through the Looking Glass, Berkeley, CA</p>
                         <span>Specialized training in child and family work</span>
                     </div>
                 </div>
 
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
+                <div class="timeline-item" data-aos="fade-left" data-aos-delay="400">
+                    <div class="timeline-marker pulse-dot active-marker"></div>
+                    <div class="timeline-content hover-tilt">
+                        <div class="timeline-step">04</div>
                         <h4>Coming Home</h4>
                         <p>Houston, Texas</p>
                         <span>Post-doctoral fellowship, giving back to the community that raised me</span>
@@ -376,19 +463,21 @@
                 </div>
             </div>
 
-            <div class="journey-quote">
-                <p>"Taking the first step towards therapy is an act of bravery. If you're ready to start this journey of self-discovery and growth, I'm here to walk alongside you."</p>
+            <div class="journey-quote" data-aos="zoom-in" data-aos-delay="500">
+                <div class="quote-icon">"</div>
+                <p>Taking the first step towards therapy is an act of bravery. If you're ready to start this journey of self-discovery and growth, I'm here to walk alongside you.</p>
             </div>
         </div>
     </section>
 
-    <!-- Services & Practical Info -->
+    <!-- Services & Practical Info - Interactive Cards -->
     <section class="practical-info">
         <div class="container">
             <div class="practical-grid">
-                <div class="practical-card">
+                <div class="practical-card hover-lift tilt-card" data-aos="flip-left" data-aos-delay="100">
+                    <div class="card-corner-accent"></div>
                     <h3>Services I Offer</h3>
-                    <ul>
+                    <ul class="checkmark-list">
                         <li>Individual Therapy</li>
                         <li>Family Therapy</li>
                         <li>Parent Coaching Sessions</li>
@@ -396,9 +485,10 @@
                     </ul>
                 </div>
 
-                <div class="practical-card">
+                <div class="practical-card hover-lift tilt-card" data-aos="flip-left" data-aos-delay="200">
+                    <div class="card-corner-accent"></div>
                     <h3>Insurance Accepted</h3>
-                    <ul>
+                    <ul class="checkmark-list">
                         <li>Aetna</li>
                         <li>Cigna</li>
                         <li>BCBS</li>
@@ -408,12 +498,23 @@
                     </ul>
                 </div>
 
-                <div class="practical-card">
+                <div class="practical-card hover-lift tilt-card" data-aos="flip-left" data-aos-delay="300">
+                    <div class="card-corner-accent"></div>
                     <h3>Session Details</h3>
-                    <p><strong>Rate:</strong> $210/hour</p>
-                    <p><strong>Availability:</strong><br>
-                    Mon-Thu: 10 AM – 5 PM<br>
-                    Fri: 10 AM – 2 PM</p>
+                    <div class="session-info">
+                        <p><strong>Rate:</strong> $210/hour</p>
+                        <div class="availability-schedule">
+                            <p><strong>Availability:</strong></p>
+                            <div class="schedule-item">
+                                <span class="day">Mon-Thu</span>
+                                <span class="time">10 AM – 5 PM</span>
+                            </div>
+                            <div class="schedule-item">
+                                <span class="day">Fri</span>
+                                <span class="time">10 AM – 2 PM</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -467,34 +568,34 @@
                         </div>
                     </div>
 
-                    <div class="connect-form-container">
+                    <div class="connect-form-container" data-aos="fade-left">
                         <h3>Request a Consultation</h3>
                         <form class="connect-form" id="contactForm">
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="name">Name *</label>
-                                    <input type="text" id="name" name="name" required>
+                                    <input type="text" id="name" name="name" required class="animated-input">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="email">Email *</label>
-                                    <input type="email" id="email" name="email" required>
+                                    <input type="email" id="email" name="email" required class="animated-input">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="phone">Phone</label>
-                                <input type="tel" id="phone" name="phone">
+                                <input type="tel" id="phone" name="phone" class="animated-input">
                             </div>
 
                             <div class="form-group">
                                 <label for="message">What brings you to therapy? *</label>
-                                <textarea id="message" name="message" rows="4" required></textarea>
+                                <textarea id="message" name="message" rows="4" required class="animated-input"></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="type">I'm seeking support for:</label>
-                                <select id="type" name="type">
+                                <select id="type" name="type" class="animated-input">
                                     <option value="">Select an option</option>
                                     <option value="child">My child</option>
                                     <option value="family">My family</option>
@@ -503,7 +604,7 @@
                                 </select>
                             </div>
 
-                            <button type="submit" class="btn btn-primary btn-full">
+                            <button type="submit" class="btn btn-primary btn-full magnetic-btn ripple-btn">
                                 <span>Send Message</span>
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -553,6 +654,20 @@
         </div>
     </footer>
 
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+    <div class="custom-cursor-follower"></div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-wave">~</div>
+            <div class="loading-text">Wavelength</div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="script.js"></script>
 </body>
 </html>
