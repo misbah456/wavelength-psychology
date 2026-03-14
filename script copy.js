@@ -155,36 +155,3 @@ if (window.ResizeObserver && nav) {
     const navObserver = new ResizeObserver(() => syncNavHeight());
     navObserver.observe(nav);
 }
-
-const approachToggle = document.getElementById("approachToggle");
-const approachExpanded = document.getElementById("approachExpanded");
-
-if (approachToggle && approachExpanded) {
-    approachToggle.addEventListener("click", () => {
-        const isOpen = approachExpanded.classList.toggle("open");
-        approachToggle.classList.toggle("active", isOpen);
-        approachToggle.querySelector("span").textContent = isOpen
-            ? "Show less"
-            : "Read more about my approach";
-    });
-}
-
-(function animateHeroPoem() {
-    const poemLines = document.querySelectorAll(".poem-line");
-    const heroDivider = document.querySelector(".hero-divider");
-    const heroActions = document.querySelector(".hero-actions");
-
-    poemLines.forEach((line, i) => {
-        setTimeout(() => {
-            line.classList.add("poem-visible");
-        }, 300 + i * 260);
-    });
-
-    const revealDelay = 300 + poemLines.length * 260 + 200;
-    if (heroDivider) {
-        setTimeout(() => heroDivider.classList.add("poem-visible"), revealDelay);
-    }
-    if (heroActions) {
-        setTimeout(() => heroActions.classList.add("poem-visible"), revealDelay + 200);
-    }
-})();

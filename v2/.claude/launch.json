@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "wavelength",
+      "runtimeExecutable": "/usr/local/bin/node",
+      "runtimeArgs": ["-e", "require('http').createServer((req,res)=>{const fs=require('fs'),path=require('path'),url=require('url');let p=path.join(process.cwd(),decodeURIComponent(url.parse(req.url).pathname));if(fs.existsSync(p)&&fs.statSync(p).isDirectory())p=path.join(p,'index.html');const ext=path.extname(p);const types={'.html':'text/html','.css':'text/css','.js':'application/javascript','.jpg':'image/jpeg','.png':'image/png','.svg':'image/svg+xml'};fs.readFile(p,(err,data)=>{if(err){res.writeHead(404);res.end('Not found');}else{res.writeHead(200,{'Content-Type':types[ext]||'text/plain'});res.end(data);}});}).listen(8080)"],
+      "port": 8080
+    }
+  ]
+}

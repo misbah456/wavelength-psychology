@@ -156,18 +156,29 @@ if (window.ResizeObserver && nav) {
     navObserver.observe(nav);
 }
 
-const approachToggle = document.getElementById("approachToggle");
-const approachExpanded = document.getElementById("approachExpanded");
+(function initScrollReveal() {
+    const targets = document.querySelectorAll(
+        ".about-grid, .approach-section .section-header, .principles-grid, .approach-full-text, .modalities-panel, .faq-section .section-header, .faq-single-col, .connect-shell"
+    );
+    if (!targets.length || !("IntersectionObserver" in window)) return;
 
-if (approachToggle && approachExpanded) {
-    approachToggle.addEventListener("click", () => {
-        const isOpen = approachExpanded.classList.toggle("open");
-        approachToggle.classList.toggle("active", isOpen);
-        approachToggle.querySelector("span").textContent = isOpen
-            ? "Show less"
-            : "Read more about my approach";
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("revealed");
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    targets.forEach((el) => {
+        el.classList.add("reveal");
+        observer.observe(el);
     });
-}
+})();
 
 (function animateHeroPoem() {
     const poemLines = document.querySelectorAll(".poem-line");
