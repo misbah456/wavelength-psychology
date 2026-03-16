@@ -140,6 +140,10 @@ section[id] {
     scroll-margin-top: calc(var(--nav-height) + 1.25rem);
 }
 
+#meet-zainub {
+    scroll-margin-top: calc(var(--nav-height) + 0.4rem);
+}
+
 .page-haze {
     position: fixed;
     border-radius: 999px;
@@ -1735,11 +1739,17 @@ textarea.animated-input {
 
     .about-card {
         padding: 1.55rem 1.45rem;
+        max-width: 22rem;
+        margin-inline: auto;
     }
 
     .about-copy {
         gap: 1rem;
         margin-top: 1.25rem;
+    }
+
+    .about-copy p {
+        font-size: 0.95rem;
     }
 
     .about-copy p,
@@ -1758,7 +1768,9 @@ textarea.animated-input {
     .approach-full-text {
         margin-top: 2rem;
         padding: 1.2rem 0;
-        max-width: 100%;
+        max-width: 22rem;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .approach-full-text::before,
@@ -1773,7 +1785,12 @@ textarea.animated-input {
     }
 
     .faq-section .section-label {
-        margin-left: 0.65rem;
+        margin-left: 0;
+        transform: translateX(-0.55rem);
+    }
+
+    .faq-section .section-label::before {
+        width: 2rem;
     }
 
     .about-title,
