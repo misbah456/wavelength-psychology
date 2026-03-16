@@ -1691,6 +1691,10 @@ textarea.animated-input {
 }
 
 @media (max-width: 620px) {
+    :root {
+        --mobile-content-width: 22rem;
+    }
+
     .nav-container {
         width: min(1240px, calc(100% - 1.5rem));
         padding: 0.78rem 0;
@@ -1737,10 +1741,14 @@ textarea.animated-input {
         gap: 1.2rem;
     }
 
+    .bio-image-editorial,
+    .about-card {
+        width: min(100%, var(--mobile-content-width));
+        margin-inline: auto;
+    }
+
     .about-card {
         padding: 1.55rem 1.45rem;
-        max-width: 22rem;
-        margin-inline: auto;
     }
 
     .about-copy {
@@ -1765,12 +1773,17 @@ textarea.animated-input {
         margin-bottom: 2.1rem;
     }
 
+    .approach-section .section-header,
+    .principles-grid,
+    .approach-full-text {
+        width: min(100%, var(--mobile-content-width));
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     .approach-full-text {
         margin-top: 2rem;
         padding: 1.2rem 0;
-        max-width: 22rem;
-        margin-left: auto;
-        margin-right: auto;
     }
 
     .approach-full-text::before,
@@ -1778,7 +1791,17 @@ textarea.animated-input {
         margin: 0.95rem auto;
     }
 
+    .modalities-panel,
+    .faq-single-col,
+    .connect-shell,
+    .footer-inner {
+        width: min(100%, var(--mobile-content-width));
+        margin-inline: auto;
+    }
+
     .faq-section .section-header {
+        width: min(100%, var(--mobile-content-width));
+        margin-inline: auto;
         justify-items: center;
         text-align: center;
         padding-inline: 0.6rem;
