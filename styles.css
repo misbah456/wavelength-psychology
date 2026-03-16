@@ -1692,7 +1692,7 @@ textarea.animated-input {
 
 @media (max-width: 620px) {
     :root {
-        --mobile-content-width: 22rem;
+        --mobile-content-width: 22.5rem;
     }
 
     .nav-container {
@@ -1793,8 +1793,7 @@ textarea.animated-input {
 
     .modalities-panel,
     .faq-single-col,
-    .connect-shell,
-    .footer-inner {
+    .connect-shell {
         width: min(100%, var(--mobile-content-width));
         margin-inline: auto;
     }
