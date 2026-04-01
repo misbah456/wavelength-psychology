@@ -1473,6 +1473,55 @@ textarea.animated-input {
     font-size: 0.96rem;
 }
 
+/* SMS consent & privacy policy */
+.sms-consent-note {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: var(--text-tertiary);
+}
+
+.sms-consent-note a {
+    color: var(--teal-700);
+    text-decoration: underline;
+    text-decoration-color: rgba(99, 170, 176, 0.45);
+    text-underline-offset: 0.15em;
+}
+
+.sms-privacy-policy {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(141, 167, 173, 0.15);
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: var(--text-tertiary);
+}
+
+.sms-policy-heading {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.sms-policy-subheading {
+    margin-top: 1rem;
+    margin-bottom: 0.25rem;
+    color: var(--text-secondary);
+}
+
+.sms-privacy-policy p {
+    margin-bottom: 0.5rem;
+}
+
+.sms-privacy-policy a {
+    color: var(--teal-700);
+    text-decoration: underline;
+    text-decoration-color: rgba(99, 170, 176, 0.45);
+    text-underline-offset: 0.15em;
+}
+
 .form-message {
     margin-top: 1rem;
     padding: 0.95rem 1rem;
