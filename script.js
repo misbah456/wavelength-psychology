@@ -8,7 +8,6 @@ const contactForm = document.getElementById("contactForm");
 const inquiryType = document.getElementById("type");
 const messageLabel = document.getElementById("messageLabel");
 const messageField = document.getElementById("message");
-const formTypePanel = document.getElementById("formTypePanel");
 const submitButtonText = document.getElementById("submitButtonText");
 const contactRevealButton = document.getElementById("contactRevealButton");
 const contactRevealResult = document.getElementById("contactRevealResult");
@@ -52,15 +51,6 @@ function updateInquiryTypeUI() {
     const selectedType = formTypeContent[inquiryType.value] ? inquiryType.value : "consultation";
     const config = formTypeContent[selectedType];
     const complianceNote = contactForm?.querySelector(".form-compliance-note");
-
-    if (formTypePanel) {
-        const recordsLink =
-            '<a href="https://www.texasattorneygeneral.gov/sites/default/files/files/divisions/consumer-protection/hb300-Authorization-Disclose-Health-Info.pdf" target="_blank" rel="noopener">Texas standard authorization form</a>';
-        formTypePanel.innerHTML = `
-            <p class="form-type-title">${config.title}</p>
-            <p class="form-type-copy">${config.body.replace("Texas standard authorization form", recordsLink)}</p>
-        `;
-    }
 
     if (messageLabel) {
         messageLabel.textContent = config.label;
