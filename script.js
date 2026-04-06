@@ -196,7 +196,6 @@ if (contactForm) {
 
         const submitButton = contactForm.querySelector("button[type='submit']");
         const honeypot = contactForm.querySelector("input[name='company']");
-        const formEndpoint = contactForm.dataset.endpoint?.trim();
         if (!submitButton) return;
 
         if (honeypot && honeypot.value.trim()) {
@@ -210,18 +209,10 @@ if (contactForm) {
         submitButton.innerHTML = "<span>Sending...</span>";
 
         try {
-            if (!formEndpoint) {
-                const missingEndpointMessage = inquiryType?.value === "records"
-                    ? "This form is not connected yet. To make it live, add your form endpoint URL to the form's data-endpoint attribute in v3b/index.html. Until then, use the Texas authorization form linked above and the reveal button if you need direct contact information."
-                    : "This form is not connected yet. To make it live, add your form endpoint URL to the form's data-endpoint attribute in v3b/index.html. Until then, the online consultation page or the reveal button are the best options.";
-                showFormMessage("info", missingEndpointMessage);
-                return;
-            }
-
             const formData = new FormData(contactForm);
             formData.delete("company");
 
-            const response = await fetch(formEndpoint, {
+            const response = await fetch(contactForm.action, {
                 method: "POST",
                 body: formData,
                 headers: {
