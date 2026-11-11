@@ -38,3 +38,6 @@ build/
 # Backup Files
 *.bak
 *.backup
+
+# Talk materials: build sources and the private speaker script (only /rahmah.html is published)
+talks/
