@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Friend Match: a memory game for kids | Wavelength Psychology</title>
+<meta name="description" content="A free memory matching game for kids. Flip the cards and find each pair of friends. Play alone or take turns with a grown-up.">
+<link rel="canonical" href="https://wavelengthpsychology.com/games/friend-match">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Wavelength Psychology">
+<meta property="og:title" content="Friend Match: a memory game for kids">
+<meta property="og:description" content="Flip the cards and find each pair of friends. Play alone or take turns.">
+<meta property="og:url" content="https://wavelengthpsychology.com/games/friend-match">
+<meta property="og:image" content="https://wavelengthpsychology.com/final_logo.png">
+<meta name="theme-color" content="#fbf8f1">
+<link rel="icon" type="image/jpeg" href="/logo-no-text.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/games/play.css">
+<style>
+.screen{gap:16px;padding-block:18px 22px}
+.opts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.opts .pill-btn[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.score{display:flex;gap:10px;justify-content:center;font-weight:700;color:var(--ink)}
+.score span{padding:8px 16px;border-radius:999px;background:var(--card);border:2px solid transparent;box-shadow:0 1px 0 var(--line)}
+.score span.turn{border-color:var(--teal);background:var(--teal-soft)}
+.board{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:100%;max-width:27rem}
+.board.small{grid-template-columns:repeat(4,1fr)}
+.cardb{appearance:none;-webkit-appearance:none;position:relative;aspect-ratio:.82;border:0;border-radius:16px;padding:0;cursor:pointer;background:var(--teal);box-shadow:0 4px 0 #144b4e,0 8px 16px var(--shadow);display:grid;place-items:center;overflow:hidden}
+.cardb::before{content:"?";font-weight:800;font-size:1.6rem;color:var(--teal-soft)}
+.cardb .f{display:none;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:100%;height:100%;background:var(--card);font-size:.75rem;font-weight:700;color:var(--ink)}
+.cardb .f svg{width:76%;height:auto}
+.cardb.up{background:var(--card);box-shadow:0 1px 0 var(--line),0 8px 16px var(--shadow)}
+.cardb.up::before{display:none}
+.cardb.up .f{display:flex}
+.cardb.got{outline:3px solid var(--sun-pop);outline-offset:-3px}
+.cardb.got .f{background:var(--sun-soft)}
+@media (min-width:900px){.board{max-width:32rem;gap:12px}.cardb .f{font-size:.875rem}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="back" href="/games/">‹ Games</a>
+  <span class="name">Friend Match</span>
+  <button class="pill-btn" id="snd" type="button" aria-pressed="true">Sound on</button>
+</div></header>
+<main><div class="wrap" style="flex:1;display:flex;flex-direction:column">
+<section class="screen">
+  <h1 id="title">Find each pair of friends</h1>
+  <div class="opts" role="group" aria-label="Game options">
+    <button class="pill-btn" data-p="1" type="button" aria-pressed="true">1 player</button>
+    <button class="pill-btn" data-p="2" type="button" aria-pressed="false">2 players</button>
+    <button class="pill-btn" data-n="6" type="button" aria-pressed="true">Easy</button>
+    <button class="pill-btn" data-n="8" type="button" aria-pressed="false">Harder</button>
+  </div>
+  <p class="score" id="score" aria-live="polite"></p>
+  <div class="board" id="board"></div>
+  <div class="row"><button class="go soft" id="again" type="button">New game</button></div>
+</section>
+</div></main>
+<p class="foot wrap">A free game from <a href="/">Wavelength Psychology</a>. Nothing you do here is saved.</p>
+<script>
+(function(){
+var d=document,$=function(id){return d.getElementById(id);};
+/* Eight friends. Drawn in code, so there are no image files to load. */
+var KIDS=[
+ {n:'Aamna', s:'#b9794f', h:'#2a1b14', k:'pony',  t:'#2f8f8f'},
+ {n:'Bilaal',s:'#a8683f', h:'#1f1410', k:'short', t:'#e0a43a'},
+ {n:'Mateo', s:'#d9a273', h:'#3b2314', k:'curly', t:'#d9603f'},
+ {n:'Zuri',  s:'#6b4226', h:'#17100c', k:'puffs', t:'#7a63c9'},
+ {n:'Linh',  s:'#f0cfa8', h:'#141414', k:'bob',   t:'#e56f8c'},
+ {n:'Noor',  s:'#c98f62', h:'#3f7f86', k:'hijab', t:'#3f7f86'},
+ {n:'Sam',   s:'#f6d7c0', h:'#b5532a', k:'short', t:'#4f7fd0', g:1},
+ {n:'Kofi',  s:'#4f2f1c', h:'#0f0b09', k:'fade',  t:'#3fa56b'}
+];
+function face(k){
+  var hair='';
+  if(k.k==='pony')hair='<circle cx="84" cy="44" r="13" fill="'+k.h+'"/><path d="M22 52a28 28 0 0 1 56 0v-6a28 28 0 0 0-56 0Z" fill="'+k.h+'"/><path d="M22 54q6-22 28-24 22 2 28 24-10-14-28-14T22 54Z" fill="'+k.h+'"/>';
+  if(k.k==='short')hair='<path d="M21 54q-2-34 29-34t29 34q-8-16-29-16T21 54Z" fill="'+k.h+'"/>';
+  if(k.k==='fade')hair='<path d="M23 50q0-28 27-28t27 28q-8-12-27-12T23 50Z" fill="'+k.h+'"/>';
+  if(k.k==='curly')hair='<g fill="'+k.h+'"><circle cx="28" cy="36" r="10"/><circle cx="40" cy="26" r="11"/><circle cx="54" cy="24" r="11"/><circle cx="67" cy="29" r="10"/><circle cx="75" cy="40" r="9"/><circle cx="23" cy="47" r="8"/></g>';
+  if(k.k==='puffs')hair='<g fill="'+k.h+'"><circle cx="20" cy="30" r="14"/><circle cx="80" cy="30" r="14"/><path d="M22 52q0-30 28-30t28 30q-8-14-28-14T22 52Z"/></g>';
+  if(k.k==='bob')hair='<path d="M18 74V50q0-30 32-30t32 30v24q-6-2-6-10V52q-10-12-26-12T24 52v12q0 8-6 10Z" fill="'+k.h+'"/>';
+  var hij=k.k==='hijab'?'<path d="M14 92q-2-70 36-72 38 2 36 72-10 8-36 8t-36-8Z" fill="'+k.h+'"/>':'';
+  var hijTop=k.k==='hijab'?'<path d="M24 54q2-26 26-26t26 26q-8-12-26-12T24 54Z" fill="'+k.h+'"/>':'';
+  var glasses=k.g?'<g fill="none" stroke="#16253f" stroke-width="2.2"><circle cx="39" cy="57" r="8"/><circle cx="61" cy="57" r="8"/><path d="M47 57h6"/></g>':'';
+  return '<svg viewBox="0 0 100 104" aria-hidden="true">'+hij+(k.k==='bob'||k.k==='pony'||k.k==='puffs'?hair:'')
+   +'<path d="M26 104q0-22 24-22t24 22Z" fill="'+k.t+'"/><circle cx="50" cy="56" r="28" fill="'+k.s+'"/>'
+   +(k.k==='bob'||k.k==='pony'||k.k==='puffs'?'<path d="M22 54q2-30 28-30t28 30q-8-14-28-14T22 54Z" fill="'+k.h+'"/>':hair)+hijTop
+   +'<circle cx="39" cy="57" r="3.4" fill="#16253f"/><circle cx="61" cy="57" r="3.4" fill="#16253f"/>'
+   +'<circle cx="32" cy="66" r="5" fill="#f29a8e" opacity=".55"/><circle cx="68" cy="66" r="5" fill="#f29a8e" opacity=".55"/>'
+   +'<path d="M41 68q9 9 18 0" fill="none" stroke="#16253f" stroke-width="2.6" stroke-linecap="round"/>'+glasses+'</svg>';
+}
+var sound=true,ac=null,players=1,pairs=6,turn=0,score=[0,0],moves=0,open=[],lock=false,left=0;
+function tone(f,t,dur,type,vol){if(!sound)return;var A=window.AudioContext||window.webkitAudioContext;if(!A)return;if(!ac)ac=new A();if(ac.state==='suspended')ac.resume();
+  var o=ac.createOscillator(),g=ac.createGain(),s=ac.currentTime+(t||0);o.type=type||'triangle';o.frequency.value=f;g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(vol||.1,s+.02);g.gain.exponentialRampToValueAtTime(.001,s+dur);o.connect(g);g.connect(ac.destination);o.start(s);o.stop(s+dur+.05);}
+$('snd').addEventListener('click',function(){sound=!sound;this.setAttribute('aria-pressed',sound?'true':'false');this.textContent=sound?'Sound on':'Sound off';});
+function paint(){
+  $('score').innerHTML=players===1?'<span>Turns: '+moves+'</span>':'<span class="'+(turn===0?'turn':'')+'">Player 1: '+score[0]+'</span><span class="'+(turn===1?'turn':'')+'">Player 2: '+score[1]+'</span>';
+}
+function deal(){
+  var kids=KIDS.slice().sort(function(){return Math.random()-.5;}).slice(0,pairs),deck=kids.concat(kids).map(function(k,i){return {k:k,i:i};});
+  for(var i=deck.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),x=deck[i];deck[i]=deck[j];deck[j]=x;}
+  turn=0;score=[0,0];moves=0;open=[];lock=false;left=pairs;$('title').textContent='Find each pair of friends';
+  $('board').innerHTML=deck.map(function(c){return '<button class="cardb" type="button" data-n="'+c.k.n+'" aria-label="Card, face down"><span class="f">'+face(c.k)+'<span>'+c.k.n+'</span></span></button>';}).join('');
+  paint();
+}
+$('board').addEventListener('click',function(e){
+  var c=e.target.closest('.cardb');if(!c||lock||c.classList.contains('up'))return;
+  c.classList.add('up');c.setAttribute('aria-label',c.getAttribute('data-n'));tone(440,0,.08);open.push(c);
+  if(open.length<2)return;
+  moves++;var a=open[0],b=open[1];open=[];
+  if(a.getAttribute('data-n')===b.getAttribute('data-n')){a.classList.add('got');b.classList.add('got');score[turn]++;left--;tone(523,0,.2);tone(784,.12,.3);
+    if(left===0){$('title').textContent=players===1?'You found them all in '+moves+' turns!':score[0]===score[1]?'A tie! Great game.':'Player '+(score[0]>score[1]?1:2)+' wins! Great game.';tone(659,.3,.2);tone(880,.45,.5);}
+    paint();
+  }else{lock=true;setTimeout(function(){a.classList.remove('up');b.classList.remove('up');a.setAttribute('aria-label','Card, face down');b.setAttribute('aria-label','Card, face down');
+    if(players===2)turn=1-turn;lock=false;paint();},1100);paint();}
+});
+[].forEach.call(d.querySelectorAll('.opts .pill-btn'),function(b){b.addEventListener('click',function(){
+  var key=b.hasAttribute('data-p')?'data-p':'data-n';[].forEach.call(d.querySelectorAll('.opts ['+key+']'),function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+  if(key==='data-p')players=+b.getAttribute('data-p');else pairs=+b.getAttribute('data-n');deal();});});
+$('again').addEventListener('click',deal);
+deal();
+})();
+</script>
+</body>
+</html>

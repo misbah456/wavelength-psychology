@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Brain Buttons: a calming game for kids | Wavelength Psychology</title>
+<meta name="description" content="A free calming game for kids. Help the worried little brain buddy feel safe by pressing four Brain Buttons: slow breathing, happy thoughts, a dance party, and the 5 senses.">
+<link rel="canonical" href="https://wavelengthpsychology.com/games/brain-buttons">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Wavelength Psychology">
+<meta property="og:title" content="Brain Buttons: a calming game for kids">
+<meta property="og:description" content="Help the worried little brain buddy feel safe with breathing, happy thoughts, a dance party, and the 5 senses.">
+<meta property="og:url" content="https://wavelengthpsychology.com/games/brain-buttons">
+<meta property="og:image" content="https://wavelengthpsychology.com/final_logo.png">
+<meta name="theme-color" content="#fbf8f1">
+<link rel="icon" type="image/jpeg" href="/logo-no-text.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/games/play.css">
+<style>
+.meter{display:flex;gap:6px;align-items:center;font-size:.8125rem;font-weight:600;color:var(--muted)}
+.meter i{width:34px;height:10px;border-radius:6px;background:var(--line-strong);transition:background .4s}
+.meter i.on{background:var(--teal-pop)}
+.pad{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:26rem}
+.bb{appearance:none;-webkit-appearance:none;position:relative;aspect-ratio:1.5;border:0;border-radius:26px;padding:14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-weight:800;font-size:1.0625rem;line-height:1.15;letter-spacing:-.01em;color:var(--card);box-shadow:0 6px 0 var(--bb-deep),0 14px 26px var(--shadow);transition:transform .08s,box-shadow .08s}
+.bb:active{transform:translateY(5px);box-shadow:0 1px 0 var(--bb-deep),0 6px 14px var(--shadow)}
+.bb .em{font-size:1.7rem;line-height:1}
+#home{gap:14px;padding-top:16px}
+#home .buddy{width:104px}
+@media (min-width:900px){#home .buddy{width:150px}#home{gap:20px}}
+.bb[data-b="breathe"]{background:var(--teal);--bb-deep:#144b4e}
+.bb[data-b="happy"]{background:#a36c00;--bb-deep:#6e4900}
+.bb[data-b="dance"]{background:var(--coral);--bb-deep:#7f2d1c}
+.bb[data-b="senses"]{background:var(--blue);--bb-deep:#27367a}
+.bb.done::after{content:"✓";position:absolute;right:10px;top:10px;width:28px;height:28px;border-radius:50%;background:var(--card);color:var(--ink);display:grid;place-items:center;font-size:.9375rem}
+.stage{position:relative;width:230px;height:230px;display:grid;place-items:center}
+.ring{position:absolute;inset:0;border-radius:50%;background:var(--teal-soft);transform:scale(.55);transition:transform 5s ease-in-out}
+.stage .buddy{position:relative;width:118px}
+.count{font-weight:800;font-size:2.4rem;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;min-height:2.4rem}
+.cue{font-weight:800;font-size:1.5rem;letter-spacing:-.01em;color:var(--ink);min-height:2.2rem}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:26rem}
+.pickc{appearance:none;-webkit-appearance:none;border:2px solid transparent;border-radius:20px;background:var(--card);box-shadow:0 1px 0 var(--line),0 8px 20px var(--shadow);padding:14px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.875rem;font-weight:600;line-height:1.2;color:var(--ink)}
+.pickc .em{font-size:2rem;line-height:1}
+.dots{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.dot{appearance:none;-webkit-appearance:none;width:58px;height:58px;border-radius:50%;border:3px dashed var(--blue-pop);background:var(--card);font-size:1.5rem;cursor:pointer;display:grid;place-items:center}
+.dot[aria-pressed="true"]{border-style:solid;border-color:var(--blue);background:var(--blue);color:var(--card)}
+.freeze .cue{color:var(--blue)}
+.party{display:flex;gap:10px;font-size:1.8rem}
+.confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:4}
+.confetti i{position:absolute;top:-20px;width:12px;height:12px;border-radius:3px;animation:fall 2.6s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="back" href="/games/">‹ Games</a>
+  <span class="name">Brain Buttons</span>
+  <button class="pill-btn" id="snd" type="button" aria-pressed="true">Sound on</button>
+</div></header>
+
+<main><div class="wrap" style="flex:1;display:flex;flex-direction:column">
+
+
+
+<!-- home -->
+<section class="screen" id="home">
+  <svg class="buddy" id="buddy" data-mood="worry" viewBox="0 0 120 138" aria-hidden="true"></svg>
+  <p class="card say" id="homeSay" aria-live="polite">Uh-oh! My alarm is buzzing, and I feel jumpy. Can you help me feel calm? Press a Brain Button!</p>
+  <p class="meter" aria-label="Calm meter"><span>Calm</span><i></i><i></i><i></i><i></i></p>
+  <div class="pad">
+    <button class="bb" data-b="breathe" type="button"><span class="em" aria-hidden="true">🍃</span>Breathing</button>
+    <button class="bb" data-b="happy" type="button"><span class="em" aria-hidden="true">🌈</span>Happy Thoughts</button>
+    <button class="bb" data-b="dance" type="button"><span class="em" aria-hidden="true">🎵</span>Dance Party</button>
+    <button class="bb" data-b="senses" type="button"><span class="em" aria-hidden="true">🖐️</span>5 Senses</button>
+  </div>
+  <details class="card grown">
+    <summary>For grown-ups</summary>
+    <ul>
+      <li>The buddy is the brain’s alarm (the amygdala). Its job is to keep us safe, and sometimes it buzzes when we are safe. The four buttons are ways to tell it “we’re okay.”</li>
+      <li>Practice when your child is calm, so the buttons are ready when feelings get big.</li>
+      <li>In a session: play together on a tablet, or share your screen on a video call and let the child choose. A child can also open this page on their own device.</li>
+      <li>Nothing is saved or sent anywhere. There are no names, accounts, or tracking.</li>
+      <li>This game is for practice and fun. It is not therapy or medical advice.</li>
+    </ul>
+  </details>
+</section>
+
+<!-- breathing -->
+<section class="screen" id="breathe" hidden>
+  <h1>Breathing Button</h1>
+  <div class="stage"><div class="ring" id="ring"></div><svg class="buddy" data-mood="ok" viewBox="0 0 120 138" aria-hidden="true"></svg></div>
+  <p class="cue" id="brCue" aria-live="polite">Ready?</p>
+  <p class="count" id="brCount"></p>
+  <button class="go" id="brGo" type="button">Start</button>
+</section>
+
+<!-- happy thoughts -->
+<section class="screen" id="happy" hidden>
+  <h1>Happy Thoughts Button</h1>
+  <p class="sub" id="hpSub">Pick a happy thing to think about.</p>
+  <div class="cards" id="hpCards">
+    <button class="pickc" type="button"><span class="em" aria-hidden="true">🏡</span>A cozy place</button>
+    <button class="pickc" type="button"><span class="em" aria-hidden="true">🌳</span>The park</button>
+    <button class="pickc" type="button"><span class="em" aria-hidden="true">🎶</span>A favorite song</button>
+    <button class="pickc" type="button"><span class="em" aria-hidden="true">🤗</span>Someone I love</button>
+    <button class="pickc" type="button"><span class="em" aria-hidden="true">🍦</span>A yummy treat</button>
+    <button class="pickc" type="button"><span class="em" aria-hidden="true">🐾</span>An animal</button>
+  </div>
+  <div class="stage" id="hpStage" hidden><div class="ring" style="background:var(--sun-soft);transform:scale(1)"></div><svg class="buddy" data-mood="calm" viewBox="0 0 120 138" aria-hidden="true"></svg></div>
+  <p class="count" id="hpCount"></p>
+</section>
+
+<!-- dance party -->
+<section class="screen" id="dance" hidden>
+  <h1>Dance Party Button</h1>
+  <p class="sub">Dance when the music plays. When it stops… freeze like a statue!</p>
+  <svg class="buddy" id="dnBuddy" data-mood="happy" viewBox="0 0 120 138" aria-hidden="true"></svg>
+  <p class="cue" id="dnCue" aria-live="assertive">Ready?</p>
+  <button class="go" id="dnGo" type="button">Start the music</button>
+</section>
+
+<!-- five senses -->
+<section class="screen" id="senses" hidden>
+  <h1>5 Senses Button</h1>
+  <p class="cue" id="snCue" aria-live="polite"></p>
+  <p class="sub" id="snSub">Look around. Tap a circle for each one you find.</p>
+  <div class="dots" id="snDots"></div>
+</section>
+
+<!-- done -->
+<section class="screen" id="done" hidden>
+  <svg class="buddy" id="doneBuddy" data-mood="calm" viewBox="0 0 120 138" aria-hidden="true"></svg>
+  <h1 id="doneT">Nice work!</h1>
+  <p class="card say" id="doneSay" aria-live="polite"></p>
+  <p class="meter" aria-label="Calm meter"><span>Calm</span><i></i><i></i><i></i><i></i></p>
+  <div class="row"><button class="go" id="doneGo" type="button">Back to the buttons</button></div>
+</section>
+
+</div></main>
+<p class="foot wrap">A free game from <a href="/">Wavelength Psychology</a>. Nothing you do here is saved.</p>
+
+<script src="/games/buddy.js"></script>
+<script>
+(function(){
+var d=document,$=function(id){return d.getElementById(id);};
+var screens=['home','breathe','happy','dance','senses','done'],done={},timers=[],sound=true,ac=null,beat=null;
+function later(fn,ms){var t=setTimeout(fn,ms);timers.push(t);return t;}
+function clearAll(){timers.forEach(clearTimeout);timers=[];stopBeat();}
+function show(id){clearAll();screens.forEach(function(s){$(s).hidden=s!==id;});window.scrollTo(0,0);}
+/* sound: tiny synth, no files */
+function ctx(){if(!ac){var A=window.AudioContext||window.webkitAudioContext;if(A)ac=new A();}if(ac&&ac.state==='suspended')ac.resume();return ac;}
+function tone(f,t,dur,type,vol){if(!sound)return;var c=ctx();if(!c)return;var o=c.createOscillator(),g=c.createGain();o.type=type||'sine';o.frequency.value=f;
+  var s=c.currentTime+(t||0);g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(vol||.12,s+.02);g.gain.exponentialRampToValueAtTime(.001,s+dur);o.connect(g);g.connect(c.destination);o.start(s);o.stop(s+dur+.05);}
+function chime(){tone(523,0,.35);tone(659,.12,.35);tone(784,.24,.5);}
+function tap(){tone(440,0,.08,'triangle',.08);}
+function startBeat(){stopBeat();var i=0,notes=[262,330,392,330,294,349,440,349];beat=setInterval(function(){tone(notes[i%8],0,.16,'triangle',.11);if(i%2===0)tone(98,0,.12,'sine',.16);i++;},230);}
+function stopBeat(){if(beat){clearInterval(beat);beat=null;}}
+$('snd').addEventListener('click',function(){sound=!sound;this.setAttribute('aria-pressed',sound?'true':'false');this.textContent=sound?'Sound on':'Sound off';if(!sound)stopBeat();else tap();});
+
+function nDone(){return Object.keys(done).length;}
+function paint(){var n=nDone();[].forEach.call(d.querySelectorAll('.meter'),function(m){[].forEach.call(m.querySelectorAll('i'),function(x,i){x.className=i<n?'on':'';});});
+  [].forEach.call(d.querySelectorAll('.bb'),function(b){b.classList.toggle('done',!!done[b.getAttribute('data-b')]);});
+  $('buddy').setAttribute('data-mood',n===0?'worry':n<3?'ok':n<4?'calm':'happy');
+  $('homeSay').textContent=n===0?'Uh-oh! My alarm is buzzing, and I feel jumpy. Can you help me feel calm? Press a Brain Button!':
+    n<4?'That helped! My alarm is getting quieter. Want to press another button?':'Thank you! I checked, and we’re okay. You can press any button again whenever you like.';}
+var SAY={breathe:'Slow breathing tells me we are safe. My alarm is quieter now.',happy:'Happy thoughts feel warm and cozy. I like your happy place!',
+  dance:'Moving my body shook the wiggly feelings out. That was fun!',senses:'Now I know where we are, and I can tell we’re safe.'};
+function finish(b){clearAll();done[b]=1;paint();chime();var all=nDone()===4;
+  $('doneT').textContent=all?'You did it!':'Nice work!';
+  $('doneSay').textContent=all?'Thanks for helping me! I checked, and we’re okay. Every time we practice, I learn that we can handle big feelings.':SAY[b];
+  $('doneBuddy').setAttribute('data-mood',all?'happy':'calm');$('doneBuddy').classList.toggle('bounce',all);
+  show('done');if(all)confetti();}
+function confetti(){var box=d.createElement('div');box.className='confetti';var cols=['var(--coral-pop)','var(--sun-pop)','var(--teal-pop)','var(--blue-pop)'];
+  for(var i=0;i<40;i++){var c=d.createElement('i');c.style.left=(Math.random()*100)+'%';c.style.background=cols[i%4];c.style.animationDelay=(Math.random()*.8)+'s';box.appendChild(c);}
+  d.body.appendChild(box);setTimeout(function(){box.remove();},3800);}
+$('doneGo').addEventListener('click',function(){show('home');});
+[].forEach.call(d.querySelectorAll('.bb'),function(b){b.addEventListener('click',function(){tap();start[b.getAttribute('data-b')]();});});
+
+var start={};
+/* breathing: in for 5, out for 7, three times */
+start.breathe=function(){show('breathe');$('ring').style.transitionDuration='0s';$('ring').style.transform='scale(.55)';$('brCue').textContent='Ready?';$('brCount').textContent='';$('brGo').hidden=false;};
+$('brGo').addEventListener('click',function(){this.hidden=true;var round=0;
+  function phase(inhale){var n=inhale?5:7,i=1,ring=$('ring');ring.style.transitionDuration=n+'s';ring.style.transform=inhale?'scale(1)':'scale(.55)';
+    $('brCue').textContent=inhale?'Breathe in…':'Breathe out, nice and slow…';tone(inhale?330:262,0,.6,'sine',.08);$('brCount').textContent=i;
+    (function tick(){later(function(){i++;if(i<=n){$('brCount').textContent=i;tick();}else if(inhale)phase(false);else{round++;if(round<3)phase(true);else finish('breathe');}},1000);})();}
+  later(function(){phase(true);},60);});
+/* happy thoughts: pick one, picture it for 15 seconds */
+start.happy=function(){show('happy');$('hpCards').hidden=false;$('hpStage').hidden=true;$('hpCount').textContent='';$('hpSub').textContent='Pick a happy thing to think about.';};
+[].forEach.call(d.querySelectorAll('.pickc'),function(c){c.addEventListener('click',function(){tap();$('hpCards').hidden=true;$('hpStage').hidden=false;
+  $('hpSub').textContent='Close your eyes and picture it. What do you see? What do you hear? Open your eyes when you hear the chime.';var n=15;$('hpCount').textContent=n;
+  (function tick(){later(function(){n--;$('hpCount').textContent=n;if(n>0)tick();else finish('happy');},1000);})();});});
+/* dance party: three rounds of dance, then freeze */
+start.dance=function(){show('dance');$('dnCue').textContent='Ready?';$('dnGo').hidden=false;$('dnBuddy').classList.remove('bounce');$('dance').classList.remove('freeze');};
+$('dnGo').addEventListener('click',function(){this.hidden=true;var round=0;
+  function go(){$('dance').classList.remove('freeze');$('dnCue').textContent='Dance!';$('dnBuddy').classList.add('bounce');$('dnBuddy').setAttribute('data-mood','happy');startBeat();
+    later(function(){stopBeat();tone(196,0,.3,'square',.07);$('dance').classList.add('freeze');$('dnCue').textContent='Freeze!';$('dnBuddy').classList.remove('bounce');$('dnBuddy').setAttribute('data-mood','ok');
+      later(function(){round++;if(round<3)go();else finish('dance');},3000);},4500+Math.random()*3500);}
+  go();});
+/* five senses: 5 see, 4 touch, 3 hear, 2 smell, 1 deep breath */
+var STEPS=[[5,'things you can see','👀'],[4,'things you can touch','✋'],[3,'things you can hear','👂'],[2,'things you can smell','👃'],[1,'slow, deep breath','🍃']];
+start.senses=function(){show('senses');var k=0;
+  function step(){var s=STEPS[k];$('snCue').textContent=(k<4?'Find ':'Take ')+s[0]+' '+s[1];$('snSub').textContent=k<4?'Look around. Tap a circle for each one you find.':'In through your nose, out through your mouth. Then tap the circle.';
+    var box=$('snDots');box.innerHTML='';for(var i=0;i<s[0];i++){var b=d.createElement('button');b.className='dot';b.type='button';b.setAttribute('aria-pressed','false');b.setAttribute('aria-label',s[1]+' '+(i+1));b.textContent=s[2];box.appendChild(b);}}
+  $('snDots').onclick=function(e){var b=e.target.closest('.dot');if(!b||b.getAttribute('aria-pressed')==='true')return;b.setAttribute('aria-pressed','true');tone(392+60*k,0,.12,'triangle',.09);
+    if(!$('snDots').querySelector('.dot[aria-pressed="false"]')){k++;if(k<STEPS.length)later(step,450);else later(function(){finish('senses');},450);}};
+  step();};
+paint();
+})();
+</script>
+</body>
+</html>

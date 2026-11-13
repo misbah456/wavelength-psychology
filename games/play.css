@@ -1,0 +1,70 @@
+/* Wavelength Psychology games. One calm look for every game: cream paper, white cards, bold friendly type.
+   No accounts, no names, nothing saved about the player. */
+:root{
+  color-scheme:light;
+  --paper:#fbf8f1; --card:#ffffff; --ink:#16253f; --text:#2b3547; --muted:#5b6574;
+  --line:rgba(22,37,63,.10); --line-strong:rgba(22,37,63,.20); --shadow:rgba(22,37,63,.08);
+  --coral:#b4432b; --coral-soft:#fce9e1; --coral-pop:#ef8263;
+  --sun:#8a5a00; --sun-soft:#fbefcf; --sun-pop:#f3bd4a;
+  --teal:#1f6b6f; --teal-soft:#def0ec; --teal-pop:#5fb9ad;
+  --blue:#3a4fa3; --blue-soft:#e6eafa; --blue-pop:#8496e6;
+  --peach:#f7c9a6; --peach-deep:#eeb088; --blush:#f29a8e;
+  --display:"Cormorant Garamond",Georgia,serif;
+  --body:"Sora",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;min-height:100vh;min-height:100dvh;background:var(--paper);color:var(--text);font-family:var(--body);font-size:1.0625rem;line-height:1.5;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+p,h1,h2,h3{margin:0}
+a{color:inherit}
+button{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+:focus-visible{outline:3px solid var(--teal);outline-offset:3px;border-radius:10px}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{width:100%;max-width:38rem;margin-inline:auto;padding-inline:20px}
+
+.top{position:sticky;top:0;z-index:5;background:rgba(251,248,241,.96);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:10px;height:56px}
+.top a.back{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px 0 10px;border-radius:999px;border:1px solid var(--line-strong);background:var(--card);text-decoration:none;font-weight:600;font-size:.9375rem;color:var(--ink)}
+.top .name{flex:1;min-width:0;font-weight:800;letter-spacing:-.01em;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pill-btn{appearance:none;-webkit-appearance:none;height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--line-strong);background:var(--card);font-weight:600;font-size:.9375rem;color:var(--ink);cursor:pointer;white-space:nowrap}
+.pill-btn[aria-pressed="false"]{color:var(--muted)}
+
+main{flex:1;display:flex;flex-direction:column}
+.screen{flex:1;display:flex;flex-direction:column;align-items:center;gap:20px;padding-block:24px 28px;text-align:center}
+h1,.h1{font-weight:800;font-size:clamp(1.6rem,6.4vw,2.1rem);line-height:1.12;letter-spacing:-.022em;color:var(--ink);text-wrap:balance}
+.sub{max-width:30rem;color:var(--text)}
+.card{background:var(--card);border-radius:22px;box-shadow:0 1px 0 var(--line),0 10px 28px var(--shadow)}
+.go{appearance:none;-webkit-appearance:none;min-height:56px;padding:0 28px;border:0;border-radius:18px;background:var(--ink);color:var(--paper);font-weight:700;font-size:1.125rem;cursor:pointer}
+.go.soft{background:var(--card);color:var(--ink);border:1.5px solid var(--line-strong)}
+.go:active{transform:translateY(1px)}
+.row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+
+/* the buddy */
+.buddy{width:150px;height:auto;overflow:visible}
+.buddy .body{fill:var(--peach)}
+.buddy .shade{fill:var(--peach-deep);opacity:.55}
+.buddy .cheek{fill:var(--blush);opacity:.7}
+.buddy .ink{fill:var(--ink)}
+.buddy .line{fill:none;stroke:var(--ink);stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}
+.buddy .limb{fill:none;stroke:var(--peach-deep);stroke-width:7;stroke-linecap:round}
+.buddy [data-m]{display:none}
+.buddy[data-mood="worry"] [data-m~="worry"],.buddy[data-mood="ok"] [data-m~="ok"],.buddy[data-mood="calm"] [data-m~="calm"],.buddy[data-mood="happy"] [data-m~="happy"]{display:inline}
+.buddy[data-mood="worry"]{animation:jitter .45s ease-in-out infinite}
+.buddy.bounce{animation:bounce .5s ease-in-out infinite}
+@keyframes jitter{0%,100%{transform:translateX(0) rotate(0)}25%{transform:translateX(-3px) rotate(-2deg)}75%{transform:translateX(3px) rotate(2deg)}}
+@keyframes bounce{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-16px) rotate(4deg)}}
+.say{position:relative;max-width:26rem;padding:14px 18px;font-weight:600;color:var(--ink);line-height:1.4}
+.say::before{content:"";position:absolute;left:50%;top:-8px;width:16px;height:16px;background:var(--card);transform:translateX(-50%) rotate(45deg);border-radius:3px}
+
+.fine{font-size:.8125rem;line-height:1.5;color:var(--muted);max-width:32rem}
+details.grown{width:100%;text-align:left}
+details.grown summary{cursor:pointer;list-style:none;padding:14px 18px;font-weight:700;color:var(--ink);display:flex;justify-content:space-between;gap:10px}
+details.grown summary::-webkit-details-marker{display:none}
+details.grown summary::after{content:"+";font-weight:800;color:var(--teal)}
+details.grown[open] summary::after{content:"–"}
+details.grown ul{margin:0;padding:0 18px 16px 36px;display:flex;flex-direction:column;gap:8px;font-size:.9375rem}
+.foot{padding:18px 0 22px;text-align:center;font-size:.8125rem;color:var(--muted)}
+.foot a{font-weight:600;color:var(--ink)}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+@media (min-width:900px){.wrap{max-width:44rem}.buddy{width:180px}}
