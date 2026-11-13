@@ -89,18 +89,15 @@
     <nav class="nav" id="mainNav">
         <div class="nav-container">
             <a href="#home" class="brand" aria-label="Wavelength Psychology home">
-                <img class="nav-mark" src="logo-no-text.jpg" alt="">
-                <span class="brand-lockup">
-                    <span class="brand-name">Wavelength</span>
-                    <span class="brand-subtitle">Psychology</span>
-                </span>
+                <img class="nav-mark" src="img/mark.webp" width="228" height="192" alt="">
+                <img class="brand-wordmark" src="img/wordmark.webp" width="558" height="162" alt="">
             </a>
 
             <div class="nav-links" id="navLinks">
                 <a href="#meet-zainub">About Me</a>
                 <a href="#my-approach">My Approach</a>
                 <a href="#faq">FAQ</a>
-                <a href="#connect">Insurance</a>
+                <a href="#insurance" data-section="connect">Insurance</a>
                 <a href="/resources">Resources</a>
                 <a href="https://secure.helloalma.com/providers/zainub-mallick/" target="_blank" rel="noopener" class="nav-cta">Book a Consultation</a>
             </div>
@@ -118,28 +115,23 @@
     <main>
         <section id="home" class="hero-section">
             <div class="hero-florals" aria-hidden="true">
-                <img class="hero-floral-panorama" src="hero-flowers-v2.png" alt="">
+                <img class="hero-floral-panorama" src="img/hero-flowers.webp" srcset="img/hero-flowers-960.webp 960w, img/hero-flowers.webp 1536w" sizes="(max-width: 620px) 36rem, 100vw" width="1536" height="1024" alt="" fetchpriority="high" decoding="async">
             </div>
             <div class="container hero-shell">
                 <div class="hero-copy">
-                    <h1 class="sr-only">Wavelength Psychology — Child, Teen &amp; Family Therapy in Spring, TX and Greater Houston</h1>
-                    <div class="scroll-poem-inner">
-                        <p class="poem-line poem-first">A space for every mind</p>
-                        <p class="poem-line">to <em>heal,</em></p>
-                        <p class="poem-line"><em>grow,</em></p>
-                        <p class="poem-line"><em>rest,</em></p>
-                        <p class="poem-line">and <em>play.</em></p>
-                    </div>
-
-                    <div class="hero-divider" aria-hidden="true"></div>
+                    <p class="hero-poem">
+                        <span class="poem-line poem-first">A space for every mind</span>
+                        <span class="poem-line"><span class="poem-part" style="--i:1">to <em>heal,</em></span> <span class="poem-part" style="--i:2"><em>grow,</em></span> <span class="poem-part" style="--i:3"><em>rest,</em></span> <span class="poem-part" style="--i:4">and <em>play.</em></span></span>
+                    </p>
+                    <h1 class="hero-lede">Child, teen, and family therapy in Spring, TX. Telehealth across Texas.</h1>
+                    <p class="hero-byline"><span>Dr. Zainub Mallick, PsyD</span> <span class="hero-dot" aria-hidden="true">&middot;</span> <span>Licensed Psychologist</span></p>
 
                     <div class="hero-actions">
-                        <a href="#meet-zainub" class="btn btn-primary hero-cta-float">
-                            <span>Meet Doctor Z</span>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M5 12h14M12 5l7 7-7 7"/>
-                            </svg>
+                        <a href="https://secure.helloalma.com/providers/zainub-mallick/" target="_blank" rel="noopener" class="btn btn-primary">
+                            <span>Book a 15-minute consultation</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                         </a>
+                        <a href="#meet-zainub" class="hero-more">Meet Dr. Z <span aria-hidden="true">&darr;</span></a>
                     </div>
                 </div>
             </div>
@@ -150,11 +142,11 @@
                 <div class="about-grid">
                     <div class="bio-image-editorial">
                         <div class="image-frame-organic">
-                            <img src="IMG_0894.jpg" alt="Dr. Zainub Mallick in Houston">
+                            <img src="img/portrait-640.jpg" srcset="img/portrait-640.webp 640w, img/portrait-1100.webp 1100w" sizes="(max-width: 1100px) 24rem, 34rem" width="640" height="960" alt="Dr. Zainub Mallick in Houston" loading="lazy" decoding="async">
                         </div>
 
                         <div class="about-values-below">
-                            <h4>What families can expect</h4>
+                            <p class="values-title">What families can expect</p>
                             <ul class="editorial-list">
                                 <li>A collaborative relationship with caregivers</li>
                                 <li>Care that honors culture, development, and context</li>
@@ -335,7 +327,7 @@
                         <details class="faq-item">
                             <summary>What is the best way to get in contact?</summary>
                             <div class="faq-answer">
-                                <p>The easiest ways to get started are through the consultation form below or by using <a href="https://secure.helloalma.com/providers/zainub-mallick/" target="_blank" rel="noopener">her online consultation page</a>. If you prefer direct contact, you can reveal her email address and phone number in the Let's Connect section. Please allow up to two business days for a response.</p>
+                                <p>The easiest way to get started is to book through <a href="https://secure.helloalma.com/providers/zainub-mallick/" target="_blank" rel="noopener">her online consultation page</a>, or to send a message with the form below. If you prefer, you can also show her email address and phone number in the Let's Connect section. Please allow up to two business days for a response.</p>
                             </div>
                         </details>
                     </div>
@@ -349,97 +341,95 @@
             <div class="container">
                 <div class="connect-shell">
                     <div class="connect-panel connect-panel-dark">
-                        <div class="section-label light">Let's Connect</div>
-                        <h2 class="connect-heading">Reach out when you're ready.</h2>
-                        <p class="connect-intro">You don't need the whole story organized. We can start with a simple conversation.</p>
-
-                        <div class="connect-details">
-                            <p class="connect-reveal-label">Prefer direct contact?</p>
-                            <button type="button" class="connect-reveal-button" id="contactRevealButton">Reveal email and phone</button>
-                            <p class="connect-reveal-note">Using the online consultation page or the consultation form is still the cleanest way to begin.</p>
-                            <div class="connect-reveal-result" id="contactRevealResult" aria-live="polite"></div>
+                        <div class="connect-lead">
+                            <div class="section-label light">Let's Connect</div>
+                            <h2 class="connect-heading">Reach out when you're ready.</h2>
+                            <p class="connect-intro">You don't need the whole story organized. We can start with a simple conversation.</p>
+                            <a href="https://secure.helloalma.com/providers/zainub-mallick/" target="_blank" rel="noopener" class="btn btn-book">
+                                <span>Book a 15-minute consultation</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            </a>
+                            <p class="connect-book-note">Opens Dr. Mallick's scheduling page on Alma, where insurance is also verified.</p>
+                            <div class="connect-direct">
+                                <button type="button" class="connect-reveal-button" id="contactRevealButton">Show email and phone</button>
+                                <div class="connect-reveal-result" id="contactRevealResult" aria-live="polite"></div>
+                            </div>
                         </div>
 
-                        <div class="connect-rates-block">
-                            <h4 class="connect-rates-title">Insurance &amp; Rates</h4>
-                            <div class="connect-rates-items">
+                        <div class="connect-block" id="insurance">
+                            <h3 class="connect-block-title">Insurance &amp; Rates</h3>
+                            <dl class="connect-rates">
                                 <div class="connect-rate">
-                                    <span class="connect-rate-label">In-Network</span>
-                                    <span class="connect-rate-value">Aetna, Cigna, Optum / UHC &amp; BCBS TX</span>
+                                    <dt>In-network</dt>
+                                    <dd>Aetna, Cigna, Optum / UnitedHealthcare, and Blue Cross Blue Shield of Texas</dd>
                                 </div>
                                 <div class="connect-rate">
-                                    <span class="connect-rate-label">Self-Pay</span>
-                                    <span class="connect-rate-value">$175 / session</span>
+                                    <dt>Self-pay</dt>
+                                    <dd>$175 per session</dd>
                                 </div>
                                 <div class="connect-rate">
-                                    <span class="connect-rate-label">Out-of-Network</span>
-                                    <span class="connect-rate-value">Superbills provided</span>
+                                    <dt>Out-of-network</dt>
+                                    <dd>Superbills provided</dd>
                                 </div>
-                            </div>
-                            <a href="https://secure.helloalma.com/providers/zainub-mallick/" target="_blank" rel="noopener" class="btn btn-connect-alma">
-                                <span>Book a Consultation</span>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            </dl>
+                        </div>
+
+                        <div class="connect-block">
+                            <h3 class="connect-block-title">Office</h3>
+                            <p class="connect-address">6601 Cypresswood Dr, Suite 112<br>Spring, TX 77379</p>
+                            <a class="connect-directions" href="https://www.google.com/maps/dir/?api=1&amp;destination=6601+Cypresswood+Dr+Suite+112%2C+Spring%2C+TX+77379" target="_blank" rel="noopener">
+                                <span>Get directions</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                             </a>
                         </div>
 
-                        <div class="connect-location">
-                            <h4 class="connect-location-title">Location</h4>
-                            <p class="connect-location-address">6601 Cypresswood Dr, Suite 112, Spring, TX 77379</p>
-                            <div class="connect-map">
-                                <iframe src="https://maps.google.com/maps?q=6601+Cypresswood+Dr+Suite+112,+Spring,+TX+77379&t=&z=14&ie=UTF8&iwloc=&output=embed" width="100%" height="200" style="border:0; border-radius: 0.5rem;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Wavelength Psychology office location"></iframe>
-                            </div>
-                        </div>
-
-                        <div class="connect-crisis">
-                            <p><strong>In Crisis?</strong> Call or text <a href="tel:988">988</a> for 24/7 support.</p>
-                        </div>
+                        <p class="connect-crisis"><strong>In crisis?</strong> Call or text <a href="tel:988">988</a> for 24/7 support.</p>
                     </div>
 
                     <div class="connect-panel connect-panel-form">
-                        <h3 class="connect-form-title">Consultation or Records Request</h3>
-                        <p class="connect-form-subtitle">Choose the option that fits what you need, then share a few details below.</p>
+                        <h3 class="connect-form-title">Send a message</h3>
+                        <p class="connect-form-subtitle">For a consultation, a question, or a records request. Dr. Mallick replies within two business days.</p>
 
                         <form class="connect-form" id="contactForm" action="https://formspree.io/f/xwvwaoke" method="POST">
                             <div class="form-honeypot" aria-hidden="true">
                                 <label for="company">Company</label>
                                 <input type="text" id="company" name="company" tabindex="-1" autocomplete="off">
                             </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="type">Inquiry Type *</label>
-                                    <select id="type" name="type" required class="animated-input">
-                                        <option value="consultation" selected>Request a consultation</option>
-                                        <option value="records">Request records</option>
-                                        <option value="general">General question</option>
-                                    </select>
-                                </div>
+                            <div class="form-group">
+                                <label for="type">What is this about?</label>
+                                <select id="type" name="type" required class="animated-input">
+                                    <option value="consultation" selected>A consultation</option>
+                                    <option value="records">A records request</option>
+                                    <option value="general">A general question</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="name">Name *</label>
-                                <input type="text" id="name" name="name" required class="animated-input" placeholder="Your name">
+                                <input type="text" id="name" name="name" required class="animated-input" placeholder="Your name" autocomplete="name">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email *</label>
-                                <input type="email" id="email" name="email" required class="animated-input" placeholder="name@example.com">
+                                <input type="email" id="email" name="email" required class="animated-input" placeholder="name@example.com" autocomplete="email">
                             </div>
                             <div class="form-group">
-                                <label for="phone">Mobile Phone</label>
-                                <input type="tel" id="phone" name="phone" class="animated-input" placeholder="Optional">
-                                <p class="sms-consent-note">By entering your phone number, you agree to receive informational SMS messages from Wavelength Psychology. Msg frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. <a href="sms-privacy.html">SMS Privacy Policy</a></p>
+                                <label for="phone">Mobile phone (optional)</label>
+                                <input type="tel" id="phone" name="phone" class="animated-input" autocomplete="tel" aria-describedby="smsNote">
+                                <p class="sms-consent-note" id="smsNote">By entering your phone number, you agree to receive informational SMS messages from Wavelength Psychology. Msg frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. <a href="sms-privacy.html">SMS Privacy Policy</a></p>
                             </div>
                             <div class="form-group">
-                                <label for="message" id="messageLabel">What brings you to therapy?</label>
-                                <textarea id="message" name="message" rows="4" class="animated-input" placeholder="Share a little about what support you're seeking."></textarea>
+                                <label for="message" id="messageLabel">How can we help?</label>
+                                <textarea id="message" name="message" rows="4" class="animated-input" placeholder="A sentence or two is plenty." aria-describedby="messageHint"></textarea>
+                                <p class="form-hint" id="messageHint">Please don't include health details here. This form is not for emergencies.</p>
                             </div>
 
                             <button type="submit" class="btn btn-primary btn-full">
-                                <span id="submitButtonText">Send Request</span>
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <span id="submitButtonText">Send message</span>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                     <path d="M5 12h14M12 5l7 7-7 7"/>
                                 </svg>
                             </button>
 
-                            <p class="form-compliance-note">For records requests, please include the client name, date of birth, dates of service if known, and where records should be sent. If records need to go to a third party, a signed authorization may still be required.</p>
+                            <p class="form-compliance-note" hidden></p>
                         </form>
                     </div>
                 </div>
@@ -452,7 +442,7 @@
             <div class="footer-inner">
                 <div class="footer-brand-row">
                     <div class="footer-brand">
-                        <img class="footer-logo" src="final_logo.png" alt="Wavelength Psychology">
+                        <img class="footer-logo" src="img/logo-round.jpg" width="200" height="200" alt="Wavelength Psychology" loading="lazy">
                         <div class="footer-copy">
                             <p class="footer-name">Dr. Zainub Mallick, PsyD</p>
                             <p class="footer-meta">6601 Cypresswood Dr, Suite 112, Spring, TX 77379</p>

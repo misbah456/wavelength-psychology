@@ -8,6 +8,7 @@ const contactForm = document.getElementById("contactForm");
 const inquiryType = document.getElementById("type");
 const messageLabel = document.getElementById("messageLabel");
 const messageField = document.getElementById("message");
+const messageHint = document.getElementById("messageHint");
 const submitButtonText = document.getElementById("submitButtonText");
 const contactRevealButton = document.getElementById("contactRevealButton");
 const contactRevealResult = document.getElementById("contactRevealResult");
@@ -15,33 +16,30 @@ const navItems = [...document.querySelectorAll(".nav-links a[href^='#']")];
 const sections = [...document.querySelectorAll("main section[id]")];
 const faqItems = [...document.querySelectorAll(".faq-item")];
 
+const defaultHint = "Please don't include health details here. This form is not for emergencies.";
+
 const formTypeContent = {
     consultation: {
-        title: "Consultation request",
-        body: "Share a little about what support you're looking for, and Dr. Mallick will follow up about next steps.",
-        label: "What brings you to therapy?",
-        placeholder: "Share a little about what support you're seeking.",
-        button: "Send Request",
-        compliance:
-            "For records requests, please include the client name, date of birth, dates of service if known, and where records should be sent. If records need to go to a third party, a signed authorization may still be required."
+        label: "How can we help?",
+        placeholder: "A sentence or two is plenty.",
+        hint: defaultHint,
+        button: "Send message",
+        compliance: ""
     },
     records: {
-        title: "Records request",
-        body: "Please include the client name, date of birth, dates of service if known, and where the records should be sent. If records need to go to a third party, you can also use the Texas standard authorization form.",
-        label: "What records are you requesting?",
-        placeholder: "Please include the client name, date of birth, dates of service if known, and where the records should be sent.",
-        button: "Send Records Request",
+        label: "How should we reach you?",
+        placeholder: "The best phone number or email, and a good time to reach you.",
+        hint: "Please don't include a date of birth or health details here. Dr. Mallick will follow up to confirm the details.",
+        button: "Send records request",
         compliance:
-            "Records requests may require a signed authorization before records can be released. The Texas Attorney General provides a standard authorization form if records need to be disclosed to a third party."
+            "Records requests may require a signed authorization before records can be released. If records need to go to a third party, you can use the Texas standard authorization form."
     },
     general: {
-        title: "General question",
-        body: "If you are unsure where to start, you can use this space for a practical question and Dr. Mallick will point you in the right direction.",
         label: "How can we help?",
-        placeholder: "Share your question, and we will follow up with the best next step.",
-        button: "Send Request",
-        compliance:
-            "For records requests, please include the client name, date of birth, dates of service if known, and where records should be sent. If records need to go to a third party, a signed authorization may still be required."
+        placeholder: "Share your question, and we'll follow up with the best next step.",
+        hint: defaultHint,
+        button: "Send message",
+        compliance: ""
     }
 };
 
@@ -61,11 +59,16 @@ function updateInquiryTypeUI() {
         messageField.required = selectedType === "records";
     }
 
+    if (messageHint) {
+        messageHint.textContent = config.hint;
+    }
+
     if (submitButtonText) {
         submitButtonText.textContent = config.button;
     }
 
     if (complianceNote) {
+        complianceNote.hidden = !config.compliance;
         const recordsLink =
             '<a href="https://www.texasattorneygeneral.gov/sites/default/files/files/divisions/consumer-protection/hb300-Authorization-Disclose-Health-Info.pdf" target="_blank" rel="noopener">Texas standard authorization form</a>';
         complianceNote.innerHTML = config.compliance.replace("Texas standard authorization form", recordsLink);
@@ -109,7 +112,8 @@ function updateActiveNavLink() {
     });
 
     navItems.forEach((link) => {
-        const isActive = currentSection && link.getAttribute("href") === `#${currentSection.id}`;
+        const target = link.dataset.section ? `#${link.dataset.section}` : link.getAttribute("href");
+        const isActive = currentSection && target === `#${currentSection.id}`;
         link.classList.toggle("active", Boolean(isActive));
     });
 }
@@ -142,7 +146,6 @@ if (contactRevealButton && contactRevealResult) {
 
         contactRevealResult.innerHTML = `
             <a href="mailto:${emailAddress}">${emailAddress}</a>
-            <span aria-hidden="true"> · </span>
             <a href="tel:${phoneNumber}">${phoneNumber}</a>
         `;
         contactRevealButton.hidden = true;
@@ -226,9 +229,9 @@ if (contactForm) {
 
             contactForm.reset();
             updateInquiryTypeUI();
-            showFormMessage("success", "Thank you. Your inquiry has been sent, and Dr. Mallick will respond within two business days.");
+            showFormMessage("success", "Thank you. Your message has been sent, and Dr. Mallick will respond within two business days.");
         } catch (error) {
-            showFormMessage("error", "Something went wrong while sending the form. Please try again, use the online consultation page, or reveal the direct contact information.");
+            showFormMessage("error", "Something went wrong while sending the form. Please try again, book through the online consultation page, or choose \"Show email and phone\" on this page.");
         } finally {
             submitButton.disabled = false;
             submitButton.innerHTML = originalHTML;
@@ -284,34 +287,4 @@ if (window.ResizeObserver && nav) {
         el.classList.add("reveal");
         observer.observe(el);
     });
-})();
-
-(function animateHeroPoem() {
-    const poemLines = document.querySelectorAll(".poem-line");
-    const heroDivider = document.querySelector(".hero-divider");
-    const heroActions = document.querySelector(".hero-actions");
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (!poemLines.length) return;
-
-    if (prefersReducedMotion) {
-        poemLines.forEach((line) => line.classList.add("poem-visible"));
-        heroDivider?.classList.add("poem-visible");
-        heroActions?.classList.add("poem-visible");
-        return;
-    }
-
-    poemLines.forEach((line, i) => {
-        setTimeout(() => {
-            line.classList.add("poem-visible");
-        }, 300 + i * 260);
-    });
-
-    const revealDelay = 300 + poemLines.length * 260 + 200;
-    if (heroDivider) {
-        setTimeout(() => heroDivider.classList.add("poem-visible"), revealDelay);
-    }
-    if (heroActions) {
-        setTimeout(() => heroActions.classList.add("poem-visible"), revealDelay + 200);
-    }
 })();
