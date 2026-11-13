@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Three in a Row: a classic game for two | Wavelength Psychology</title>
+<meta name="description" content="A free classic game for kids. Get three in a row before the other player. Play with a friend or against the buddy.">
+<link rel="canonical" href="https://wavelengthpsychology.com/games/three-in-a-row">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Wavelength Psychology">
+<meta property="og:title" content="Three in a Row: a classic game for two">
+<meta property="og:description" content="A free classic game for kids. Get three in a row before the other player. Play with a friend or against the buddy.">
+<meta property="og:url" content="https://wavelengthpsychology.com/games/three-in-a-row">
+<meta property="og:image" content="https://wavelengthpsychology.com/final_logo.png">
+<meta name="theme-color" content="#fbf8f1">
+<link rel="icon" type="image/jpeg" href="/logo-no-text.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/games/play.css">
+<style>
+.screen{gap:16px;padding-block:18px 22px}
+.opts{display:flex;gap:8px;justify-content:center}
+.opts .pill-btn[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:21rem}
+.cell{appearance:none;-webkit-appearance:none;aspect-ratio:1;border:0;border-radius:22px;background:var(--card);box-shadow:0 1px 0 var(--line),0 8px 20px var(--shadow);cursor:pointer;display:grid;place-items:center;font-weight:800;font-size:3rem;line-height:1}
+.cell[data-v="X"]{color:var(--coral)}.cell[data-v="O"]{color:var(--teal)}
+.cell.win{background:var(--sun-soft)}
+.msg{min-height:1.6em;font-weight:700;font-size:1.125rem;color:var(--ink)}
+.who{display:flex;align-items:center;gap:10px;justify-content:center}
+.who .buddy{width:56px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="back" href="/games/">‹ Games</a>
+  <span class="name">Three in a Row</span>
+  <button class="pill-btn" id="snd" type="button" aria-pressed="true">Sound on</button>
+</div></header>
+<main><div class="wrap" style="flex:1;display:flex;flex-direction:column">
+<section class="screen">
+  <h1>Three in a Row</h1>
+  <div class="opts" role="group" aria-label="Who is playing"><button class="pill-btn" data-m="buddy" type="button" aria-pressed="true">Play the buddy</button><button class="pill-btn" data-m="two" type="button" aria-pressed="false">2 players</button></div>
+  <div class="who"><svg class="buddy" id="buddy" data-mood="ok" viewBox="0 0 120 138" aria-hidden="true"></svg><p class="msg" id="msg" aria-live="polite"></p></div>
+  <div class="grid" id="grid"></div>
+  <div class="row"><button class="go soft" id="again" type="button">New game</button></div>
+</section>
+</div></main>
+<p class="foot wrap">A free game from <a href="/">Wavelength Psychology</a>. Nothing you do here is saved.</p>
+<script src="/games/buddy.js"></script>
+<script>
+(function(){
+var d=document,$=function(id){return d.getElementById(id);},sound=true,ac=null;
+function tone(f,t,dur,type,vol){if(!sound)return;var A=window.AudioContext||window.webkitAudioContext;if(!A)return;if(!ac)ac=new A();if(ac.state==='suspended')ac.resume();
+  var o=ac.createOscillator(),g=ac.createGain(),s=ac.currentTime+(t||0);o.type=type||'triangle';o.frequency.value=f;g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(vol||.1,s+.02);g.gain.exponentialRampToValueAtTime(.001,s+dur);o.connect(g);g.connect(ac.destination);o.start(s);o.stop(s+dur+.05);}
+$('snd').addEventListener('click',function(){sound=!sound;this.setAttribute('aria-pressed',sound?'true':'false');this.textContent=sound?'Sound on':'Sound off';});
+
+var g=$('grid'),b=[],turn='X',mode='buddy',over=false,L=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+function win(){for(var i=0;i<8;i++){var l=L[i];if(b[l[0]]&&b[l[0]]===b[l[1]]&&b[l[1]]===b[l[2]])return l;}return null;}
+function draw(){[].forEach.call(g.children,function(c,i){c.textContent=b[i]==='X'?'✕':b[i]==='O'?'◯':'';c.setAttribute('data-v',b[i]||'');c.setAttribute('aria-label','Square '+(i+1)+(b[i]?', '+b[i]:', empty'));});}
+function say(){$('msg').textContent=mode==='buddy'?(turn==='X'?'Your turn! You are ✕.':'The buddy is thinking…'):'Player '+(turn==='X'?'1 (✕)':'2 (◯)')+', your turn.';}
+function reset(){b=Array(9).fill('');turn='X';over=false;g.innerHTML='';for(var i=0;i<9;i++){var c=d.createElement('button');c.className='cell';c.type='button';c.setAttribute('data-i',i);g.appendChild(c);}$('buddy').setAttribute('data-mood','ok');draw();say();}
+function finish(){var w=win();if(w){over=true;w.forEach(function(i){g.children[i].classList.add('win');});
+    var me=b[w[0]];$('msg').textContent=mode==='buddy'?(me==='X'?'You win! Nice one.':'The buddy got three. Good game!'):'Player '+(me==='X'?1:2)+' wins! Good game.';
+    $('buddy').setAttribute('data-mood',mode==='buddy'&&me==='X'?'calm':'happy');tone(523,0,.2);tone(784,.15,.4);return true;}
+  if(b.every(Boolean)){over=true;$('msg').textContent='A tie! Good game.';$('buddy').setAttribute('data-mood','happy');return true;}return false;}
+function move(i){if(over||b[i])return false;b[i]=turn;tone(turn==='X'?440:330,0,.1);draw();if(finish())return true;turn=turn==='X'?'O':'X';say();return true;}
+function buddyMove(){var free=[];b.forEach(function(v,i){if(!v)free.push(i);});
+  function finds(p){for(var k=0;k<free.length;k++){b[free[k]]=p;var w=win();b[free[k]]='';if(w)return free[k];}return -1;}
+  var pick=finds('O');if(pick<0&&Math.random()<.6)pick=finds('X');if(pick<0)pick=free[Math.floor(Math.random()*free.length)];move(pick);}
+g.addEventListener('click',function(e){var c=e.target.closest('.cell');if(!c)return;if(mode==='buddy'&&turn==='O')return;
+  if(move(+c.getAttribute('data-i'))&&!over&&mode==='buddy')setTimeout(buddyMove,650);});
+[].forEach.call(d.querySelectorAll('.opts .pill-btn'),function(x){x.addEventListener('click',function(){mode=x.getAttribute('data-m');[].forEach.call(d.querySelectorAll('.opts .pill-btn'),function(y){y.setAttribute('aria-pressed',y===x?'true':'false');});reset();});});
+$('again').addEventListener('click',reset);reset();
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stop and Go: a game for practicing brakes | Wavelength Psychology</title>
+<meta name="description" content="A free game for kids. Tap on green, hands off on red. A fun way to practice stopping and waiting.">
+<link rel="canonical" href="https://wavelengthpsychology.com/games/stop-and-go">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Wavelength Psychology">
+<meta property="og:title" content="Stop and Go: a game for practicing brakes">
+<meta property="og:description" content="A free game for kids. Tap on green, hands off on red. A fun way to practice stopping and waiting.">
+<meta property="og:url" content="https://wavelengthpsychology.com/games/stop-and-go">
+<meta property="og:image" content="https://wavelengthpsychology.com/final_logo.png">
+<meta name="theme-color" content="#fbf8f1">
+<link rel="icon" type="image/jpeg" href="/logo-no-text.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/games/play.css">
+<style>
+.screen{gap:16px;padding-block:18px 22px}
+.track{position:relative;width:100%;max-width:26rem;height:66px;border-radius:999px;background:var(--card);box-shadow:0 1px 0 var(--line),0 8px 20px var(--shadow)}
+.track::after{content:"🏁";position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:1.6rem}
+.track .buddy{position:absolute;left:8px;top:4px;width:50px;transition:left .35s ease-out}
+.light{appearance:none;-webkit-appearance:none;width:min(58vw,230px,32vh);aspect-ratio:1;border-radius:50%;border:0;background:var(--line-strong);color:var(--card);font-weight:800;font-size:1.9rem;letter-spacing:-.02em;cursor:pointer;box-shadow:0 10px 0 rgba(22,37,63,.18),0 20px 34px var(--shadow);transition:background .08s}
+.light[data-s="go"]{background:#2f9a62;box-shadow:0 10px 0 #1d6b42,0 20px 34px var(--shadow)}
+.light[data-s="stop"]{background:#c8452f;box-shadow:0 10px 0 #8a2c1c,0 20px 34px var(--shadow)}
+.light:active{transform:translateY(6px)}
+.msg{min-height:1.6em;font-weight:700;color:var(--ink)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="back" href="/games/">‹ Games</a>
+  <span class="name">Stop and Go</span>
+  <button class="pill-btn" id="snd" type="button" aria-pressed="true">Sound on</button>
+</div></header>
+<main><div class="wrap" style="flex:1;display:flex;flex-direction:column">
+<section class="screen">
+  <h1 id="t">Stop and Go</h1>
+  <p class="sub" id="sub">Tap the big button when it turns <strong style="color:#1d6b42">green</strong>. Keep your hands off when it turns <strong style="color:#a8361f">red</strong>. Help the buddy reach the flag!</p>
+  <div class="track"><svg class="buddy" id="buddy" data-mood="ok" viewBox="0 0 120 138" aria-hidden="true"></svg></div>
+  <button class="light" id="light" type="button" data-s="wait" aria-live="assertive">Ready?</button>
+  <p class="msg" id="msg" aria-live="polite"></p>
+  <div class="row"><button class="go" id="start" type="button">Start</button></div>
+</section>
+</div></main>
+<p class="foot wrap">A free game from <a href="/">Wavelength Psychology</a>. Nothing you do here is saved.</p>
+<script src="/games/buddy.js"></script>
+<script>
+(function(){
+var d=document,$=function(id){return d.getElementById(id);},sound=true,ac=null;
+function tone(f,t,dur,type,vol){if(!sound)return;var A=window.AudioContext||window.webkitAudioContext;if(!A)return;if(!ac)ac=new A();if(ac.state==='suspended')ac.resume();
+  var o=ac.createOscillator(),g=ac.createGain(),s=ac.currentTime+(t||0);o.type=type||'triangle';o.frequency.value=f;g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(vol||.1,s+.02);g.gain.exponentialRampToValueAtTime(.001,s+dur);o.connect(g);g.connect(ac.destination);o.start(s);o.stop(s+dur+.05);}
+$('snd').addEventListener('click',function(){sound=!sound;this.setAttribute('aria-pressed',sound?'true':'false');this.textContent=sound?'Sound on':'Sound off';});
+
+var light=$('light'),msg=$('msg'),bud=$('buddy'),N=14,i=0,good=0,stops=0,stopOk=0,state='idle',tm=null,pos=0;
+function place(){var w=bud.parentNode.clientWidth-54-56;bud.style.left=(8+w*pos/N)+'px';}
+function show(s,label){light.setAttribute('data-s',s);light.textContent=label;}
+function next(){
+  if(i>=N){return end();}
+  state='gap';show('wait','…');
+  tm=setTimeout(function(){var go=plan[i];if(!go)stops++;state=go?'go':'stop';show(state,go?'GO!':'STOP');tone(go?660:220,0,.12,go?'triangle':'square',.08);
+    tm=setTimeout(function(){ if(state==='go'){msg.textContent='Too slow! Tap when it is green.';bud.setAttribute('data-mood','ok');}
+      else if(state==='stop'){stopOk++;good++;pos++;place();msg.textContent='Great stopping!';bud.setAttribute('data-mood','calm');tone(523,0,.15);}
+      i++;next();},Math.max(750,1300-i*35));},600+Math.random()*900);
+}
+light.addEventListener('click',function(){
+  if(state==='go'){clearTimeout(tm);good++;pos++;place();msg.textContent='Zoom!';bud.setAttribute('data-mood','happy');tone(784,0,.12);i++;next();}
+  else if(state==='stop'){clearTimeout(tm);msg.textContent='Oops, that was red. Brakes!';bud.setAttribute('data-mood','worry');tone(160,0,.25,'square',.07);i++;next();}
+  else if(state==='gap'){msg.textContent='Wait for the color…';}
+});
+function end(){state='idle';show('wait','Done!');bud.setAttribute('data-mood','happy');
+  $('t').textContent=good>=N-2?'Super brakes!':'Nice driving!';
+  msg.textContent='You got '+good+' of '+N+'. You stopped on red '+stopOk+' of '+stops+' times.';
+  $('start').textContent='Play again';$('start').hidden=false;tone(523,0,.2);tone(659,.15,.2);tone(784,.3,.4);}
+var plan=[];function mix(){plan=[];for(var k=0;k<N;k++)plan.push(k>=5);for(var k=N-1;k>0;k--){var j=Math.floor(Math.random()*(k+1)),x=plan[k];plan[k]=plan[j];plan[j]=x;}if(!plan[0]){var g=plan.indexOf(true);plan[g]=false;plan[0]=true;}}
+$('start').addEventListener('click',function(){this.hidden=true;mix();i=0;good=0;stops=0;stopOk=0;pos=0;place();msg.textContent='';$('t').textContent='Stop and Go';bud.setAttribute('data-mood','ok');next();});
+window.addEventListener('resize',place);
+
+})();
+</script>
+</body>
+</html>
