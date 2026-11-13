@@ -1,70 +1,184 @@
-/* Wavelength Psychology games. One calm look for every game: cream paper, white cards, bold friendly type.
-   No accounts, no names, nothing saved about the player. */
+/* Wavelength Psychology games. One look for every game: cream paper, white cards, bold friendly type,
+   buttons you can feel. No accounts, no names, nothing saved about the player. */
 :root{
   color-scheme:light;
-  --paper:#fbf8f1; --card:#ffffff; --ink:#16253f; --text:#2b3547; --muted:#5b6574;
-  --line:rgba(22,37,63,.10); --line-strong:rgba(22,37,63,.20); --shadow:rgba(22,37,63,.08);
-  --coral:#b4432b; --coral-soft:#fce9e1; --coral-pop:#ef8263;
-  --sun:#8a5a00; --sun-soft:#fbefcf; --sun-pop:#f3bd4a;
-  --teal:#1f6b6f; --teal-soft:#def0ec; --teal-pop:#5fb9ad;
-  --blue:#3a4fa3; --blue-soft:#e6eafa; --blue-pop:#8496e6;
+  --paper:#fbf8f1; --card:#ffffff; --ink:#16253f; --ink-deep:#0a1428; --text:#2b3547; --muted:#5b6574;
+  --line:rgba(22,37,63,.10); --line-strong:rgba(22,37,63,.20); --shadow:rgba(22,37,63,.10);
+  --coral:#b4432b; --coral-deep:#7f2d1c; --coral-soft:#fce9e1; --coral-pop:#ef8263;
+  --sun:#8a5a00; --sun-deep:#6e4900; --sun-soft:#fbefcf; --sun-pop:#f3bd4a;
+  --teal:#1f6b6f; --teal-deep:#144b4e; --teal-soft:#def0ec; --teal-pop:#5fb9ad;
+  --blue:#3a4fa3; --blue-deep:#27367a; --blue-soft:#e6eafa; --blue-pop:#8496e6;
+  --green:#2f9a62; --green-deep:#1d6b42; --red:#c8452f; --red-deep:#8a2c1c;
   --peach:#f7c9a6; --peach-deep:#eeb088; --blush:#f29a8e;
-  --display:"Cormorant Garamond",Georgia,serif;
   --body:"Sora",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --top:56px; --spring:cubic-bezier(.2,1.5,.4,1);
 }
 *,*::before,*::after{box-sizing:border-box}
 [hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{margin:0;min-height:100vh;min-height:100dvh;background:var(--paper);color:var(--text);font-family:var(--body);font-size:1.0625rem;line-height:1.5;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+body{margin:0;min-height:100vh;min-height:100dvh;color:var(--text);font-family:var(--body);font-size:1.0625rem;line-height:1.5;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;
+  background:radial-gradient(52rem 26rem at 108% -6%,rgba(95,185,173,.17),transparent 62%),radial-gradient(46rem 26rem at -12% 104%,rgba(243,189,74,.17),transparent 62%),var(--paper);background-attachment:fixed}
 p,h1,h2,h3{margin:0}
 a{color:inherit}
-button{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-:focus-visible{outline:3px solid var(--teal);outline-offset:3px;border-radius:10px}
+body{touch-action:manipulation}
+h1:focus{outline:none}
+button{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+:focus-visible{outline:3px solid var(--teal);outline-offset:3px;border-radius:12px}
 .sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.wrap{width:100%;max-width:38rem;margin-inline:auto;padding-inline:20px}
+.wrap{width:100%;max-width:35rem;margin-inline:auto;padding-inline:20px}
+.ic{display:block;width:1em;height:1em;flex:none}
 
-.top{position:sticky;top:0;z-index:5;background:rgba(251,248,241,.96);border-bottom:1px solid var(--line)}
-.top .wrap{display:flex;align-items:center;gap:10px;height:56px}
-.top a.back{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px 0 10px;border-radius:999px;border:1px solid var(--line-strong);background:var(--card);text-decoration:none;font-weight:600;font-size:.9375rem;color:var(--ink)}
+/* top bar */
+.top{position:sticky;top:0;z-index:6;background:rgba(251,248,241,.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:12px;height:var(--top)}
+.top a.back{display:inline-flex;align-items:center;gap:2px;height:44px;padding:0 14px 0 8px;border-radius:999px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line-strong);text-decoration:none;font-weight:600;font-size:.9375rem;color:var(--ink)}
+.top a.back .ic{font-size:20px}
 .top .name{flex:1;min-width:0;font-weight:800;letter-spacing:-.01em;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pill-btn{appearance:none;-webkit-appearance:none;height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--line-strong);background:var(--card);font-weight:600;font-size:.9375rem;color:var(--ink);cursor:pointer;white-space:nowrap}
-.pill-btn[aria-pressed="false"]{color:var(--muted)}
+.snd{appearance:none;-webkit-appearance:none;display:grid;place-items:center;width:44px;height:44px;margin-right:-4px;border:0;border-radius:50%;background:var(--card);box-shadow:inset 0 0 0 1px var(--line-strong);color:var(--ink);cursor:pointer;font-size:22px}
+.snd .off,.snd[aria-pressed="false"] .on{display:none}
+.snd[aria-pressed="false"] .off{display:block}
+.snd[aria-pressed="false"]{color:var(--muted)}
 
-main{flex:1;display:flex;flex-direction:column}
-.screen{flex:1;display:flex;flex-direction:column;align-items:center;gap:20px;padding-block:24px 28px;text-align:center}
-h1,.h1{font-weight:800;font-size:clamp(1.6rem,6.4vw,2.1rem);line-height:1.12;letter-spacing:-.022em;color:var(--ink);text-wrap:balance}
-.sub{max-width:30rem;color:var(--text)}
+/* layout: one screen fills the space under the top bar */
+main{display:flex;flex-direction:column;min-height:calc(100vh - var(--top));min-height:calc(100dvh - var(--top))}
+main>.wrap{flex:1;display:flex;flex-direction:column}
+.screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding-block:18px 22px;text-align:center}
+h1,.h1{font-weight:800;font-size:clamp(1.55rem,6.2vw,2rem);line-height:1.12;letter-spacing:-.022em;color:var(--ink);text-wrap:balance}
+.sub{max-width:28rem;color:var(--text);text-wrap:pretty}
+.fine{font-size:.8125rem;line-height:1.5;color:var(--muted);max-width:32rem}
 .card{background:var(--card);border-radius:22px;box-shadow:0 1px 0 var(--line),0 10px 28px var(--shadow)}
-.go{appearance:none;-webkit-appearance:none;min-height:56px;padding:0 28px;border:0;border-radius:18px;background:var(--ink);color:var(--paper);font-weight:700;font-size:1.125rem;cursor:pointer}
-.go.soft{background:var(--card);color:var(--ink);border:1.5px solid var(--line-strong)}
-.go:active{transform:translateY(1px)}
 .row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.spacer{flex:1}
+
+/* buttons you can feel */
+.go{appearance:none;-webkit-appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:0 30px;border:0;border-radius:18px;background:var(--ink);color:#fff;font-weight:700;font-size:1.125rem;white-space:nowrap;cursor:pointer;box-shadow:0 5px 0 var(--ink-deep),0 14px 24px rgba(22,37,63,.18);transition:transform .09s,box-shadow .09s}
+.go:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink-deep),0 6px 12px rgba(22,37,63,.16)}
+.go.soft{min-height:52px;padding:0 26px;font-size:1.0625rem;background:var(--card);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line-strong),0 4px 0 rgba(22,37,63,.14)}
+.go.soft:active{box-shadow:inset 0 0 0 1.5px var(--line-strong),0 0 0 rgba(22,37,63,.14)}
+.textbtn{appearance:none;-webkit-appearance:none;min-height:44px;padding:0 12px;border:0;background:none;font-weight:600;font-size:.9375rem;color:var(--ink);text-decoration:underline;text-decoration-color:var(--line-strong);text-underline-offset:.25em;cursor:pointer}
+/* a pill with two or three choices */
+.seg{display:inline-flex;padding:4px;border-radius:999px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line-strong)}
+.seg button{appearance:none;-webkit-appearance:none;min-height:44px;padding:0 16px;border:0;border-radius:999px;background:none;font-weight:600;font-size:.9375rem;color:var(--muted);cursor:pointer;white-space:nowrap;transition:background .15s,color .15s}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+
+/* the scene: where the buddy lives in each game */
+.scene{position:relative;width:100%;border-radius:28px;background:linear-gradient(180deg,#e7f3f0 0%,#f3f6ee 58%,#fbf3e2 100%);box-shadow:inset 0 0 0 1px rgba(22,37,63,.06),0 10px 28px var(--shadow);overflow:hidden;isolation:isolate}
+.scene::before,.scene::after{content:"";position:absolute;border-radius:50%;z-index:-1}
+.scene::before{left:-12%;bottom:-34%;width:74%;aspect-ratio:1.6;background:rgba(95,185,173,.20)}
+.scene::after{right:-16%;bottom:-40%;width:70%;aspect-ratio:1.5;background:rgba(243,189,74,.22)}
 
 /* the buddy */
-.buddy{width:150px;height:auto;overflow:visible}
+.buddy{display:block;width:150px;height:auto;overflow:visible;--lx:0;--ly:0}
 .buddy .body{fill:var(--peach)}
-.buddy .shade{fill:var(--peach-deep);opacity:.55}
 .buddy .cheek{fill:var(--blush);opacity:.7}
 .buddy .ink{fill:var(--ink)}
+.buddy .eye-w{fill:#fff}
+.buddy .glint{fill:#fff}
 .buddy .line{fill:none;stroke:var(--ink);stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}
 .buddy .limb{fill:none;stroke:var(--peach-deep);stroke-width:7;stroke-linecap:round}
+.buddy .b-fold{fill:none;stroke:var(--peach-deep);stroke-width:3;stroke-linecap:round;opacity:.75}
+.buddy .b-hi{fill:none;stroke:#fff;stroke-width:5;stroke-linecap:round;opacity:.45}
+.buddy .b-shadow{fill:rgba(22,37,63,.12);transform-box:fill-box;transform-origin:center}
+.buddy .b-buzz path{fill:none;stroke:var(--coral-pop);stroke-width:3.4;stroke-linecap:round}
 .buddy [data-m]{display:none}
-.buddy[data-mood="worry"] [data-m~="worry"],.buddy[data-mood="ok"] [data-m~="ok"],.buddy[data-mood="calm"] [data-m~="calm"],.buddy[data-mood="happy"] [data-m~="happy"]{display:inline}
-.buddy[data-mood="worry"]{animation:jitter .45s ease-in-out infinite}
-.buddy.bounce{animation:bounce .5s ease-in-out infinite}
-@keyframes jitter{0%,100%{transform:translateX(0) rotate(0)}25%{transform:translateX(-3px) rotate(-2deg)}75%{transform:translateX(3px) rotate(2deg)}}
-@keyframes bounce{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-16px) rotate(4deg)}}
-.say{position:relative;max-width:26rem;padding:14px 18px;font-weight:600;color:var(--ink);line-height:1.4}
-.say::before{content:"";position:absolute;left:50%;top:-8px;width:16px;height:16px;background:var(--card);transform:translateX(-50%) rotate(45deg);border-radius:3px}
+.buddy[data-mood="worry"] [data-m~="worry"],.buddy[data-mood="ok"] [data-m~="ok"],.buddy[data-mood="calm"] [data-m~="calm"],.buddy[data-mood="happy"] [data-m~="happy"],
+.buddy[data-mood="oops"] [data-m~="oops"],.buddy[data-mood="freeze"] [data-m~="freeze"],.buddy[data-mood="think"] [data-m~="think"]{display:inline}
+.buddy .b-all{transform-box:fill-box;transform-origin:50% 100%;animation:b-breathe 3.8s ease-in-out infinite}
+.buddy .b-look{transform:translate(calc(var(--lx)*1px),calc(var(--ly)*1px));transition:transform .12s ease-out}
+.buddy .b-eyes{transform-box:fill-box;transform-origin:center;animation:b-blink 4.6s infinite}
+.buddy[data-mood="worry"] .b-all{animation:b-jitter .42s ease-in-out infinite}
+.buddy[data-mood="worry"] .b-buzz{animation:b-buzz .5s steps(2,jump-none) infinite}
+.buddy[data-mood="freeze"] .b-all,.buddy[data-mood="freeze"] .b-eyes{animation:none}
+.buddy.bounce .b-all{animation:b-bounce .56s ease-in-out infinite}
+.buddy.bounce .b-shadow{animation:b-shadow .56s ease-in-out infinite}
+.buddy.r-hop .b-all{animation:r-hop .5s var(--spring)}
+.buddy.r-shake .b-all{animation:r-shake .45s ease-in-out}
+.buddy.r-nod .b-all{animation:r-nod .5s ease-in-out}
+.buddy.r-spin .b-all{animation:r-spin .7s ease-in-out}
+.buddy.r-squish .b-all{animation:r-squish .4s var(--spring)}
+@keyframes b-breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.02,.982)}}
+@keyframes b-blink{0%,45%,49%,100%{transform:scaleY(1)}47%{transform:scaleY(.1)}}
+@keyframes b-jitter{0%,100%{transform:translateX(0) rotate(0)}25%{transform:translateX(-2.5px) rotate(-1.6deg)}75%{transform:translateX(2.5px) rotate(1.6deg)}}
+@keyframes b-buzz{0%{opacity:1}100%{opacity:.25}}
+@keyframes b-bounce{0%,100%{transform:translateY(0) scale(1.04,.96)}50%{transform:translateY(-16px) scale(.98,1.03)}}
+@keyframes b-shadow{0%,100%{transform:scale(1)}50%{transform:scale(.72);opacity:.6}}
+@keyframes r-hop{0%{transform:translateY(0) scale(1.06,.94)}45%{transform:translateY(-18px) scale(.97,1.04)}100%{transform:none}}
+@keyframes r-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px) rotate(-4deg)}40%{transform:translateX(6px) rotate(3deg)}60%{transform:translateX(-4px) rotate(-2deg)}80%{transform:translateX(3px)}}
+@keyframes r-nod{0%,100%{transform:rotate(0)}30%{transform:rotate(6deg) translateY(2px)}60%{transform:rotate(-3deg)}}
+@keyframes r-spin{0%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(.92)}100%{transform:rotate(360deg) scale(1)}}
+@keyframes r-squish{0%{transform:scale(1)}40%{transform:scale(1.12,.86)}100%{transform:scale(1)}}
 
-.fine{font-size:.8125rem;line-height:1.5;color:var(--muted);max-width:32rem}
+/* things arrive one after another */
+.rise{animation:rise .5s var(--spring) both;animation-delay:calc(var(--i,0)*70ms)}
+@keyframes rise{from{opacity:0;transform:translateY(14px) scale(.96)}}
+
+/* a scene where the buddy stands on the left and talks on the right */
+.talk{flex:none;display:flex;align-items:flex-end;gap:8px;padding:14px 14px 14px 10px}
+.bud-btn{appearance:none;-webkit-appearance:none;flex:none;padding:0;border:0;background:none;cursor:pointer;border-radius:40%}
+.talk .buddy{flex:none;width:clamp(96px,16vh,128px)}
+.talk-side{flex:1;min-width:0;align-self:stretch;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;gap:10px}
+.talk .bubble{align-self:stretch;max-width:none;margin-top:auto;padding:12px 14px;font-size:.9375rem;text-align:left}
+.talk .bubble::before{left:-6px;top:auto;bottom:30px;transform:rotate(45deg)}
+.talk.mini{padding:10px 12px 10px 8px}
+.talk.mini .buddy{width:clamp(64px,10.500vh,84px)}
+.talk.mini .bubble{display:flex;align-items:center;min-height:calc(2.800em + 24px)}
+.talk.mini .bubble::before{bottom:20px}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:0 12px;border-radius:999px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line-strong);font-size:.8125rem;font-weight:700;color:var(--ink);white-space:nowrap}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+.chip.turn{background:var(--ink);color:#fff;box-shadow:none}
+/* keeps its place in the layout while hidden, so nothing jumps */
+.gone{visibility:hidden}
+/* ignore taps for a moment after a screen changes, so a double-tap cannot land on the next screen */
+.guard{pointer-events:none}
+@media (min-width:700px){.talk{padding:20px 20px 20px 16px;gap:14px}.talk .bubble{font-size:1.0625rem;padding:16px 18px}.talk.mini .bubble{font-size:1rem;padding:12px 16px}}
+
+/* what the buddy says */
+.bubble{position:relative;max-width:26rem;padding:14px 18px;border-radius:20px;background:var(--card);box-shadow:0 1px 0 var(--line),0 10px 28px var(--shadow);font-weight:600;color:var(--ink);line-height:1.4;text-wrap:pretty}
+.bubble::before{content:"";position:absolute;left:50%;top:-7px;width:16px;height:16px;background:var(--card);transform:translateX(-50%) rotate(45deg);border-radius:3px}
+.pop{animation:pop .36s var(--spring)}
+@keyframes pop{0%{transform:scale(.92);opacity:.4}100%{transform:none;opacity:1}}
+
+/* small status line under the action */
+.msg{min-height:1.5em;font-weight:700;color:var(--ink)}
+/* progress dots */
+.pips{display:flex;gap:6px;align-items:center;justify-content:center}
+.pips i{width:10px;height:10px;border-radius:50%;background:var(--line-strong);transition:background .25s,transform .25s var(--spring)}
+.pips i.on{background:var(--teal-pop);transform:scale(1.15)}
+.pips i.miss{background:var(--coral-pop)}
+
+/* 3, 2, 1 */
+.count3{position:absolute;inset:0;z-index:3;display:grid;place-items:center;font-weight:800;font-size:clamp(4rem,22vw,6.5rem);letter-spacing:-.04em;color:var(--ink);border-radius:inherit;pointer-events:none}
+.count3.pop{animation:count3 .6s var(--spring)}
+@keyframes count3{0%{font-size:2rem;opacity:0}60%{opacity:1}}
+
+/* confetti and tap bursts */
+.confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:8}
+.confetti i{position:absolute;top:-24px;animation:fall var(--t,2.8s) cubic-bezier(.2,.5,.5,1) var(--d,0s) forwards}
+@keyframes fall{to{transform:translate3d(var(--dx,0),112vh,0) rotate(var(--rot,540deg))}}
+.burst{position:fixed;inset:0;pointer-events:none;z-index:8}
+.burst i{position:absolute;margin:-4px 0 0 -4px;border-radius:50%;animation:burst .6s cubic-bezier(.1,.7,.3,1) forwards}
+@keyframes burst{to{transform:translate(var(--bx),var(--by)) scale(.2);opacity:0}}
+
+/* notes for grown-ups */
 details.grown{width:100%;text-align:left}
-details.grown summary{cursor:pointer;list-style:none;padding:14px 18px;font-weight:700;color:var(--ink);display:flex;justify-content:space-between;gap:10px}
+details.grown summary{cursor:pointer;list-style:none;padding:14px 18px;font-weight:700;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:52px}
 details.grown summary::-webkit-details-marker{display:none}
-details.grown summary::after{content:"+";font-weight:800;color:var(--teal)}
+details.grown summary::after{content:"+";font-weight:800;font-size:1.25rem;line-height:1;color:var(--teal)}
 details.grown[open] summary::after{content:"–"}
 details.grown ul{margin:0;padding:0 18px 16px 36px;display:flex;flex-direction:column;gap:8px;font-size:.9375rem}
-.foot{padding:18px 0 22px;text-align:center;font-size:.8125rem;color:var(--muted)}
+
+.foot{margin:0;padding:18px 20px 24px;text-align:center;font-size:.8125rem;color:var(--muted);text-wrap:balance}
 .foot a{font-weight:600;color:var(--ink)}
-@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
-@media (min-width:900px){.wrap{max-width:44rem}.buddy{width:180px}}
+/* short phones: a little less chrome so the game itself keeps its room */
+@media (max-height:600px){.screen{gap:12px;padding-block:12px 16px}.talk.mini .buddy{width:58px}.go{min-height:50px}h1,.h1{font-size:1.4rem}}
+/* phones on their side are too short for a game: ask for upright */
+@media (orientation:landscape) and (max-height:450px){body.game::after{content:"Turn your phone upright to play.";position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:24px;background:var(--paper);font-weight:800;font-size:1.25rem;color:var(--ink);text-align:center}}
+@media (min-width:700px){.wrap{max-width:40rem}.screen{gap:20px;padding-block:28px 30px}}
+/* Motion that only decorates is switched off; the breathing balloon and timers still move, slowly. */
+@media (prefers-reduced-motion: reduce){
+  .rise{animation:none!important}
+  .buddy .b-all,.buddy .b-eyes,.buddy .b-buzz,.buddy .b-shadow,.pop,.count3.pop{animation:none!important}
+  .decor{animation:none!important;transition:none!important}
+}
+/* tablets: use the room */
+@media (min-width:700px) and (min-height:900px){.wrap{max-width:46rem}.screen{gap:24px}h1,.h1{font-size:2.4rem}.talk .buddy{width:150px}.talk.mini .buddy{width:104px}.go{min-height:64px;font-size:1.25rem;padding:0 36px}.go.soft{min-height:58px;font-size:1.125rem}.chip{min-height:36px;font-size:.9375rem;padding:0 14px}.seg button{min-height:48px;font-size:1.0625rem;padding:0 20px}.sub{font-size:1.1875rem;max-width:34rem}.bubble{font-size:1.125rem}}

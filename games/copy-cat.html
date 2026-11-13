@@ -17,53 +17,71 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="/games/play.css">
+<link rel="stylesheet" href="/games/play.css?v=3">
 <style>
-.screen{gap:16px;padding-block:18px 22px}
-.pads{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:min(22rem,40vh)}
-.padb{appearance:none;-webkit-appearance:none;aspect-ratio:1;border:0;border-radius:28px;cursor:pointer;opacity:.5;transition:opacity .08s,transform .08s}
-.padb.lit,.padb:active{opacity:1;transform:scale(1.04)}
-.padb:nth-child(1){background:var(--teal-pop)}.padb:nth-child(2){background:var(--sun-pop)}.padb:nth-child(3){background:var(--coral-pop)}.padb:nth-child(4){background:var(--blue-pop)}
+.screen{gap:14px}
+.padwrap{flex:1;display:grid;place-items:center;width:100%;min-height:180px}
+.pads{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,3.500vw,18px);width:min(100%,23rem,max(180px,calc(100vh - 330px)));width:min(100%,23rem,max(180px,calc(100dvh - 330px)))}
+.padb{appearance:none;-webkit-appearance:none;position:relative;aspect-ratio:1;border:0;border-radius:22%;background:var(--c);color:rgba(255,255,255,.9);cursor:pointer;display:grid;place-items:center;font-size:clamp(44px,13vw,64px);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.3),0 8px 0 var(--cd),0 18px 28px var(--shadow);filter:saturate(.72) brightness(.98);opacity:.8;transition:transform .08s,box-shadow .1s,filter .1s,opacity .1s}
+.padb.lit,.padb:active{filter:saturate(1.25) brightness(1.08);opacity:1;transform:translateY(5px);box-shadow:inset 0 3px 0 rgba(255,255,255,.45),0 3px 0 var(--cd),0 0 0 5px #fff,0 0 30px 8px var(--c)}
+.padb::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none}
+.padb.lit::after{animation:ring .42s ease-out}
+@keyframes ring{from{box-shadow:0 0 0 0 rgba(255,255,255,.9)}to{box-shadow:0 0 0 22px rgba(255,255,255,0)}}
+.padb.wrong{animation:padno .4s ease-in-out}
+@keyframes padno{20%{transform:translateX(-8px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.padb.hint{animation:hint .45s ease-in-out 3}
+@keyframes hint{50%{filter:saturate(1.25) brightness(1.1);opacity:1;box-shadow:inset 0 3px 0 rgba(255,255,255,.45),0 8px 0 var(--cd),0 0 0 5px #fff,0 0 30px 8px var(--c)}}
+.padb:nth-child(1){--c:#5fb9ad;--cd:#3a8f84}.padb:nth-child(2){--c:#f3bd4a;--cd:#c7922a}.padb:nth-child(3){--c:#ef8263;--cd:#c25d40}.padb:nth-child(4){--c:#8496e6;--cd:#5d6fc2}
 .pads.lock .padb{pointer-events:none}
-.msg{min-height:1.6em;font-weight:700;color:var(--ink)}
-.lvl{font-weight:800;font-size:1.25rem;color:var(--teal)}
+.pads.idle .padb{opacity:.55}
+@media (min-width:700px) and (min-height:900px){.pads{width:min(100%,31rem,calc(100dvh - 430px));gap:24px}.padb{font-size:84px}}
 </style>
 </head>
-<body>
+<body class="game">
 <header class="top"><div class="wrap">
-  <a class="back" href="/games/">‹ Games</a>
+  <a class="back" href="/games/"><span data-icon="back"></span>Games</a>
   <span class="name">Copy Cat</span>
-  <button class="pill-btn" id="snd" type="button" aria-pressed="true">Sound on</button>
+  <button class="snd" id="snd" type="button"></button>
 </div></header>
-<main><div class="wrap" style="flex:1;display:flex;flex-direction:column">
+<main><div class="wrap">
 <section class="screen">
-  <h1>Copy Cat</h1>
-  <p class="sub">Watch the lights. Then tap them in the same order. Each round adds one more!</p>
-  <p class="lvl" id="lvl" aria-live="polite">Round 1</p>
-  <div class="pads lock" id="pads"><button class="padb" type="button" aria-label="Green"></button><button class="padb" type="button" aria-label="Yellow"></button><button class="padb" type="button" aria-label="Red"></button><button class="padb" type="button" aria-label="Blue"></button></div>
-  <p class="msg" id="msg" aria-live="polite"></p>
+  <h1 class="sr">Copy Cat</h1>
+  <div class="scene talk mini">
+    <svg class="buddy" id="buddy" data-mood="ok" viewBox="0 0 120 138" aria-hidden="true"></svg>
+    <div class="talk-side">
+      <p class="chips"><span class="chip" id="lvl">Round 1</span><span class="chip" id="best">Best 0</span></p>
+      <p class="bubble" id="msg" aria-live="polite">Watch the lights, then tap them in the same order.</p>
+    </div>
+  </div>
+  <div class="padwrap"><div class="pads lock idle" id="pads">
+    <button class="padb" type="button" aria-label="Green circle"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="15" fill="currentColor"/></svg></button>
+    <button class="padb" type="button" aria-label="Yellow star"><span data-icon="star"></span></button>
+    <button class="padb" type="button" aria-label="Orange triangle"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 9 40 37H8Z" fill="currentColor" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/></svg></button>
+    <button class="padb" type="button" aria-label="Blue square"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><rect x="10" y="10" width="28" height="28" rx="7" fill="currentColor"/></svg></button>
+  </div></div>
   <div class="row"><button class="go" id="start" type="button">Start</button></div>
 </section>
 </div></main>
-<p class="foot wrap">A free game from <a href="/">Wavelength Psychology</a>. Nothing you do here is saved.</p>
-<script src="/games/buddy.js"></script>
+<p class="foot">A free game from <a href="/">Wavelength Psychology</a>. Nothing you do here is saved.</p>
+<script src="/games/play.js?v=3"></script>
 <script>
 (function(){
-var d=document,$=function(id){return d.getElementById(id);},sound=true,ac=null;
-function tone(f,t,dur,type,vol){if(!sound)return;var A=window.AudioContext||window.webkitAudioContext;if(!A)return;if(!ac)ac=new A();if(ac.state==='suspended')ac.resume();
-  var o=ac.createOscillator(),g=ac.createGain(),s=ac.currentTime+(t||0);o.type=type||'triangle';o.frequency.value=f;g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(vol||.1,s+.02);g.gain.exponentialRampToValueAtTime(.001,s+dur);o.connect(g);g.connect(ac.destination);o.start(s);o.stop(s+dur+.05);}
-$('snd').addEventListener('click',function(){sound=!sound;this.setAttribute('aria-pressed',sound?'true':'false');this.textContent=sound?'Sound on':'Sound off';});
-
-var pads=[].slice.call(d.querySelectorAll('.padb')),box=$('pads'),seq=[],at=0,best=0,F=[330,392,494,587];
-function flash(k,ms){pads[k].classList.add('lit');tone(F[k],0,.28,'triangle',.12);setTimeout(function(){pads[k].classList.remove('lit');},ms||380);}
-function play(){box.classList.add('lock');$('msg').textContent='Watch…';$('lvl').textContent='Round '+seq.length;var j=0;
-  (function step(){if(j<seq.length){flash(seq[j]);j++;setTimeout(step,620);}else{box.classList.remove('lock');$('msg').textContent='Your turn!';at=0;}})();}
-function grow(){seq.push(Math.floor(Math.random()*4));setTimeout(play,650);}
-pads.forEach(function(p,k){p.addEventListener('click',function(){flash(k,200);
-  if(k!==seq[at]){box.classList.add('lock');best=Math.max(best,seq.length-1);$('msg').textContent='So close! You remembered '+(seq.length-1)+' in a row.';tone(160,.1,.3,'square',.07);$('start').textContent='Try again';$('start').hidden=false;return;}
-  at++;if(at===seq.length){box.classList.add('lock');$('msg').textContent='Yes!';tone(784,.2,.2);grow();}});});
-$('start').addEventListener('click',function(){this.hidden=true;seq=[];grow();});
-
+var P=Play,$=P.$,d=document;
+var pads=P.all('.padb'),box=$('pads'),bud=$('buddy'),msg=$('msg'),seq=[],at=0,best=0,hintT=0,F=[330,392,494,587],YES=['Yes!','You got it!','Nice memory!','Wow!','Keep going!'];
+function flash(k,ms){pads[k].classList.add('lit');P.tone(F[k],0,.28,'triangle',.12);setTimeout(function(){pads[k].classList.remove('lit');},ms||340);}
+function play(){box.classList.add('lock');box.classList.remove('idle');P.say(msg,'Watch…');P.mood(bud,'think');P.say($('lvl'),'Round '+seq.length);var j=0,gap=Math.max(400,640-seq.length*22);
+  (function step(){if(j<seq.length){flash(seq[j],gap*.56);j++;setTimeout(step,gap);}else{box.classList.remove('lock');P.say(msg,'Your turn!');P.mood(bud,'ok');at=0;}})();}
+function grow(){seq.push(Math.floor(Math.random()*4));setTimeout(play,900);}
+pads.forEach(function(p,k){p.addEventListener('click',function(){
+  if(box.classList.contains('lock')||!seq.length)return;
+  if(k!==seq[at]){box.classList.add('lock');var got=seq.length-1;best=Math.max(best,got);$('best').textContent='Best '+best;
+    p.classList.add('wrong');setTimeout(function(){p.classList.remove('wrong');},420);var right=pads[seq[at]];right.classList.add('hint');hintT=setTimeout(function(){right.classList.remove('hint');box.classList.add('idle');},1400);
+    P.sfx.bad();P.buzz(60);P.mood(bud,'oops');P.react(bud,'shake');P.say(msg,got>0?'So close! You remembered '+got+' in a row. Want to try again?':'So close! Watch one more time?');
+    $('start').textContent='Try again';$('start').classList.remove('gone');return;}
+  flash(k,180);P.buzz(8);at++;
+  if(at===seq.length){box.classList.add('lock');best=Math.max(best,seq.length);$('best').textContent='Best '+best;P.say(msg,YES[Math.floor(Math.random()*YES.length)]);P.mood(bud,'happy');P.react(bud,'hop');P.burst(bud,{n:9,r:60});P.tone(784,.2,.2);grow();}});});
+$('start').addEventListener('click',function(){P.sfx.tap();this.classList.add('gone');clearTimeout(hintT);pads.forEach(function(x){x.classList.remove('hint','wrong');});box.classList.remove('idle');box.classList.add('lock');seq=[];grow();});
 })();
 </script>
 </body>

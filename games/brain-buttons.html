@@ -17,62 +17,153 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="/games/play.css">
+<link rel="stylesheet" href="/games/play.css?v=3">
 <style>
-.meter{display:flex;gap:6px;align-items:center;font-size:.8125rem;font-weight:600;color:var(--muted)}
-.meter i{width:34px;height:10px;border-radius:6px;background:var(--line-strong);transition:background .4s}
-.meter i.on{background:var(--teal-pop)}
-.pad{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:26rem}
-.bb{appearance:none;-webkit-appearance:none;position:relative;aspect-ratio:1.5;border:0;border-radius:26px;padding:14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-weight:800;font-size:1.0625rem;line-height:1.15;letter-spacing:-.01em;color:var(--card);box-shadow:0 6px 0 var(--bb-deep),0 14px 26px var(--shadow);transition:transform .08s,box-shadow .08s}
-.bb:active{transform:translateY(5px);box-shadow:0 1px 0 var(--bb-deep),0 6px 14px var(--shadow)}
-.bb .em{font-size:1.7rem;line-height:1}
-#home{gap:14px;padding-top:16px}
-#home .buddy{width:104px}
-@media (min-width:900px){#home .buddy{width:150px}#home{gap:20px}}
-.bb[data-b="breathe"]{background:var(--teal);--bb-deep:#144b4e}
-.bb[data-b="happy"]{background:#a36c00;--bb-deep:#6e4900}
-.bb[data-b="dance"]{background:var(--coral);--bb-deep:#7f2d1c}
-.bb[data-b="senses"]{background:var(--blue);--bb-deep:#27367a}
-.bb.done::after{content:"✓";position:absolute;right:10px;top:10px;width:28px;height:28px;border-radius:50%;background:var(--card);color:var(--ink);display:grid;place-items:center;font-size:.9375rem}
-.stage{position:relative;width:230px;height:230px;display:grid;place-items:center}
-.ring{position:absolute;inset:0;border-radius:50%;background:var(--teal-soft);transform:scale(.55);transition:transform 5s ease-in-out}
-.stage .buddy{position:relative;width:118px}
-.count{font-weight:800;font-size:2.4rem;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;min-height:2.4rem}
-.cue{font-weight:800;font-size:1.5rem;letter-spacing:-.01em;color:var(--ink);min-height:2.2rem}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:26rem}
-.pickc{appearance:none;-webkit-appearance:none;border:2px solid transparent;border-radius:20px;background:var(--card);box-shadow:0 1px 0 var(--line),0 8px 20px var(--shadow);padding:14px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.875rem;font-weight:600;line-height:1.2;color:var(--ink)}
-.pickc .em{font-size:2rem;line-height:1}
-.dots{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.dot{appearance:none;-webkit-appearance:none;width:58px;height:58px;border-radius:50%;border:3px dashed var(--blue-pop);background:var(--card);font-size:1.5rem;cursor:pointer;display:grid;place-items:center}
-.dot[aria-pressed="true"]{border-style:solid;border-color:var(--blue);background:var(--blue);color:var(--card)}
-.freeze .cue{color:var(--blue)}
-.party{display:flex;gap:10px;font-size:1.8rem}
-.confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:4}
-.confetti i{position:absolute;top:-20px;width:12px;height:12px;border-radius:3px;animation:fall 2.6s linear forwards}
-@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+/* ---- home ---- */
+.talk{min-height:clamp(168px,29vh,236px)}
+.calm{display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.9);font-size:.8125rem;font-weight:700;color:var(--ink)}
+.calm i{width:20px;height:8px;border-radius:4px;background:var(--line-strong);transition:background .5s,transform .4s var(--spring)}
+.calm i.on{background:var(--teal-pop);transform:scaleY(1.25)}
+.pad{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:12px;width:100%;max-height:290px}
+.bb{appearance:none;-webkit-appearance:none;position:relative;min-height:clamp(78px,14.500vh,112px);border:0;border-radius:24px;padding:12px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-weight:800;font-size:1.0625rem;line-height:1.15;letter-spacing:-.01em;color:#fff;background:var(--c);box-shadow:inset 0 2px 0 rgba(255,255,255,.22),0 6px 0 var(--cd),0 16px 26px var(--shadow);transition:transform .09s,box-shadow .09s}
+.bb:active{transform:translateY(5px);box-shadow:inset 0 2px 0 rgba(255,255,255,.22),0 1px 0 var(--cd),0 6px 14px var(--shadow)}
+.lbl{display:grid;place-items:center;min-height:2.300em}
+.bb .ic{font-size:32px}
+.bb .tick .ic{font-size:17px}
+.bb .tick{position:absolute;right:9px;top:9px;width:26px;height:26px;border-radius:50%;background:#fff;color:var(--cd);display:none;place-items:center;font-size:17px}
+.bb.done .tick{display:grid;animation:pop .4s var(--spring)}
+.bb[data-b="breathe"]{--c:var(--teal);--cd:var(--teal-deep)}
+.bb[data-b="happy"]{--c:#a36c00;--cd:var(--sun-deep)}
+.bb[data-b="dance"]{--c:var(--coral);--cd:var(--coral-deep)}
+.bb[data-b="senses"]{--c:var(--blue);--cd:var(--blue-deep)}
+
+/* ---- shared by the four exercises ---- */
+.play-scene{flex:1 1 auto;min-height:165px;max-height:400px;--sh:260px}
+.play-scene .buddy{position:absolute;left:50%;bottom:16px;width:calc(var(--sh)*.26);min-width:60px;transform:translateX(-50%)}
+#breathe .cue,#dance .cue{min-height:2.450em;display:grid;place-items:center}
+#dnSub,#hpSub,#snSub{min-height:3em}
+.cue{min-height:1.3em;font-weight:800;font-size:clamp(1.25rem,5.200vw,1.5rem);line-height:1.2;letter-spacing:-.015em;color:var(--ink);text-wrap:balance}
+.stars3{position:absolute;right:12px;top:12px;display:flex;gap:2px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.9);font-size:20px;color:rgba(22,37,63,.18)}
+.stars3 .on{color:var(--sun-pop);animation:pop .45s var(--spring)}
+
+/* ---- breathing ---- */
+.balloon{position:absolute;left:50%;bottom:calc(18px + var(--sh)*.3);height:calc(var(--sh)*.56);width:auto;aspect-ratio:100/120;transform-origin:50% 100%;transform:translateX(-50%) scale(var(--s,.42));will-change:transform}
+.string{position:absolute;left:50%;bottom:calc(16px + var(--sh)*.25);width:2px;height:calc(var(--sh)*.07 + 4px);margin-left:-1px;background:rgba(22,37,63,.3)}
+.puff{position:absolute;left:50%;bottom:calc(18px + var(--sh)*.3);width:10px;height:10px;margin-left:-5px;border-radius:50%;background:#fff;animation:puff 1.8s ease-out forwards}
+@keyframes puff{from{opacity:.9}to{transform:translate(var(--px),var(--py)) scale(2.2);opacity:0}}
+.hold{appearance:none;-webkit-appearance:none;position:relative;overflow:hidden;width:100%;max-width:22rem;min-height:64px;padding:0 20px;border:0;border-radius:22px;background:var(--teal);color:#fff;font-weight:800;font-size:1.125rem;cursor:pointer;touch-action:none;-webkit-touch-callout:none;box-shadow:inset 0 2px 0 rgba(255,255,255,.22),0 6px 0 var(--teal-deep),0 16px 26px var(--shadow);transition:transform .09s,box-shadow .09s,background .3s}
+.hold .fill{position:absolute;inset:0;background:rgba(8,20,36,.24);transform-origin:left;transform:scaleX(var(--p,0))}
+.hold span{position:relative;font-variant-numeric:tabular-nums}
+.hold.down{transform:translateY(5px);box-shadow:inset 0 2px 0 rgba(255,255,255,.22),0 1px 0 var(--teal-deep),0 6px 14px var(--shadow)}
+.hold.rest .fill{background:rgba(255,255,255,.36)}
+.hold.rest{color:var(--ink-deep);background:#7fa9a6;box-shadow:inset 0 2px 0 rgba(255,255,255,.22),0 6px 0 #5f8a87,0 16px 26px var(--shadow);cursor:default}
+.breath-pips i{width:12px;height:12px}
+
+/* ---- happy thoughts ---- */
+.picks{flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:10px;width:100%;max-height:430px}
+.pickc{appearance:none;-webkit-appearance:none;min-height:clamp(96px,17vh,124px);border:0;border-radius:22px;background:var(--card);box-shadow:0 1px 0 var(--line),0 4px 0 rgba(22,37,63,.10),0 12px 22px var(--shadow);padding:12px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;font-size:.875rem;font-weight:700;line-height:1.2;color:var(--ink);transition:transform .09s,box-shadow .09s}
+.pickc:active{transform:translateY(4px);box-shadow:0 1px 0 var(--line),0 0 0 rgba(22,37,63,.10),0 6px 12px var(--shadow)}
+.pickc .ic{font-size:clamp(44px,9vh,64px)}
+.th-scene{background:linear-gradient(180deg,#fdf3d4 0%,#fbf5e6 60%,#f6efe0 100%)}
+.thought{position:absolute;left:50%;top:7%;width:calc(var(--sh)*.5);aspect-ratio:1;margin-left:calc(var(--sh)*-.25);border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 12px 30px rgba(138,90,0,.16);animation:bob 4.200s ease-in-out infinite}
+.thought .ic{font-size:calc(var(--sh)*.26)}
+.thought svg.ring{position:absolute;inset:-7px;width:calc(100% + 14px);height:calc(100% + 14px);transform:rotate(-90deg)}
+.thought .ring circle{fill:none;stroke-width:4;stroke-linecap:round}
+.th-dot{position:absolute;left:50%;border-radius:50%;background:#fff;box-shadow:0 4px 10px rgba(138,90,0,.14)}
+.th-dot.a{top:calc(7% + var(--sh)*.52);width:16px;height:16px;margin-left:18px}
+.th-dot.b{top:calc(7% + var(--sh)*.6);width:10px;height:10px;margin-left:8px}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.twinkle{position:absolute;color:var(--sun-pop);font-size:20px;animation:twinkle 2.400s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes twinkle{0%,100%{transform:scale(.4);opacity:.2}50%{transform:scale(1);opacity:1}}
+
+/* ---- dance party ---- */
+.dn-scene{background:linear-gradient(180deg,#fde7dc 0%,#fbefcf 100%);cursor:pointer;transition:background .4s}
+.dn-scene.on{animation:disco 3.680s linear infinite}
+@keyframes disco{0%,100%{background-color:#fde7dc}25%{background-color:#fbefcf}50%{background-color:#def0ec}75%{background-color:#e6eafa}}
+.dn-scene.on,.dn-scene.frozen{background-image:none}
+.dn-scene.frozen{animation:none;background:linear-gradient(180deg,#d8e8fb 0%,#eef4fc 100%)}
+.beam{position:absolute;top:-10%;left:50%;width:46%;height:120%;margin-left:-23%;background:linear-gradient(180deg,rgba(239,130,99,.42),rgba(239,130,99,0) 92%);clip-path:polygon(44% 0,56% 0,100% 100%,0 100%);transform-origin:50% 0;opacity:0;transition:opacity .3s}
+.dn-scene.on .beam{opacity:1;animation:beam 1.840s ease-in-out infinite alternate}
+.beam.b2{background:linear-gradient(180deg,rgba(132,150,230,.46),rgba(132,150,230,0) 92%);animation-delay:-.92s!important;animation-direction:alternate-reverse!important}
+@keyframes beam{from{transform:rotate(-24deg)}to{transform:rotate(24deg)}}
+.note{position:absolute;bottom:18%;color:var(--c);font-size:24px;animation:note 2s ease-out forwards;pointer-events:none}
+@keyframes note{from{opacity:0;transform:translateY(0) rotate(0)}15%{opacity:1}to{opacity:0;transform:translate(var(--nx),calc(var(--sh)*-.7)) rotate(var(--nr))}}
+.dn-scene .buddy{width:calc(var(--sh)*.36)}
+.buddy.d1 .b-all{animation:d-sway .46s ease-in-out infinite alternate}
+.buddy.d2 .b-all{animation:d-hop .46s ease-in-out infinite}
+.buddy.d3 .b-all{animation:d-twist .92s ease-in-out infinite}
+.buddy.d1 .b-shadow,.buddy.d2 .b-shadow,.buddy.d3 .b-shadow{animation:b-shadow .46s ease-in-out infinite}
+@keyframes d-sway{from{transform:rotate(-11deg) translateX(-7px)}to{transform:rotate(11deg) translateX(7px)}}
+@keyframes d-hop{0%,100%{transform:translateY(0) scale(1.07,.93)}50%{transform:translateY(-20px) scale(.96,1.05)}}
+@keyframes d-twist{0%,100%{transform:scaleX(1) rotate(-6deg)}25%{transform:scaleX(.72) rotate(0)}50%{transform:scaleX(1) rotate(6deg)}75%{transform:scaleX(.72) rotate(0)}}
+.dn-scene.frozen .note{animation-play-state:paused;opacity:.5}
+.frost{position:absolute;color:#8fb4e6;opacity:0;transition:opacity .25s,transform .4s var(--spring);transform:scale(.4)}
+.dn-scene.frozen .frost{opacity:.9;transform:scale(1)}
+.frost.f1{left:8%;top:10%;font-size:34px}.frost.f2{right:9%;top:16%;font-size:26px}.frost.f3{left:14%;bottom:20%;font-size:22px}.frost.f4{right:13%;bottom:24%;font-size:30px}
+.fz-bar{position:absolute;left:14px;right:14px;bottom:10px;height:8px;border-radius:4px;background:rgba(58,79,163,.18);overflow:hidden;opacity:0}
+.dn-scene.frozen .fz-bar{opacity:1}
+.fz-bar i{display:block;height:100%;border-radius:4px;background:var(--blue-pop);transform-origin:left}
+.dn-scene.frozen .fz-bar i{animation:fzbar 3s linear forwards}
+@keyframes fzbar{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+#dance.freeze .cue{color:var(--blue)}
+
+/* ---- five senses ---- */
+.sn-top{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;width:100%;margin-bottom:-22px;padding-left:4px}
+.steps5{display:flex;gap:7px;padding-bottom:16px}
+.st{width:clamp(38px,11vw,44px);aspect-ratio:1;border-radius:14px;background:var(--card);box-shadow:inset 0 0 0 1.500px var(--line-strong);display:grid;place-items:center;font-weight:800;font-size:1.0625rem;color:var(--muted);transition:transform .3s var(--spring),background .3s,color .3s}
+.st .ic{font-size:22px;display:none}
+.st.now{background:var(--c);color:#fff;box-shadow:0 4px 0 var(--cd);transform:translateY(-3px)}
+.st.done{background:var(--teal-soft);color:var(--teal);box-shadow:none}
+.st.done b{display:none}.st.done .ic{display:block}
+.sn-card{flex:1;width:100%;max-height:400px;padding:22px 18px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.sn-ic{width:clamp(72px,13vh,96px);aspect-ratio:1;border-radius:30%;background:var(--cs);color:var(--c);display:grid;place-items:center;font-size:clamp(40px,7.500vh,56px)}
+.toks{display:grid;grid-template-columns:repeat(var(--n),minmax(0,58px));gap:10px;justify-content:center;width:100%;margin-top:6px}
+.tok{appearance:none;-webkit-appearance:none;width:100%;aspect-ratio:1;padding:0;border:0;border-radius:50%;background:var(--card);box-shadow:inset 0 0 0 2.500px var(--c);color:var(--c);font-weight:800;font-size:1.25rem;cursor:pointer;display:grid;place-items:center;transition:transform .09s}
+.tok:active{transform:scale(.92)}
+.tok .ic{display:none;font-size:26px}
+.tok[aria-pressed="true"]{background:var(--c);color:#fff;box-shadow:0 4px 0 var(--cd);animation:pop .4s var(--spring);cursor:default}
+.tok[aria-pressed="true"] b{display:none}.tok[aria-pressed="true"] .ic{display:block}
+.sn-buddy{position:relative;z-index:1;flex:none;width:clamp(64px,19vw,84px);margin-right:10px}
+#senses[data-k="0"]{--c:var(--blue);--cd:var(--blue-deep);--cs:var(--blue-soft)}
+#senses[data-k="1"]{--c:var(--coral);--cd:var(--coral-deep);--cs:var(--coral-soft)}
+#senses[data-k="2"]{--c:var(--teal);--cd:var(--teal-deep);--cs:var(--teal-soft)}
+#senses[data-k="3"]{--c:#a36c00;--cd:var(--sun-deep);--cs:var(--sun-soft)}
+#senses[data-k="4"]{--c:var(--green);--cd:var(--green-deep);--cs:#dff3e8}
+
+/* ---- done ---- */
+#done{justify-content:center;gap:20px}
+@media (min-width:700px){.pad{gap:16px}.picks{gap:14px}}
+@media (max-width:380px){.bb{font-size:1rem}}
+@media (max-height:600px){.bb{min-height:66px;gap:3px}.bb .ic{font-size:26px}.talk{min-height:0}}
+@media (min-width:700px) and (min-height:900px){.talk{min-height:270px}.pad{max-height:440px;gap:20px}.bb{font-size:1.375rem;border-radius:30px}.bb .ic{font-size:46px}.bb .tick{width:34px;height:34px}.bb .tick .ic{font-size:22px}
+  .play-scene{max-height:580px}.picks{max-height:620px;gap:18px}.pickc{font-size:1.0625rem;border-radius:28px}.hold{max-width:30rem;min-height:78px;font-size:1.3125rem}.cue{font-size:1.875rem}
+  .sn-card{max-height:580px;gap:20px}.sn-buddy{width:112px;margin-right:18px}.st{width:56px;font-size:1.3125rem;border-radius:18px}.st .ic{font-size:28px}.toks{grid-template-columns:repeat(var(--n),minmax(0,80px));gap:16px}.tok{font-size:1.625rem}.tok .ic{font-size:36px}.stars3{font-size:28px;padding:8px 14px}}
 </style>
 </head>
-<body>
+<body class="game">
 <header class="top"><div class="wrap">
-  <a class="back" href="/games/">‹ Games</a>
+  <a class="back" id="backLink" href="/games/"><span data-icon="back"></span><span id="backT">Games</span></a>
   <span class="name">Brain Buttons</span>
-  <button class="pill-btn" id="snd" type="button" aria-pressed="true">Sound on</button>
+  <button class="snd" id="snd" type="button"></button>
 </div></header>
 
-<main><div class="wrap" style="flex:1;display:flex;flex-direction:column">
-
-
+<main><div class="wrap">
 
 <!-- home -->
 <section class="screen" id="home">
-  <svg class="buddy" id="buddy" data-mood="worry" viewBox="0 0 120 138" aria-hidden="true"></svg>
-  <p class="card say" id="homeSay" aria-live="polite">Uh-oh! My alarm is buzzing, and I feel jumpy. Can you help me feel calm? Press a Brain Button!</p>
-  <p class="meter" aria-label="Calm meter"><span>Calm</span><i></i><i></i><i></i><i></i></p>
+  <h1 class="sr">Brain Buttons</h1>
+  <div class="scene talk">
+    <button class="bud-btn" id="budBtn" type="button" aria-label="Say hi to the buddy"><svg class="buddy" id="buddy" data-mood="worry" viewBox="0 0 120 138" aria-hidden="true"></svg></button>
+    <div class="talk-side">
+      <p class="calm" id="calmHome" aria-label="Calm meter"><span>Calm</span><i></i><i></i><i></i><i></i></p>
+      <p class="bubble" id="homeSay" aria-live="polite"></p>
+    </div>
+  </div>
   <div class="pad">
-    <button class="bb" data-b="breathe" type="button"><span class="em" aria-hidden="true">🍃</span>Breathing</button>
-    <button class="bb" data-b="happy" type="button"><span class="em" aria-hidden="true">🌈</span>Happy Thoughts</button>
-    <button class="bb" data-b="dance" type="button"><span class="em" aria-hidden="true">🎵</span>Dance Party</button>
-    <button class="bb" data-b="senses" type="button"><span class="em" aria-hidden="true">🖐️</span>5 Senses</button>
+    <button class="bb rise" style="--i:1" data-b="breathe" type="button"><span data-icon="wind"></span><span class="lbl">Breathing</span><span class="tick" data-icon="check"></span></button>
+    <button class="bb rise" style="--i:2" data-b="happy" type="button"><span data-icon="sun"></span><span class="lbl">Happy Thoughts</span><span class="tick" data-icon="check"></span></button>
+    <button class="bb rise" style="--i:3" data-b="dance" type="button"><span data-icon="music"></span><span class="lbl">Dance Party</span><span class="tick" data-icon="check"></span></button>
+    <button class="bb rise" style="--i:4" data-b="senses" type="button"><span data-icon="hand"></span><span class="lbl">5 Senses</span><span class="tick" data-icon="check"></span></button>
   </div>
   <details class="card grown">
     <summary>For grown-ups</summary>
@@ -80,6 +171,7 @@
       <li>The buddy is the brain’s alarm (the amygdala). Its job is to keep us safe, and sometimes it buzzes when we are safe. The four buttons are ways to tell it “we’re okay.”</li>
       <li>Practice when your child is calm, so the buttons are ready when feelings get big.</li>
       <li>In a session: play together on a tablet, or share your screen on a video call and let the child choose. A child can also open this page on their own device.</li>
+      <li>Breathing has a “Just watch” option for when you are sharing your screen.</li>
       <li>Nothing is saved or sent anywhere. There are no names, accounts, or tracking.</li>
       <li>This game is for practice and fun. It is not therapy or medical advice.</li>
     </ul>
@@ -89,123 +181,214 @@
 <!-- breathing -->
 <section class="screen" id="breathe" hidden>
   <h1>Breathing Button</h1>
-  <div class="stage"><div class="ring" id="ring"></div><svg class="buddy" data-mood="ok" viewBox="0 0 120 138" aria-hidden="true"></svg></div>
-  <p class="cue" id="brCue" aria-live="polite">Ready?</p>
-  <p class="count" id="brCount"></p>
-  <button class="go" id="brGo" type="button">Start</button>
+  <div class="scene play-scene" id="brScene">
+    <p class="stars3" id="brStars" aria-label="Breaths done"><span data-icon="star"></span><span data-icon="star"></span><span data-icon="star"></span></p>
+    <svg class="balloon" id="balloon" viewBox="0 0 100 120" aria-hidden="true"><defs><radialGradient id="bg1" cx="34%" cy="28%" r="80%"><stop offset="0" stop-color="#9adbd0"/><stop offset="1" stop-color="#3d9c92"/></radialGradient></defs><path d="M50 3c26 0 45 21 45 49 0 27-21 49-45 53C26 101 5 79 5 52 5 24 24 3 50 3Z" fill="url(#bg1)"/><path d="M43 104h14l3 12H40Z" fill="#3d9c92"/><path d="M22 42q4-19 21-26" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".55"/></svg>
+    <i class="string"></i>
+    <svg class="buddy" id="brBuddy" data-mood="ok" viewBox="0 0 120 138" aria-hidden="true"></svg>
+  </div>
+  <p class="cue" id="brCue" aria-live="polite"></p>
+  <p class="pips breath-pips" id="brPips" aria-hidden="true"></p>
+  <button class="hold" id="hold" type="button"><i class="fill"></i><span id="holdT">Hold to breathe in</span></button>
+  <button class="textbtn" id="brMode" type="button">Just watch</button>
 </section>
 
 <!-- happy thoughts -->
 <section class="screen" id="happy" hidden>
   <h1>Happy Thoughts Button</h1>
   <p class="sub" id="hpSub">Pick a happy thing to think about.</p>
-  <div class="cards" id="hpCards">
-    <button class="pickc" type="button"><span class="em" aria-hidden="true">🏡</span>A cozy place</button>
-    <button class="pickc" type="button"><span class="em" aria-hidden="true">🌳</span>The park</button>
-    <button class="pickc" type="button"><span class="em" aria-hidden="true">🎶</span>A favorite song</button>
-    <button class="pickc" type="button"><span class="em" aria-hidden="true">🤗</span>Someone I love</button>
-    <button class="pickc" type="button"><span class="em" aria-hidden="true">🍦</span>A yummy treat</button>
-    <button class="pickc" type="button"><span class="em" aria-hidden="true">🐾</span>An animal</button>
+  <div class="picks" id="hpPick">
+    <button class="pickc rise" style="--i:1" data-p="house" type="button"><span data-icon="house"></span><span class="lbl">A cozy place</span></button>
+    <button class="pickc rise" style="--i:2" data-p="tree" type="button"><span data-icon="tree"></span><span class="lbl">The park</span></button>
+    <button class="pickc rise" style="--i:3" data-p="song" type="button"><span data-icon="song"></span><span class="lbl">A favorite song</span></button>
+    <button class="pickc rise" style="--i:4" data-p="heart" type="button"><span data-icon="heart"></span><span class="lbl">Someone I love</span></button>
+    <button class="pickc rise" style="--i:5" data-p="treat" type="button"><span data-icon="treat"></span><span class="lbl">A yummy treat</span></button>
+    <button class="pickc rise" style="--i:6" data-p="paw" type="button"><span data-icon="paw"></span><span class="lbl">An animal</span></button>
   </div>
-  <div class="stage" id="hpStage" hidden><div class="ring" style="background:var(--sun-soft);transform:scale(1)"></div><svg class="buddy" data-mood="calm" viewBox="0 0 120 138" aria-hidden="true"></svg></div>
-  <p class="count" id="hpCount"></p>
+  <div class="scene play-scene th-scene" id="hpThink" hidden>
+    <span class="twinkle decor" style="left:10%;top:16%" data-icon="sparkle"></span><span class="twinkle decor" style="right:9%;top:30%;--d:.8s" data-icon="sparkle"></span><span class="twinkle decor" style="left:16%;top:56%;--d:1.4s;font-size:15px" data-icon="sparkle"></span><span class="twinkle decor" style="right:16%;top:66%;--d:.4s;font-size:15px" data-icon="sparkle"></span>
+    <div class="thought decor"><svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" stroke="rgba(138,90,0,.14)"/><circle id="hpRing" cx="50" cy="50" r="47" stroke="#f3bd4a" stroke-dasharray="295.300" stroke-dashoffset="295.300"/></svg><span id="hpIcon"></span></div>
+    <i class="th-dot a"></i><i class="th-dot b"></i>
+    <svg class="buddy" id="hpBuddy" data-mood="calm" viewBox="0 0 120 138" aria-hidden="true"></svg>
+  </div>
 </section>
 
 <!-- dance party -->
 <section class="screen" id="dance" hidden>
   <h1>Dance Party Button</h1>
-  <p class="sub">Dance when the music plays. When it stops… freeze like a statue!</p>
-  <svg class="buddy" id="dnBuddy" data-mood="happy" viewBox="0 0 120 138" aria-hidden="true"></svg>
+  <div class="scene play-scene dn-scene" id="dnScene">
+    <i class="beam decor"></i><i class="beam b2 decor"></i>
+    <span class="frost f1" data-icon="snow"></span><span class="frost f2" data-icon="snow"></span><span class="frost f3" data-icon="snow"></span><span class="frost f4" data-icon="snow"></span>
+    <p class="stars3" id="dnStars" aria-label="Rounds done"><span data-icon="star"></span><span data-icon="star"></span><span data-icon="star"></span></p>
+    <svg class="buddy" id="dnBuddy" data-mood="happy" viewBox="0 0 120 138" aria-hidden="true"></svg>
+    <div class="fz-bar"><i></i></div>
+  </div>
   <p class="cue" id="dnCue" aria-live="assertive">Ready?</p>
+  <p class="sub" id="dnSub">Dance when the music plays. When it stops, freeze like a statue!</p>
   <button class="go" id="dnGo" type="button">Start the music</button>
 </section>
 
 <!-- five senses -->
-<section class="screen" id="senses" hidden>
+<section class="screen" id="senses" data-k="0" hidden>
   <h1>5 Senses Button</h1>
-  <p class="cue" id="snCue" aria-live="polite"></p>
-  <p class="sub" id="snSub">Look around. Tap a circle for each one you find.</p>
-  <div class="dots" id="snDots"></div>
+  <div class="sn-top"><div class="steps5" id="snSteps" aria-hidden="true"></div><svg class="buddy sn-buddy" id="snBuddy" data-mood="ok" viewBox="0 0 120 138" aria-hidden="true"></svg></div>
+  <div class="card sn-card" id="snCard">
+    <div class="sn-ic" id="snIc"></div>
+    <p class="cue" id="snCue" aria-live="polite"></p>
+    <p class="sub" id="snSub"></p>
+    <div class="toks" id="snToks"></div>
+  </div>
 </section>
 
 <!-- done -->
 <section class="screen" id="done" hidden>
-  <svg class="buddy" id="doneBuddy" data-mood="calm" viewBox="0 0 120 138" aria-hidden="true"></svg>
   <h1 id="doneT">Nice work!</h1>
-  <p class="card say" id="doneSay" aria-live="polite"></p>
-  <p class="meter" aria-label="Calm meter"><span>Calm</span><i></i><i></i><i></i><i></i></p>
+  <div class="scene talk">
+    <svg class="buddy" id="doneBuddy" data-mood="calm" viewBox="0 0 120 138" aria-hidden="true"></svg>
+    <div class="talk-side">
+      <p class="calm" id="calmDone" aria-label="Calm meter"><span>Calm</span><i></i><i></i><i></i><i></i></p>
+      <p class="bubble" id="doneSay" aria-live="polite"></p>
+    </div>
+  </div>
   <div class="row"><button class="go" id="doneGo" type="button">Back to the buttons</button></div>
 </section>
 
 </div></main>
-<p class="foot wrap">A free game from <a href="/">Wavelength Psychology</a>. Nothing you do here is saved.</p>
+<p class="foot">A free game from <a href="/">Wavelength Psychology</a>. Nothing you do here is saved.</p>
 
-<script src="/games/buddy.js"></script>
+<script src="/games/play.js?v=3"></script>
 <script>
 (function(){
-var d=document,$=function(id){return d.getElementById(id);};
-var screens=['home','breathe','happy','dance','senses','done'],done={},timers=[],sound=true,ac=null,beat=null;
+var P=Play,$=P.$,d=document;
+var screens=['home','breathe','happy','dance','senses','done'],done={},timers=[],ivals=[],beat=null;
 function later(fn,ms){var t=setTimeout(fn,ms);timers.push(t);return t;}
-function clearAll(){timers.forEach(clearTimeout);timers=[];stopBeat();}
-function show(id){clearAll();screens.forEach(function(s){$(s).hidden=s!==id;});window.scrollTo(0,0);}
-/* sound: tiny synth, no files */
-function ctx(){if(!ac){var A=window.AudioContext||window.webkitAudioContext;if(A)ac=new A();}if(ac&&ac.state==='suspended')ac.resume();return ac;}
-function tone(f,t,dur,type,vol){if(!sound)return;var c=ctx();if(!c)return;var o=c.createOscillator(),g=c.createGain();o.type=type||'sine';o.frequency.value=f;
-  var s=c.currentTime+(t||0);g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(vol||.12,s+.02);g.gain.exponentialRampToValueAtTime(.001,s+dur);o.connect(g);g.connect(c.destination);o.start(s);o.stop(s+dur+.05);}
-function chime(){tone(523,0,.35);tone(659,.12,.35);tone(784,.24,.5);}
-function tap(){tone(440,0,.08,'triangle',.08);}
-function startBeat(){stopBeat();var i=0,notes=[262,330,392,330,294,349,440,349];beat=setInterval(function(){tone(notes[i%8],0,.16,'triangle',.11);if(i%2===0)tone(98,0,.12,'sine',.16);i++;},230);}
-function stopBeat(){if(beat){clearInterval(beat);beat=null;}}
-$('snd').addEventListener('click',function(){sound=!sound;this.setAttribute('aria-pressed',sound?'true':'false');this.textContent=sound?'Sound on':'Sound off';if(!sound)stopBeat();else tap();});
+function every(fn,ms){var t=setInterval(fn,ms);ivals.push(t);return t;}
+function clearAll(){timers.forEach(clearTimeout);timers=[];ivals.forEach(clearInterval);ivals=[];stopBeat();brStop();}
+/* each scene reports its height, so the things inside can size themselves to fit */
+function fit(){P.all('.scene').forEach(function(s){if(s.offsetHeight)s.style.setProperty('--sh',s.offsetHeight+'px');});}
+var cur='home',mainEl=d.querySelector('main'),guardT=0;
+function show(id,fromPop){clearAll();P.clearConfetti();screens.forEach(function(s){$(s).hidden=s!==id;});window.scrollTo(0,0);fit();
+  /* inside an exercise the header pill and the browser's Back both return to the buttons */
+  if(id!=='home'&&cur==='home'&&!fromPop){try{history.pushState({bb:1},'');}catch(e){}}
+  cur=id;$('backT').textContent=id==='home'?'Games':'Buttons';$('backLink').setAttribute('aria-label',id==='home'?'Back to all games':'Back to the Brain Buttons');
+  mainEl.classList.add('guard');clearTimeout(guardT);guardT=setTimeout(function(){mainEl.classList.remove('guard');},400);
+  var h=$(id).querySelector('h1');if(h){h.tabIndex=-1;try{h.focus({preventScroll:true});}catch(e){}}}
+$('backLink').addEventListener('click',function(e){if(cur!=='home'){e.preventDefault();P.sfx.tap();show('home');}});
+window.addEventListener('popstate',function(){if(cur!=='home')show('home',true);});
+window.addEventListener('resize',fit);
+if(window.ResizeObserver){var ro=new ResizeObserver(fit);P.all('.scene').forEach(function(x){ro.observe(x);});}
+function stars(id,n){P.all('#'+id+' span').forEach(function(s,i){s.classList.toggle('on',i<n);});}
 
+/* ---------- home ---------- */
 function nDone(){return Object.keys(done).length;}
-function paint(){var n=nDone();[].forEach.call(d.querySelectorAll('.meter'),function(m){[].forEach.call(m.querySelectorAll('i'),function(x,i){x.className=i<n?'on':'';});});
-  [].forEach.call(d.querySelectorAll('.bb'),function(b){b.classList.toggle('done',!!done[b.getAttribute('data-b')]);});
-  $('buddy').setAttribute('data-mood',n===0?'worry':n<3?'ok':n<4?'calm':'happy');
-  $('homeSay').textContent=n===0?'Uh-oh! My alarm is buzzing, and I feel jumpy. Can you help me feel calm? Press a Brain Button!':
-    n<4?'That helped! My alarm is getting quieter. Want to press another button?':'Thank you! I checked, and we’re okay. You can press any button again whenever you like.';}
+function homeLine(){var n=nDone();return n===0?'Uh-oh! My alarm is buzzing, and I feel jumpy. Can you help me feel calm? Press a Brain Button!':
+  n<4?'That helped! My alarm is getting quieter. Want to press another button?':'Thank you! I checked, and we’re okay. You can press any button again whenever you like.';}
+function paint(){var n=nDone();
+  P.all('.calm').forEach(function(m){P.all('i',m).forEach(function(x,i){x.className=i<n?'on':'';});});
+  P.all('.bb').forEach(function(b){b.classList.toggle('done',!!done[b.getAttribute('data-b')]);});
+  P.mood($('buddy'),n===0?'worry':n<3?'ok':n<4?'calm':'happy');$('homeSay').textContent=homeLine();}
+var HI=['Hi! Thank you for helping me.','Hee hee, that tickles!','I like practicing with you.','Which button should we press?'],hi=0;
+$('budBtn').addEventListener('click',function(){P.react($('buddy'),'hop');P.sfx.pop(hi%4);P.burst($('buddy'),{n:9,r:64});P.say($('homeSay'),HI[hi++%HI.length]);
+  later(function(){P.say($('homeSay'),homeLine());},2800);});
+var start={};
+P.all('.bb').forEach(function(b){b.addEventListener('click',function(){P.sfx.tap();start[b.getAttribute('data-b')]();});});
+
+/* ---------- done ---------- */
 var SAY={breathe:'Slow breathing tells me we are safe. My alarm is quieter now.',happy:'Happy thoughts feel warm and cozy. I like your happy place!',
   dance:'Moving my body shook the wiggly feelings out. That was fun!',senses:'Now I know where we are, and I can tell we’re safe.'};
-function finish(b){clearAll();done[b]=1;paint();chime();var all=nDone()===4;
+function finish(b,extra){clearAll();var was=nDone();done[b]=1;var all=nDone()===4;
   $('doneT').textContent=all?'You did it!':'Nice work!';
-  $('doneSay').textContent=all?'Thanks for helping me! I checked, and we’re okay. Every time we practice, I learn that we can handle big feelings.':SAY[b];
-  $('doneBuddy').setAttribute('data-mood',all?'happy':'calm');$('doneBuddy').classList.toggle('bounce',all);
-  show('done');if(all)confetti();}
-function confetti(){var box=d.createElement('div');box.className='confetti';var cols=['var(--coral-pop)','var(--sun-pop)','var(--teal-pop)','var(--blue-pop)'];
-  for(var i=0;i<40;i++){var c=d.createElement('i');c.style.left=(Math.random()*100)+'%';c.style.background=cols[i%4];c.style.animationDelay=(Math.random()*.8)+'s';box.appendChild(c);}
-  d.body.appendChild(box);setTimeout(function(){box.remove();},3800);}
+  $('doneSay').textContent=all?'Thanks for helping me! I checked, and we’re okay. Every time we practice, I learn that we can handle big feelings.':SAY[b]+(extra?' '+extra:'');
+  P.mood($('doneBuddy'),all?'happy':'calm');$('doneBuddy').classList.toggle('bounce',all);
+  show('done');
+  /* fill the calm meter one step, so the child sees it grow */
+  P.all('#calmDone i').forEach(function(x,i){x.className=i<was?'on':'';});
+  later(function(){paint();P.sfx.chime();P.react($('doneBuddy'),'hop');if(all)P.confetti();else P.burst($('doneBuddy'),{n:12,r:80});},350);}
 $('doneGo').addEventListener('click',function(){show('home');});
-[].forEach.call(d.querySelectorAll('.bb'),function(b){b.addEventListener('click',function(){tap();start[b.getAttribute('data-b')]();});});
 
-var start={};
-/* breathing: in for 5, out for 7, three times */
-start.breathe=function(){show('breathe');$('ring').style.transitionDuration='0s';$('ring').style.transform='scale(.55)';$('brCue').textContent='Ready?';$('brCount').textContent='';$('brGo').hidden=false;};
-$('brGo').addEventListener('click',function(){this.hidden=true;var round=0;
-  function phase(inhale){var n=inhale?5:7,i=1,ring=$('ring');ring.style.transitionDuration=n+'s';ring.style.transform=inhale?'scale(1)':'scale(.55)';
-    $('brCue').textContent=inhale?'Breathe in…':'Breathe out, nice and slow…';tone(inhale?330:262,0,.6,'sine',.08);$('brCount').textContent=i;
-    (function tick(){later(function(){i++;if(i<=n){$('brCount').textContent=i;tick();}else if(inhale)phase(false);else{round++;if(round<3)phase(true);else finish('breathe');}},1000);})();}
-  later(function(){phase(true);},60);});
-/* happy thoughts: pick one, picture it for 15 seconds */
-start.happy=function(){show('happy');$('hpCards').hidden=false;$('hpStage').hidden=true;$('hpCount').textContent='';$('hpSub').textContent='Pick a happy thing to think about.';};
-[].forEach.call(d.querySelectorAll('.pickc'),function(c){c.addEventListener('click',function(){tap();$('hpCards').hidden=true;$('hpStage').hidden=false;
-  $('hpSub').textContent='Close your eyes and picture it. What do you see? What do you hear? Open your eyes when you hear the chime.';var n=15;$('hpCount').textContent=n;
-  (function tick(){later(function(){n--;$('hpCount').textContent=n;if(n>0)tick();else finish('happy');},1000);})();});});
-/* dance party: three rounds of dance, then freeze */
-start.dance=function(){show('dance');$('dnCue').textContent='Ready?';$('dnGo').hidden=false;$('dnBuddy').classList.remove('bounce');$('dance').classList.remove('freeze');};
-$('dnGo').addEventListener('click',function(){this.hidden=true;var round=0;
-  function go(){$('dance').classList.remove('freeze');$('dnCue').textContent='Dance!';$('dnBuddy').classList.add('bounce');$('dnBuddy').setAttribute('data-mood','happy');startBeat();
-    later(function(){stopBeat();tone(196,0,.3,'square',.07);$('dance').classList.add('freeze');$('dnCue').textContent='Freeze!';$('dnBuddy').classList.remove('bounce');$('dnBuddy').setAttribute('data-mood','ok');
-      later(function(){round++;if(round<3)go();else finish('dance');},3000);},4500+Math.random()*3500);}
-  go();});
-/* five senses: 5 see, 4 touch, 3 hear, 2 smell, 1 deep breath */
-var STEPS=[[5,'things you can see','👀'],[4,'things you can touch','✋'],[3,'things you can hear','👂'],[2,'things you can smell','👃'],[1,'slow, deep breath','🍃']];
+/* ---------- breathing: in for 5, out for 7, three times ---------- */
+var IN=5000,OUT=7000,MIN=.42,br={mode:'hold',state:'idle',p:0,n:0,raf:0,held:false,snd:null};
+var hold=$('hold'),holdT=$('holdT');
+function brSet(p){br.p=p;$('balloon').style.setProperty('--s',(MIN+(1-MIN)*p).toFixed(4));hold.style.setProperty('--p',p.toFixed(4));}
+function brPips(n,k){var h='';for(var i=0;i<n;i++)h+='<i'+(i<k?' class="on"':'')+'></i>';if($('brPips').getAttribute('data-k')!==n+'/'+k){$('brPips').innerHTML=h;$('brPips').setAttribute('data-k',n+'/'+k);}}
+function brQuiet(){cancelAnimationFrame(br.raf);br.raf=0;if(br.snd){br.snd();br.snd=null;}}
+function brStop(){brQuiet();br.held=false;br.state='off';hold.classList.remove('down');}
+function brIdle(msg){br.state='idle';brSet(0);brPips(5,0);P.say($('brCue'),msg);hold.classList.remove('rest');holdT.textContent=br.mode==='hold'?'Hold to breathe in':'Start';P.mood($('brBuddy'),'ok');
+  /* already pressing (pressed again while the balloon settled)? then start right away */
+  if(br.held&&br.mode==='hold'){hold.classList.add('down');brIn();}}
+function brIn(){if(br.state!=='idle')return;br.state='in';var t0=performance.now();P.say($('brCue'),'Breathe in…');br.snd=P.glide(220,330,IN/1000,.05);
+  (function f(){var p=Math.min(1,(performance.now()-t0)/IN),k=Math.min(5,Math.floor(p*5)+1);brSet(p);brPips(5,k);holdT.textContent='Breathing in… '+k;
+    if(p>=1)return brFull();br.raf=requestAnimationFrame(f);})();}
+function brFull(){brQuiet();br.state='full';P.sfx.good();P.buzz(20);P.say($('brCue'),'Now let go, and breathe out slowly.');holdT.textContent='Let go';
+  if(br.mode==='auto'||!br.held)later(brOut,br.mode==='auto'?500:0);else later(function(){if(br.state==='full')brOut();},1800);}
+function brEarly(){brQuiet();br.state='sink';var from=br.p,t0=performance.now();
+  (function f(){var q=Math.min(1,(performance.now()-t0)/450);brSet(from*(1-q));if(q>=1)return brIdle('Almost! Keep holding until the balloon is full.');br.raf=requestAnimationFrame(f);})();}
+function brOut(){if(br.state!=='full')return;br.state='out';hold.classList.add('rest');hold.classList.remove('down');P.mood($('brBuddy'),'calm');P.say($('brCue'),'Breathe out, nice and slow…');
+  br.snd=P.glide(330,196,OUT/1000,.05);var t0=performance.now(),lastPuff=0;
+  (function f(){var now=performance.now(),q=Math.min(1,(now-t0)/OUT),k=Math.min(7,Math.floor(q*7)+1);brSet(1-q);brPips(7,k);holdT.textContent='Breathing out… '+k;
+    if(!P.reduced&&now-lastPuff>420&&q<.92){lastPuff=now;var u=d.createElement('i');u.className='puff decor';u.style.setProperty('--px',((Math.random()-.5)*150)+'px');u.style.setProperty('--py',(-20-Math.random()*70)+'px');$('brScene').insertBefore(u,$('balloon'));setTimeout(function(){u.remove();},1900);}
+    if(q>=1)return brDone();br.raf=requestAnimationFrame(f);})();}
+function brDone(){brQuiet();br.n++;stars('brStars',br.n);P.sfx.pop(br.n);P.react($('brBuddy'),'hop');P.burst($('brStars'),{n:8,r:40,color:'#f3bd4a'});
+  if(br.n>=3)return later(function(){finish('breathe');},700);
+  brIdle(br.mode==='auto'?(br.n===1?'One breath done. Here comes the next one.':'Last one!'):(br.n===1?'One breath done! Press and hold for the next.':'Last one! Press and hold.'));
+  if(br.mode==='auto')later(brIn,1500);}
+function brPress(){if(br.mode!=='hold')return;br.held=true;if(br.state==='idle'){hold.classList.add('down');P.buzz(10);brIn();}}
+function brLift(){if(br.mode!=='hold')return;br.held=false;hold.classList.remove('down');if(br.state==='in')brEarly();else if(br.state==='full')brOut();}
+hold.addEventListener('pointerdown',function(e){if(e.button)return;try{hold.setPointerCapture(e.pointerId);}catch(x){}brPress();});
+['pointerup','pointercancel','lostpointercapture'].forEach(function(t){hold.addEventListener(t,brLift);});
+hold.addEventListener('keydown',function(e){if((e.key===' '||e.key==='Enter')&&!e.repeat){e.preventDefault();brPress();}});
+hold.addEventListener('keyup',function(e){if(e.key===' '||e.key==='Enter'){e.preventDefault();brLift();}});
+hold.addEventListener('contextmenu',function(e){e.preventDefault();});
+hold.addEventListener('click',function(){if(br.mode==='auto'&&br.state==='idle'){P.sfx.tap();brIn();}});
+$('brMode').addEventListener('click',function(){if(br.n>=3)return;brQuiet();timers.forEach(clearTimeout);timers=[];br.mode=br.mode==='hold'?'auto':'hold';this.textContent=br.mode==='hold'?'Just watch':'I want to hold the button';
+  brIdle(br.mode==='hold'?'Press and hold the button. Breathe in as the balloon fills.':'Press Start, then breathe along with the balloon.');});
+start.breathe=function(){show('breathe');br.n=0;br.mode='hold';$('brMode').textContent='Just watch';stars('brStars',0);brIdle('Press and hold the button. Breathe in as the balloon fills.');};
+
+/* ---------- happy thoughts: pick one, picture it for 15 seconds ---------- */
+var THINK=['Close your eyes and picture it. What can you see?','What can you hear there?','How does your body feel there?'];
+start.happy=function(){show('happy');$('hpPick').hidden=false;$('hpThink').hidden=true;$('hpSub').textContent='Pick a happy thing to think about.';};
+P.all('.pickc').forEach(function(c){c.addEventListener('click',function(){P.sfx.pop(2);$('hpPick').hidden=true;$('hpThink').hidden=false;fit();
+  $('hpIcon').innerHTML=P.icon(c.getAttribute('data-p'));P.mood($('hpBuddy'),'calm');
+  var ring=$('hpRing');ring.style.transition='none';ring.style.strokeDashoffset='295.3';void ring.getBoundingClientRect();ring.style.transition='stroke-dashoffset 15s linear';ring.style.strokeDashoffset='0';
+  P.say($('hpSub'),THINK[0]);later(function(){P.say($('hpSub'),THINK[1]);},5000);later(function(){P.say($('hpSub'),THINK[2]);},10000);
+  later(function(){P.sfx.chime();P.say($('hpSub'),'Open your eyes.');P.mood($('hpBuddy'),'happy');later(function(){finish('happy');},1300);},15000);});});
+
+/* ---------- dance party: three rounds of dance, then freeze ---------- */
+function startBeat(){stopBeat();var i=0,notes=[262,330,392,330,294,349,440,349];beat=setInterval(function(){P.tone(notes[i%8],0,.16,'triangle',.11);if(i%2===0)P.tone(98,0,.12,'sine',.16);else P.tone(1800,0,.03,'square',.015);i++;},230);}
+function stopBeat(){if(beat){clearInterval(beat);beat=null;}}
+P.onSound(function(on){if(!on)stopBeat();else if(dn.state==='dance')startBeat();});
+var dn={state:'idle',round:0,ok:0,moved:false},dnS=$('dnScene'),dnB=$('dnBuddy'),NC=['#b4432b','#1f6b6f','#3a4fa3','#a36c00'];
+function dnNote(x){if(P.reduced)return;var n=d.createElement('span');n.className='note decor';n.innerHTML=P.icon('music');n.style.left=(x==null?10+Math.random()*76:x)+'%';n.style.setProperty('--c',NC[Math.floor(Math.random()*4)]);n.style.setProperty('--nx',((Math.random()-.5)*80)+'px');n.style.setProperty('--nr',((Math.random()-.5)*70)+'deg');dnS.appendChild(n);setTimeout(function(){n.remove();},2050);}
+function dnClear(){dnB.classList.remove('d1','d2','d3');}
+function dnGo(){dn.state='dance';$('dance').classList.remove('freeze');dnS.classList.remove('frozen');dnS.classList.add('on');P.say($('dnCue'),'Dance!');$('dnSub').textContent='Tap the stage to make the buddy jump.';
+  P.mood(dnB,'happy');dnClear();dnB.classList.add('d'+(dn.round%3+1));startBeat();every(function(){if(dn.state!=='dance')return;dnNote();if(P.reduced){dn.flip=!dn.flip;P.mood(dnB,dn.flip?'calm':'happy');}},330);
+  later(dnFreeze,4500+Math.random()*3500);}
+function dnFreeze(){dn.state='freeze';dn.moved=false;stopBeat();P.tone(196,0,.3,'square',.07);P.buzz(30);$('dance').classList.add('freeze');dnS.classList.remove('on');dnS.classList.add('frozen');
+  P.say($('dnCue'),'Freeze!');$('dnSub').textContent='Stay as still as a statue…';dnClear();P.mood(dnB,'freeze');
+  later(function(){if(!dn.moved)dn.ok++;dn.round++;stars('dnStars',dn.round);ivals.forEach(clearInterval);ivals=[];
+    if(dn.round<3)dnGo();else{dn.state='idle';dnS.classList.remove('frozen');finish('dance',dn.ok===3?'You froze every time!':'You stayed frozen '+dn.ok+' of 3 times.');}},3000);}
+dnS.addEventListener('pointerdown',function(e){
+  if(dn.state==='dance'){var r=dnS.getBoundingClientRect();if(P.reduced)P.mood(dnB,'oops');P.react(dnB,'hop');P.tone(140,0,.14,'sine',.2);P.tone(660+Math.random()*300,0,.1,'triangle',.08);P.burst({x:e.clientX,y:e.clientY},{n:8,r:50});dnNote((e.clientX-r.left)/r.width*100);}
+  else if(dn.state==='freeze'){dn.moved=true;P.mood(dnB,'oops');P.react(dnB,'shake');P.sfx.bad();P.say($('dnCue'),'Oops, you moved!');later(function(){if(dn.state==='freeze'){P.mood(dnB,'freeze');P.say($('dnCue'),'Freeze!');}},800);}
+});
+start.dance=function(){show('dance');dn.state='idle';dn.round=0;dn.ok=0;stars('dnStars',0);dnClear();dnS.classList.remove('on','frozen');$('dance').classList.remove('freeze');P.mood(dnB,'happy');
+  $('dnCue').textContent='Ready?';$('dnSub').textContent='Dance when the music plays. When it stops, freeze like a statue!';$('dnGo').classList.remove('gone');};
+$('dnGo').addEventListener('click',function(){this.classList.add('gone');dnGo();});
+
+/* ---------- five senses: 5 see, 4 touch, 3 hear, 2 smell, 1 deep breath ---------- */
+var STEPS=[[5,'things you can see','eye','Look around. Tap a circle for each one you find.','Good looking!'],[4,'things you can touch','hand','Reach out and feel them. Tap a circle for each one.','Nice touching!'],
+  [3,'things you can hear','ear','Listen closely. Tap a circle for each sound.','Great listening!'],[2,'things you can smell','nose','Take a sniff. Tap a circle for each one.','Good sniffing!'],[1,'slow, deep breath','wind','In through your nose, out through your mouth. Then tap the circle.','Ahhh.']];
 start.senses=function(){show('senses');var k=0;
-  function step(){var s=STEPS[k];$('snCue').textContent=(k<4?'Find ':'Take ')+s[0]+' '+s[1];$('snSub').textContent=k<4?'Look around. Tap a circle for each one you find.':'In through your nose, out through your mouth. Then tap the circle.';
-    var box=$('snDots');box.innerHTML='';for(var i=0;i<s[0];i++){var b=d.createElement('button');b.className='dot';b.type='button';b.setAttribute('aria-pressed','false');b.setAttribute('aria-label',s[1]+' '+(i+1));b.textContent=s[2];box.appendChild(b);}}
-  $('snDots').onclick=function(e){var b=e.target.closest('.dot');if(!b||b.getAttribute('aria-pressed')==='true')return;b.setAttribute('aria-pressed','true');tone(392+60*k,0,.12,'triangle',.09);
-    if(!$('snDots').querySelector('.dot[aria-pressed="false"]')){k++;if(k<STEPS.length)later(step,450);else later(function(){finish('senses');},450);}};
+  $('snSteps').innerHTML=STEPS.map(function(s){return '<span class="st"><b>'+s[0]+'</b>'+P.icon('check')+'</span>';}).join('');
+  function step(){var s=STEPS[k];$('senses').setAttribute('data-k',k);P.all('.st').forEach(function(x,i){x.className='st'+(i<k?' done':i===k?' now':'');});
+    $('snIc').innerHTML=P.icon(s[2]);$('snCue').textContent=(k<4?'Find ':'Take ')+s[0]+' '+s[1];$('snSub').textContent=s[3];
+    var h='';for(var i=0;i<s[0];i++)h+='<button class="tok" type="button" aria-pressed="false" aria-label="'+s[1]+', number '+(i+1)+'"><b>'+(i+1)+'</b>'+P.icon('check')+'</button>';
+    $('snToks').style.setProperty('--n',s[0]);$('snToks').innerHTML=h;var c=$('snCard');c.classList.remove('pop');void c.offsetWidth;c.classList.add('pop');P.mood($('snBuddy'),'ok');}
+  $('snToks').onclick=function(e){var b=e.target.closest('.tok');if(!b||b.getAttribute('aria-pressed')==='true')return;b.setAttribute('aria-pressed','true');
+    var left=$('snToks').querySelectorAll('.tok[aria-pressed="false"]').length;P.sfx.pop(STEPS[k][0]-left);P.buzz(10);P.burst(b,{n:8,r:38});P.react($('snBuddy'),'nod');
+    if(!left){P.mood($('snBuddy'),'happy');P.react($('snBuddy'),'hop');k++;if(k<STEPS.length)later(step,750);else{P.all('.st').forEach(function(x){x.className='st done';});later(function(){finish('senses');},750);}}};
   step();};
-paint();
+paint();fit();d.addEventListener('DOMContentLoaded',fit);window.addEventListener('load',fit);
 })();
 </script>
 </body>

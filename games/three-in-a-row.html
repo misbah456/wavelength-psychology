@@ -17,62 +17,85 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="/games/play.css">
+<link rel="stylesheet" href="/games/play.css?v=3">
 <style>
-.screen{gap:16px;padding-block:18px 22px}
-.opts{display:flex;gap:8px;justify-content:center}
-.opts .pill-btn[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:21rem}
-.cell{appearance:none;-webkit-appearance:none;aspect-ratio:1;border:0;border-radius:22px;background:var(--card);box-shadow:0 1px 0 var(--line),0 8px 20px var(--shadow);cursor:pointer;display:grid;place-items:center;font-weight:800;font-size:3rem;line-height:1}
-.cell[data-v="X"]{color:var(--coral)}.cell[data-v="O"]{color:var(--teal)}
-.cell.win{background:var(--sun-soft)}
-.msg{min-height:1.6em;font-weight:700;font-size:1.125rem;color:var(--ink)}
-.who{display:flex;align-items:center;gap:10px;justify-content:center}
-.who .buddy{width:56px}
+.screen{gap:14px}
+.boardwrap{flex:1;display:grid;place-items:center;width:100%;min-height:180px}
+.tboard{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));width:min(100%,22rem,max(180px,calc(100vh - 384px)));width:min(100%,22rem,max(180px,calc(100dvh - 384px)));aspect-ratio:1;padding:12px;border-radius:30px;background:var(--card);box-shadow:0 1px 0 var(--line),0 6px 0 rgba(22,37,63,.10),0 20px 34px var(--shadow)}
+.cell{appearance:none;-webkit-appearance:none;position:relative;z-index:1;min-width:0;min-height:0;padding:0;border:0;background:none;cursor:pointer;border-radius:18px;transition:background .15s}
+.gridlines{position:absolute;inset:12px;width:calc(100% - 24px);height:calc(100% - 24px);pointer-events:none}
+.gridlines path{fill:none;stroke:#cfe6e1;stroke-width:4;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.cell:not([data-v]):active{background:var(--paper)}
+@media (hover:hover){.tboard:not(.over) .cell:not([data-v]):hover{background:var(--paper)}}
+.cell[data-v]{cursor:default}
+.cell svg{position:absolute;left:16%;top:16%;width:68%;height:68%;overflow:visible}
+.mk{fill:none;stroke-width:7;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:draw .26s ease-out forwards}
+.mk.x{stroke:var(--coral-pop)}.mk.x.b{animation-delay:.14s}.mk.o{stroke:var(--teal-pop);animation-duration:.36s}
+@keyframes draw{to{stroke-dashoffset:0}}
+.cell.win svg{animation:winpulse .7s ease-in-out infinite alternate}
+@keyframes winpulse{to{transform:scale(1.14)}}
+.winline{position:absolute;inset:12px;width:calc(100% - 24px);height:calc(100% - 24px);pointer-events:none;overflow:visible}
+.winline line{stroke:var(--sun-pop);stroke-width:12;stroke-linecap:round;opacity:.85;stroke-dasharray:1;stroke-dashoffset:1;animation:draw .4s .15s ease-out forwards}
+@media (min-width:700px) and (min-height:900px){.tboard{width:min(100%,31rem,calc(100dvh - 470px));padding:16px;border-radius:38px}.mk{stroke-width:6}}
 </style>
 </head>
-<body>
+<body class="game">
 <header class="top"><div class="wrap">
-  <a class="back" href="/games/">‹ Games</a>
+  <a class="back" href="/games/"><span data-icon="back"></span>Games</a>
   <span class="name">Three in a Row</span>
-  <button class="pill-btn" id="snd" type="button" aria-pressed="true">Sound on</button>
+  <button class="snd" id="snd" type="button"></button>
 </div></header>
-<main><div class="wrap" style="flex:1;display:flex;flex-direction:column">
+<main><div class="wrap">
 <section class="screen">
-  <h1>Three in a Row</h1>
-  <div class="opts" role="group" aria-label="Who is playing"><button class="pill-btn" data-m="buddy" type="button" aria-pressed="true">Play the buddy</button><button class="pill-btn" data-m="two" type="button" aria-pressed="false">2 players</button></div>
-  <div class="who"><svg class="buddy" id="buddy" data-mood="ok" viewBox="0 0 120 138" aria-hidden="true"></svg><p class="msg" id="msg" aria-live="polite"></p></div>
-  <div class="grid" id="grid"></div>
+  <h1 class="sr">Three in a Row</h1>
+  <div class="scene talk mini">
+    <svg class="buddy" id="buddy" data-mood="ok" viewBox="0 0 120 138" aria-hidden="true"></svg>
+    <div class="talk-side">
+      <p class="chips" id="score" aria-label="Score"></p>
+      <p class="bubble" id="msg" aria-live="polite"></p>
+    </div>
+  </div>
+  <div class="row"><span class="seg" role="group" aria-label="Who is playing"><button data-m="buddy" type="button" aria-pressed="true">Play the buddy</button><button data-m="two" type="button" aria-pressed="false">2 players</button></span></div>
+  <div class="boardwrap"><div class="tboard" id="grid"></div></div>
   <div class="row"><button class="go soft" id="again" type="button">New game</button></div>
 </section>
 </div></main>
-<p class="foot wrap">A free game from <a href="/">Wavelength Psychology</a>. Nothing you do here is saved.</p>
-<script src="/games/buddy.js"></script>
+<p class="foot">A free game from <a href="/">Wavelength Psychology</a>. Nothing you do here is saved.</p>
+<script src="/games/play.js?v=3"></script>
 <script>
 (function(){
-var d=document,$=function(id){return d.getElementById(id);},sound=true,ac=null;
-function tone(f,t,dur,type,vol){if(!sound)return;var A=window.AudioContext||window.webkitAudioContext;if(!A)return;if(!ac)ac=new A();if(ac.state==='suspended')ac.resume();
-  var o=ac.createOscillator(),g=ac.createGain(),s=ac.currentTime+(t||0);o.type=type||'triangle';o.frequency.value=f;g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(vol||.1,s+.02);g.gain.exponentialRampToValueAtTime(.001,s+dur);o.connect(g);g.connect(ac.destination);o.start(s);o.stop(s+dur+.05);}
-$('snd').addEventListener('click',function(){sound=!sound;this.setAttribute('aria-pressed',sound?'true':'false');this.textContent=sound?'Sound on':'Sound off';});
-
-var g=$('grid'),b=[],turn='X',mode='buddy',over=false,L=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+var P=Play,$=P.$,d=document;
+var g=$('grid'),bud=$('buddy'),msg=$('msg'),b=[],turn='X',mode='buddy',over=false,tm=null,sc={X:0,O:0,T:0},L=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+var MARK={X:'<svg viewBox="0 0 48 48" aria-hidden="true"><path class="mk x" pathLength="1" d="M11 11 37 37"/><path class="mk x b" pathLength="1" d="M37 11 11 37"/></svg>',
+          O:'<svg viewBox="0 0 48 48" aria-hidden="true"><circle class="mk o" pathLength="1" cx="24" cy="24" r="14" transform="rotate(-90 24 24)"/></svg>'};
 function win(){for(var i=0;i<8;i++){var l=L[i];if(b[l[0]]&&b[l[0]]===b[l[1]]&&b[l[1]]===b[l[2]])return l;}return null;}
-function draw(){[].forEach.call(g.children,function(c,i){c.textContent=b[i]==='X'?'✕':b[i]==='O'?'◯':'';c.setAttribute('data-v',b[i]||'');c.setAttribute('aria-label','Square '+(i+1)+(b[i]?', '+b[i]:', empty'));});}
-function say(){$('msg').textContent=mode==='buddy'?(turn==='X'?'Your turn! You are ✕.':'The buddy is thinking…'):'Player '+(turn==='X'?'1 (✕)':'2 (◯)')+', your turn.';}
-function reset(){b=Array(9).fill('');turn='X';over=false;g.innerHTML='';for(var i=0;i<9;i++){var c=d.createElement('button');c.className='cell';c.type='button';c.setAttribute('data-i',i);g.appendChild(c);}$('buddy').setAttribute('data-mood','ok');draw();say();}
-function finish(){var w=win();if(w){over=true;w.forEach(function(i){g.children[i].classList.add('win');});
-    var me=b[w[0]];$('msg').textContent=mode==='buddy'?(me==='X'?'You win! Nice one.':'The buddy got three. Good game!'):'Player '+(me==='X'?1:2)+' wins! Good game.';
-    $('buddy').setAttribute('data-mood',mode==='buddy'&&me==='X'?'calm':'happy');tone(523,0,.2);tone(784,.15,.4);return true;}
-  if(b.every(Boolean)){over=true;$('msg').textContent='A tie! Good game.';$('buddy').setAttribute('data-mood','happy');return true;}return false;}
-function move(i){if(over||b[i])return false;b[i]=turn;tone(turn==='X'?440:330,0,.1);draw();if(finish())return true;turn=turn==='X'?'O':'X';say();return true;}
+function score(){var a=mode==='buddy'?['You','Buddy']:['P1','P2'];
+  $('score').innerHTML='<span class="chip'+(!over&&turn==='X'?' turn':'')+'">'+a[0]+': '+sc.X+'</span><span class="chip'+(!over&&turn==='O'?' turn':'')+'">'+a[1]+': '+sc.O+'</span><span class="chip">Ties: '+sc.T+'</span>';}
+function say(){P.say(msg,mode==='buddy'?(turn==='X'?'Your turn! You are X.':'Hmm, let me think…'):'Player '+(turn==='X'?'1, you are X.':'2, you are O.')+' Your turn!');
+  if(mode==='buddy')P.mood(bud,turn==='X'?'ok':'think');score();}
+function reset(){clearTimeout(tm);P.clearConfetti();b=['','','','','','','','',''];turn='X';over=false;g.classList.remove('over');g.innerHTML='';
+  for(var i=0;i<9;i++){var c=d.createElement('button');c.className='cell';c.type='button';c.setAttribute('data-i',i);c.setAttribute('aria-label','Square '+(i+1)+', empty');g.appendChild(c);}
+  g.insertAdjacentHTML('beforeend','<svg class="gridlines" viewBox="0 0 300 300" aria-hidden="true"><path d="M100 8v284M200 8v284M8 100h284M8 200h284"/></svg>');
+  P.mood(bud,'ok');bud.classList.remove('bounce');say();}
+function finish(){var w=win();
+  if(w){over=true;g.classList.add('over');w.forEach(function(i){g.children[i].classList.add('win');});
+    var p=function(i){return [(i%3)*100+50,Math.floor(i/3)*100+50];},a=p(w[0]),z=p(w[2]),dx=(z[0]-a[0])/200*34,dy=(z[1]-a[1])/200*34;
+    g.insertAdjacentHTML('beforeend','<svg class="winline" viewBox="0 0 300 300" aria-hidden="true"><line pathLength="1" x1="'+(a[0]-dx)+'" y1="'+(a[1]-dy)+'" x2="'+(z[0]+dx)+'" y2="'+(z[1]+dy)+'"/></svg>');
+    var me=b[w[0]];sc[me]++;
+    if(mode==='buddy'){if(me==='X'){P.say(msg,'You win! Nice one.');P.mood(bud,'happy');P.react(bud,'hop');P.confetti(50);}else{P.say(msg,'I got three in a row. Good game!');P.mood(bud,'happy');bud.classList.add('bounce');}}
+    else{P.say(msg,'Player '+(me==='X'?1:2)+' wins! Good game.');P.mood(bud,'happy');P.react(bud,'hop');P.confetti(50);}
+    P.sfx.win();score();return true;}
+  if(b.every(Boolean)){over=true;g.classList.add('over');sc.T++;P.say(msg,'A tie! Good game.');P.mood(bud,'calm');P.react(bud,'nod');P.sfx.chime();score();return true;}
+  return false;}
+function move(i){if(over||b[i])return false;b[i]=turn;var c=g.children[i];c.innerHTML=MARK[turn];c.setAttribute('data-v',turn);c.setAttribute('aria-label','Square '+(i+1)+', '+turn);
+  P.tone(turn==='X'?440:330,0,.1);P.buzz(8);if(finish())return true;turn=turn==='X'?'O':'X';say();return true;}
 function buddyMove(){var free=[];b.forEach(function(v,i){if(!v)free.push(i);});
   function finds(p){for(var k=0;k<free.length;k++){b[free[k]]=p;var w=win();b[free[k]]='';if(w)return free[k];}return -1;}
   var pick=finds('O');if(pick<0&&Math.random()<.6)pick=finds('X');if(pick<0)pick=free[Math.floor(Math.random()*free.length)];move(pick);}
 g.addEventListener('click',function(e){var c=e.target.closest('.cell');if(!c)return;if(mode==='buddy'&&turn==='O')return;
-  if(move(+c.getAttribute('data-i'))&&!over&&mode==='buddy')setTimeout(buddyMove,650);});
-[].forEach.call(d.querySelectorAll('.opts .pill-btn'),function(x){x.addEventListener('click',function(){mode=x.getAttribute('data-m');[].forEach.call(d.querySelectorAll('.opts .pill-btn'),function(y){y.setAttribute('aria-pressed',y===x?'true':'false');});reset();});});
-$('again').addEventListener('click',reset);reset();
-
+  if(move(+c.getAttribute('data-i'))&&!over&&mode==='buddy')tm=setTimeout(buddyMove,750+Math.random()*450);});
+P.all('.seg button').forEach(function(x){x.addEventListener('click',function(){if(x.getAttribute('data-m')===mode)return;P.sfx.tap();mode=x.getAttribute('data-m');sc={X:0,O:0,T:0};P.all('.seg button').forEach(function(y){y.setAttribute('aria-pressed',y===x?'true':'false');});reset();});});
+$('again').addEventListener('click',function(){P.sfx.tap();reset();});reset();
 })();
 </script>
 </body>

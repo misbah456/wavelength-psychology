@@ -17,68 +17,114 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="/games/play.css">
+<link rel="stylesheet" href="/games/play.css?v=3">
 <style>
-.screen{gap:16px;padding-block:18px 22px}
-.track{position:relative;width:100%;max-width:26rem;height:66px;border-radius:999px;background:var(--card);box-shadow:0 1px 0 var(--line),0 8px 20px var(--shadow)}
-.track::after{content:"🏁";position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:1.6rem}
-.track .buddy{position:absolute;left:8px;top:4px;width:50px;transition:left .35s ease-out}
-.light{appearance:none;-webkit-appearance:none;width:min(58vw,230px,32vh);aspect-ratio:1;border-radius:50%;border:0;background:var(--line-strong);color:var(--card);font-weight:800;font-size:1.9rem;letter-spacing:-.02em;cursor:pointer;box-shadow:0 10px 0 rgba(22,37,63,.18),0 20px 34px var(--shadow);transition:background .08s}
-.light[data-s="go"]{background:#2f9a62;box-shadow:0 10px 0 #1d6b42,0 20px 34px var(--shadow)}
-.light[data-s="stop"]{background:#c8452f;box-shadow:0 10px 0 #8a2c1c,0 20px 34px var(--shadow)}
-.light:active{transform:translateY(6px)}
-.msg{min-height:1.6em;font-weight:700;color:var(--ink)}
+.screen{gap:14px}
+/* the road */
+.road{flex:none;height:clamp(118px,21vh,170px);--x:0}
+.road .lane{position:absolute;left:0;right:0;bottom:0;height:34%;background:#3b4a63}
+.road .lane::before{content:"";position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.75) 0 18px,transparent 18px 36px);background-size:36px 4px}
+.road.moving .lane::before{animation:lane .35s linear}
+@keyframes lane{to{background-position:-36px 0}}
+.road .flag{position:absolute;right:14px;bottom:26%;font-size:clamp(34px,6.500vh,46px);color:var(--ink);transform-origin:20% 100%}
+.road.won .flag{animation:flagwave .5s ease-in-out infinite alternate;color:var(--coral)}
+@keyframes flagwave{from{transform:rotate(-6deg)}to{transform:rotate(8deg)}}
+.kart{position:absolute;left:10px;bottom:14%;width:clamp(58px,10.500vh,78px);transform:translateX(var(--x));transition:transform .4s cubic-bezier(.3,1.3,.5,1);z-index:1}
+.kart .buddy{width:100%}
+.kart .board{display:block;width:112%;margin:-9% 0 0 -6%}
+.kart .wheel{transform-box:fill-box;transform-origin:center}
+.road.moving .kart .wheel{animation:wheel .35s linear}
+@keyframes wheel{to{transform:rotate(360deg)}}
+.road.jolt{animation:jolt .4s ease-in-out}
+@keyframes jolt{20%{transform:translateX(-6px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+.dust{position:absolute;bottom:16%;width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.8);animation:dust .6s ease-out forwards;pointer-events:none}
+@keyframes dust{to{transform:translate(-26px,-12px) scale(2);opacity:0}}
+.pips i{width:clamp(8px,2.600vw,11px);height:clamp(8px,2.600vw,11px)}
+/* the light */
+.lightwrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;width:100%;min-height:150px}
+.lightbox{position:relative;display:grid;place-items:center}
+.light{appearance:none;-webkit-appearance:none;position:relative;width:min(62vw,250px,34vh);aspect-ratio:1;border-radius:50%;border:0;background:#c9cdd4;color:#fff;font-weight:800;font-size:clamp(1.7rem,7.500vw,2.3rem);letter-spacing:-.02em;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.3),0 10px 0 #a3a8b1,0 22px 34px var(--shadow);transition:background .08s,box-shadow .08s,transform .08s}
+.light .ic{font-size:1.5em}
+.light:active{transform:translateY(7px);box-shadow:inset 0 3px 0 rgba(255,255,255,.3),0 3px 0 #a3a8b1,0 10px 18px var(--shadow)}
+.light[data-s="go"]{background:var(--green);box-shadow:inset 0 3px 0 rgba(255,255,255,.3),0 10px 0 var(--green-deep),0 0 0 10px rgba(47,154,98,.18),0 22px 40px rgba(47,154,98,.35)}
+.light[data-s="go"]:active{box-shadow:inset 0 3px 0 rgba(255,255,255,.3),0 3px 0 var(--green-deep),0 0 0 10px rgba(47,154,98,.18),0 10px 18px var(--shadow)}
+.light[data-s="stop"]{background:var(--red);box-shadow:inset 0 3px 0 rgba(255,255,255,.3),0 10px 0 var(--red-deep),0 0 0 10px rgba(200,69,47,.18),0 22px 40px rgba(200,69,47,.35)}
+.light[data-s="go"],.light[data-s="stop"]{animation:pop .22s var(--spring)}
+.dots3{display:flex;gap:8px}
+.dots3 i{width:12px;height:12px;border-radius:50%;background:#fff;animation:dots 1s ease-in-out infinite}
+.dots3 i:nth-child(2){animation-delay:.15s}.dots3 i:nth-child(3){animation-delay:.3s}
+@keyframes dots{0%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-7px);opacity:1}}
+/* results */
+.result{width:100%;padding:22px 20px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.bigstars{display:flex;gap:6px;font-size:clamp(40px,12vw,54px);color:rgba(22,37,63,.14)}
+.bigstars .on{color:var(--sun-pop);animation:pop .5s var(--spring) both}
+.bigstars .on:nth-child(2){animation-delay:.18s}.bigstars .on:nth-child(3){animation-delay:.36s}
+.stat{font-weight:700;color:var(--ink)}
+@media (min-width:700px) and (min-height:900px){.road{height:230px}.kart{width:104px}.light{width:min(62vw,350px,36vh);font-size:3.2rem}.result{padding:34px 30px;gap:16px}.stat{font-size:1.25rem}.pips i{width:14px;height:14px}.msg{font-size:1.25rem}}
+[data-state="intro"] [data-show]:not([data-show~="intro"]),[data-state="play"] [data-show]:not([data-show~="play"]),[data-state="end"] [data-show]:not([data-show~="end"]){display:none!important}
 </style>
 </head>
-<body>
+<body class="game">
 <header class="top"><div class="wrap">
-  <a class="back" href="/games/">‹ Games</a>
+  <a class="back" href="/games/"><span data-icon="back"></span>Games</a>
   <span class="name">Stop and Go</span>
-  <button class="pill-btn" id="snd" type="button" aria-pressed="true">Sound on</button>
+  <button class="snd" id="snd" type="button"></button>
 </div></header>
-<main><div class="wrap" style="flex:1;display:flex;flex-direction:column">
-<section class="screen">
-  <h1 id="t">Stop and Go</h1>
-  <p class="sub" id="sub">Tap the big button when it turns <strong style="color:#1d6b42">green</strong>. Keep your hands off when it turns <strong style="color:#a8361f">red</strong>. Help the buddy reach the flag!</p>
-  <div class="track"><svg class="buddy" id="buddy" data-mood="ok" viewBox="0 0 120 138" aria-hidden="true"></svg></div>
-  <button class="light" id="light" type="button" data-s="wait" aria-live="assertive">Ready?</button>
-  <p class="msg" id="msg" aria-live="polite"></p>
-  <div class="row"><button class="go" id="start" type="button">Start</button></div>
+<main><div class="wrap">
+<section class="screen" id="game" data-state="intro">
+  <h1 class="sr">Stop and Go</h1>
+  <p class="h1" id="t" data-show="end"></p>
+  <div class="scene road" id="road">
+    <span class="flag" data-icon="flag"></span>
+    <i class="lane"></i>
+    <div class="kart" id="kart"><svg class="buddy" id="buddy" data-mood="ok" viewBox="0 0 120 138" aria-hidden="true"></svg>
+      <svg class="board" viewBox="0 0 134 34" aria-hidden="true"><rect x="2" y="2" width="130" height="16" rx="8" fill="#ef8263"/><rect x="2" y="2" width="130" height="6" rx="3" fill="#fff" opacity=".25"/><g class="wheel"><circle cx="30" cy="22" r="11" fill="#16253f"/><path d="M30 14v16M22 22h16" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".7"/></g><g class="wheel"><circle cx="104" cy="22" r="11" fill="#16253f"/><path d="M104 14v16M96 22h16" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".7"/></g></svg></div>
+  </div>
+  <p class="sub" data-show="intro">Tap the big button when it turns <strong style="color:var(--green-deep)">green</strong>. Hands off when it turns <strong style="color:var(--red-deep)">red</strong>. Help the buddy roll to the flag!</p>
+  <p class="pips" data-show="play" id="pips" aria-hidden="true"></p>
+  <div class="lightwrap" data-show="play"><div class="lightbox" id="lw"><button class="light" id="light" type="button" data-s="wait" aria-live="assertive"></button></div><p class="msg" id="msg" aria-live="polite"></p></div>
+  <div class="card result" data-show="end">
+    <p class="bigstars" id="stars" aria-hidden="true"><span data-icon="star"></span><span data-icon="star"></span><span data-icon="star"></span></p>
+    <p class="stat" id="stat1"></p>
+    <p class="sub" id="stat2"></p>
+  </div>
+  <div class="row" data-show="intro end"><button class="go" id="start" type="button">Start</button></div>
 </section>
 </div></main>
-<p class="foot wrap">A free game from <a href="/">Wavelength Psychology</a>. Nothing you do here is saved.</p>
-<script src="/games/buddy.js"></script>
+<p class="foot">A free game from <a href="/">Wavelength Psychology</a>. Nothing you do here is saved.</p>
+<script src="/games/play.js?v=3"></script>
 <script>
 (function(){
-var d=document,$=function(id){return d.getElementById(id);},sound=true,ac=null;
-function tone(f,t,dur,type,vol){if(!sound)return;var A=window.AudioContext||window.webkitAudioContext;if(!A)return;if(!ac)ac=new A();if(ac.state==='suspended')ac.resume();
-  var o=ac.createOscillator(),g=ac.createGain(),s=ac.currentTime+(t||0);o.type=type||'triangle';o.frequency.value=f;g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(vol||.1,s+.02);g.gain.exponentialRampToValueAtTime(.001,s+dur);o.connect(g);g.connect(ac.destination);o.start(s);o.stop(s+dur+.05);}
-$('snd').addEventListener('click',function(){sound=!sound;this.setAttribute('aria-pressed',sound?'true':'false');this.textContent=sound?'Sound on':'Sound off';});
-
-var light=$('light'),msg=$('msg'),bud=$('buddy'),N=14,i=0,good=0,stops=0,stopOk=0,state='idle',tm=null,pos=0;
-function place(){var w=bud.parentNode.clientWidth-54-56;bud.style.left=(8+w*pos/N)+'px';}
-function show(s,label){light.setAttribute('data-s',s);light.textContent=label;}
-function next(){
-  if(i>=N){return end();}
-  state='gap';show('wait','…');
-  tm=setTimeout(function(){var go=plan[i];if(!go)stops++;state=go?'go':'stop';show(state,go?'GO!':'STOP');tone(go?660:220,0,.12,go?'triangle':'square',.08);
-    tm=setTimeout(function(){ if(state==='go'){msg.textContent='Too slow! Tap when it is green.';bud.setAttribute('data-mood','ok');}
-      else if(state==='stop'){stopOk++;good++;pos++;place();msg.textContent='Great stopping!';bud.setAttribute('data-mood','calm');tone(523,0,.15);}
-      i++;next();},Math.max(750,1300-i*35));},600+Math.random()*900);
-}
-light.addEventListener('click',function(){
-  if(state==='go'){clearTimeout(tm);good++;pos++;place();msg.textContent='Zoom!';bud.setAttribute('data-mood','happy');tone(784,0,.12);i++;next();}
-  else if(state==='stop'){clearTimeout(tm);msg.textContent='Oops, that was red. Brakes!';bud.setAttribute('data-mood','worry');tone(160,0,.25,'square',.07);i++;next();}
-  else if(state==='gap'){msg.textContent='Wait for the color…';}
-});
-function end(){state='idle';show('wait','Done!');bud.setAttribute('data-mood','happy');
-  $('t').textContent=good>=N-2?'Super brakes!':'Nice driving!';
-  msg.textContent='You got '+good+' of '+N+'. You stopped on red '+stopOk+' of '+stops+' times.';
-  $('start').textContent='Play again';$('start').hidden=false;tone(523,0,.2);tone(659,.15,.2);tone(784,.3,.4);}
-var plan=[];function mix(){plan=[];for(var k=0;k<N;k++)plan.push(k>=5);for(var k=N-1;k>0;k--){var j=Math.floor(Math.random()*(k+1)),x=plan[k];plan[k]=plan[j];plan[j]=x;}if(!plan[0]){var g=plan.indexOf(true);plan[g]=false;plan[0]=true;}}
-$('start').addEventListener('click',function(){this.hidden=true;mix();i=0;good=0;stops=0;stopOk=0;pos=0;place();msg.textContent='';$('t').textContent='Stop and Go';bud.setAttribute('data-mood','ok');next();});
+var P=Play,$=P.$,d=document;
+var game=$('game'),light=$('light'),msg=$('msg'),bud=$('buddy'),road=$('road'),N=14,i=0,good=0,stops=0,stopOk=0,state='idle',tm=null,pos=0,plan=[],res=[],lastHit=0;
+var WAIT='<span class="dots3" aria-hidden="true"><i></i><i></i><i></i></span><span class="sr">Wait</span>';
+function place(){var w=road.clientWidth-$('kart').offsetWidth-70;road.style.setProperty('--x',Math.max(0,w*pos/N)+'px');}
+function pips(){var h='';for(var k=0;k<N;k++)h+='<i class="'+(res[k]===1?'on':res[k]===0?'miss':'')+'"></i>';$('pips').innerHTML=h;}
+function show(s){light.setAttribute('data-s',s==='count'?'wait':s);light.innerHTML=s==='go'?'GO!':s==='stop'?P.icon('hand')+'STOP':s==='count'?'':WAIT;}
+function advance(){pos++;place();road.classList.remove('moving');void road.offsetWidth;road.classList.add('moving');
+  if(!P.reduced){var k=$('kart').getBoundingClientRect(),r=road.getBoundingClientRect(),u=d.createElement('i');u.className='dust decor';u.style.left=(k.left-r.left+6)+'px';road.appendChild(u);setTimeout(function(){u.remove();},650);}}
+function mark(ok){res[i]=ok?1:0;if(ok)good++;pips();i++;}
+function next(){if(i>=N)return end();state='gap';show('wait');
+  tm=setTimeout(function(){var go=plan[i];if(!go)stops++;state=go?'go':'stop';show(state);msg.textContent='';P.tone(go?660:220,0,.12,go?'triangle':'square',.08);
+    tm=setTimeout(function(){
+      if(state==='go'){P.say(msg,'Too slow! Tap when it is green.');P.mood(bud,'ok');mark(false);}
+      else{stopOk++;advance();P.say(msg,'Great stopping!');P.mood(bud,'calm');P.react(bud,'nod');P.tone(523,0,.15);mark(true);}
+      next();},Math.max(750,1300-i*35));},600+Math.random()*900);}
+light.addEventListener('pointerdown',function(e){if(e.button)return;
+  if(state==='go'){clearTimeout(tm);lastHit=performance.now();advance();P.say(msg,'Zoom!');P.mood(bud,'happy');P.react(bud,'hop');P.sfx.good();P.buzz(12);P.burst(light,{n:8,r:120,color:'#6fd09a'});mark(true);next();}
+  else if(state==='stop'){clearTimeout(tm);lastHit=performance.now();P.say(msg,'Oops, that was red. Brakes!');P.mood(bud,'oops');P.react(bud,'shake');P.sfx.bad();P.buzz(60);road.classList.remove('jolt');void road.offsetWidth;road.classList.add('jolt');mark(false);next();}
+  else if(state==='gap'){if(performance.now()-lastHit>400)P.say(msg,'Wait for the color…');}});
+light.addEventListener('keydown',function(e){if((e.key===' '||e.key==='Enter')&&!e.repeat){e.preventDefault();light.dispatchEvent(new PointerEvent('pointerdown',{button:0}));}});
+function end(){state='idle';var n=good>=N-1?3:good>=N-4?2:1;game.setAttribute('data-state','end');if(n>=2){pos=N;place();}road.classList.add('won');P.mood(bud,'happy');bud.classList.add('bounce');
+  $('t').textContent=n===3?'Super brakes!':n===2?'Nice driving!':'Good try!';
+  P.all('#stars span').forEach(function(s,k){s.classList.toggle('on',k<n);});
+  $('stat1').textContent='You got '+good+' of '+N+'.';$('stat2').textContent='You stopped on red '+stopOk+' of '+stops+' times. Stopping is the hard part, and it gets easier with practice.';
+  $('start').textContent='Play again';P.sfx.win();if(n===3)P.confetti();}
+function mix(){plan=[];for(var k=0;k<N;k++)plan.push(k>=5);for(k=N-1;k>0;k--){var j=Math.floor(Math.random()*(k+1)),x=plan[k];plan[k]=plan[j];plan[j]=x;}if(!plan[0]){var g=plan.indexOf(true);plan[g]=false;plan[0]=true;}}
+$('start').addEventListener('click',function(){P.sfx.tap();mix();i=0;good=0;stops=0;stopOk=0;pos=0;res=[];place();pips();msg.textContent='';road.classList.remove('won');bud.classList.remove('bounce');P.mood(bud,'ok');
+  game.setAttribute('data-state','play');state='count';show('count');P.clearConfetti();P.countdown($('lw'),function(){next();});});
 window.addEventListener('resize',place);
-
 })();
 </script>
 </body>

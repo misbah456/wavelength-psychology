@@ -17,52 +17,70 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="/games/play.css">
+<link rel="stylesheet" href="/games/play.css?v=3">
 <style>
-.screen{gap:16px;padding-block:18px 22px}
-.opts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.opts .pill-btn[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-.score{display:flex;gap:10px;justify-content:center;font-weight:700;color:var(--ink)}
-.score span{padding:8px 16px;border-radius:999px;background:var(--card);border:2px solid transparent;box-shadow:0 1px 0 var(--line)}
-.score span.turn{border-color:var(--teal);background:var(--teal-soft)}
-.board{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:100%;max-width:27rem}
-.board.small{grid-template-columns:repeat(4,1fr)}
-.cardb{appearance:none;-webkit-appearance:none;position:relative;aspect-ratio:.82;border:0;border-radius:16px;padding:0;cursor:pointer;background:var(--teal);box-shadow:0 4px 0 #144b4e,0 8px 16px var(--shadow);display:grid;place-items:center;overflow:hidden}
-.cardb::before{content:"?";font-weight:800;font-size:1.6rem;color:var(--teal-soft)}
-.cardb .f{display:none;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:100%;height:100%;background:var(--card);font-size:.75rem;font-weight:700;color:var(--ink)}
-.cardb .f svg{width:76%;height:auto}
-.cardb.up{background:var(--card);box-shadow:0 1px 0 var(--line),0 8px 16px var(--shadow)}
-.cardb.up::before{display:none}
-.cardb.up .f{display:flex}
-.cardb.got{outline:3px solid var(--sun-pop);outline-offset:-3px}
-.cardb.got .f{background:var(--sun-soft)}
-@media (min-width:900px){.board{max-width:32rem;gap:12px}.cardb .f{font-size:.875rem}}
+.screen{gap:12px}
+.status{display:flex;align-items:center;gap:10px;width:100%;min-height:60px}
+.status .buddy{flex:none;width:52px}
+.status .msg{flex:1;min-width:0;text-align:left;font-size:.9375rem;line-height:1.3;text-wrap:balance}
+.status .chips{flex:none}
+.opts{gap:8px;flex-wrap:nowrap}
+.opts .seg button{padding:0 clamp(9px,3vw,16px);font-size:clamp(.8125rem,3.600vw,.9375rem)}
+.boardwrap{position:relative;flex:1;display:grid;place-items:center;width:100%;min-height:240px}
+.board{display:grid;grid-template-columns:repeat(4,var(--cw,76px));gap:var(--gap,10px)}
+.cardb{appearance:none;-webkit-appearance:none;width:var(--cw,76px);aspect-ratio:.82;padding:0;border:0;background:none;cursor:pointer;perspective:700px;border-radius:16px}
+.cardb .in{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;transition:transform .42s cubic-bezier(.3,1.25,.5,1)}
+.cardb.up .in{transform:rotateY(180deg)}
+.cardb .bk,.cardb .f{position:absolute;inset:0;border-radius:calc(var(--cw,76px)*.2);-webkit-backface-visibility:hidden;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.cardb .bk{background:var(--teal);color:rgba(255,255,255,.92);font-size:calc(var(--cw,76px)*.4);box-shadow:inset 0 2px 0 rgba(255,255,255,.2),0 4px 0 var(--teal-deep),0 10px 18px var(--shadow)}
+.cardb .bk::before{content:"";position:absolute;inset:calc(var(--cw,76px)*.08);border-radius:calc(var(--cw,76px)*.13);border:2px solid rgba(255,255,255,.26)}
+/* swap the two faces as the card passes edge-on, so the flip never depends on the browser hiding back faces */
+.cardb .bk{visibility:visible;transition:visibility 0s .13s}
+.cardb .f{visibility:hidden;transition:visibility 0s .13s}
+.cardb.up .bk{visibility:hidden}
+.cardb.up .f{visibility:visible}
+.cardb:not(.up):active .in{transform:translateY(3px)}
+.cardb .f{transform:rotateY(180deg);gap:1px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line),0 4px 0 #d8d3c7,0 10px 18px var(--shadow);font-size:clamp(.625rem,calc(var(--cw,76px)*.155),.875rem);font-weight:700;color:var(--ink);line-height:1.1;overflow:hidden}
+.cardb .f svg{width:74%;height:auto}
+.cardb.got .f{background:var(--sun-soft);box-shadow:inset 0 0 0 3px var(--sun-pop),0 4px 0 #d9a53a,0 10px 18px var(--shadow)}
+.board.tiny .f>span{display:none}
+.board.tiny .f svg{width:86%}
+.cardb.got{animation:got .5s var(--spring)}
+@keyframes got{40%{transform:scale(1.1) rotate(-3deg)}}
+.cardb.no{animation:cardno .42s ease-in-out}
+@keyframes cardno{20%{transform:translateX(-6px) rotate(-3deg)}45%{transform:translateX(5px) rotate(3deg)}70%{transform:translateX(-3px)}}
+.cardb.wave .f svg{animation:wave 1s ease-in-out infinite alternate}
+@keyframes wave{from{transform:rotate(-7deg)}to{transform:rotate(7deg)}}
+@media (min-width:700px) and (min-height:900px){.status .buddy{width:84px}.status .msg{font-size:1.1875rem}}
 </style>
 </head>
-<body>
+<body class="game">
 <header class="top"><div class="wrap">
-  <a class="back" href="/games/">‹ Games</a>
+  <a class="back" href="/games/"><span data-icon="back"></span>Games</a>
   <span class="name">Friend Match</span>
-  <button class="pill-btn" id="snd" type="button" aria-pressed="true">Sound on</button>
+  <button class="snd" id="snd" type="button"></button>
 </div></header>
-<main><div class="wrap" style="flex:1;display:flex;flex-direction:column">
+<main><div class="wrap">
 <section class="screen">
-  <h1 id="title">Find each pair of friends</h1>
-  <div class="opts" role="group" aria-label="Game options">
-    <button class="pill-btn" data-p="1" type="button" aria-pressed="true">1 player</button>
-    <button class="pill-btn" data-p="2" type="button" aria-pressed="false">2 players</button>
-    <button class="pill-btn" data-n="6" type="button" aria-pressed="true">Easy</button>
-    <button class="pill-btn" data-n="8" type="button" aria-pressed="false">Harder</button>
+  <h1 class="sr">Friend Match</h1>
+  <div class="status">
+    <svg class="buddy" id="buddy" data-mood="ok" viewBox="0 0 120 138" aria-hidden="true"></svg>
+    <p class="msg" id="msg" aria-live="polite">Find the pairs!</p>
+    <p class="chips" id="score"></p>
   </div>
-  <p class="score" id="score" aria-live="polite"></p>
-  <div class="board" id="board"></div>
+  <div class="row opts">
+    <span class="seg" role="group" aria-label="Players"><button data-p="1" type="button" aria-pressed="true">1 player</button><button data-p="2" type="button" aria-pressed="false">2 players</button></span>
+    <span class="seg" role="group" aria-label="Level"><button data-n="6" type="button" aria-pressed="true">Easy</button><button data-n="8" type="button" aria-pressed="false">Harder</button></span>
+  </div>
+  <div class="boardwrap" id="bw"><div class="board" id="board"></div></div>
   <div class="row"><button class="go soft" id="again" type="button">New game</button></div>
 </section>
 </div></main>
-<p class="foot wrap">A free game from <a href="/">Wavelength Psychology</a>. Nothing you do here is saved.</p>
+<p class="foot">A free game from <a href="/">Wavelength Psychology</a>. Nothing you do here is saved.</p>
+<script src="/games/play.js?v=3"></script>
 <script>
 (function(){
-var d=document,$=function(id){return d.getElementById(id);};
+var P=Play,$=P.$,d=document;
 /* Eight friends. Drawn in code, so there are no image files to load. */
 var KIDS=[
  {n:'Aamna', s:'#b9794f', h:'#2a1b14', k:'pony',  t:'#2f8f8f'},
@@ -92,36 +110,46 @@ function face(k){
    +'<circle cx="32" cy="66" r="5" fill="#f29a8e" opacity=".55"/><circle cx="68" cy="66" r="5" fill="#f29a8e" opacity=".55"/>'
    +'<path d="M41 68q9 9 18 0" fill="none" stroke="#16253f" stroke-width="2.6" stroke-linecap="round"/>'+glasses+'</svg>';
 }
-var sound=true,ac=null,players=1,pairs=6,turn=0,score=[0,0],moves=0,open=[],lock=false,left=0;
-function tone(f,t,dur,type,vol){if(!sound)return;var A=window.AudioContext||window.webkitAudioContext;if(!A)return;if(!ac)ac=new A();if(ac.state==='suspended')ac.resume();
-  var o=ac.createOscillator(),g=ac.createGain(),s=ac.currentTime+(t||0);o.type=type||'triangle';o.frequency.value=f;g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(vol||.1,s+.02);g.gain.exponentialRampToValueAtTime(.001,s+dur);o.connect(g);g.connect(ac.destination);o.start(s);o.stop(s+dur+.05);}
-$('snd').addEventListener('click',function(){sound=!sound;this.setAttribute('aria-pressed',sound?'true':'false');this.textContent=sound?'Sound on':'Sound off';});
+var bud=$('buddy'),msg=$('msg'),board=$('board'),players=1,pairs=6,turn=0,score=[0,0],moves=0,open=[],lock=false,left=0,tm=null,tm2=null,riseT=null;
+/* size the cards to the space there is, so the whole board always fits */
+function fit(){board.style.position='absolute';var w=$('bw').clientWidth,h=$('bw').clientHeight,rows=pairs/2,gap=w<360?8:10,big=window.innerWidth>=700&&window.innerHeight>=900,
+    cw=Math.max(48,Math.floor(Math.min((w-3*gap)/4,(h-(rows-1)*gap)/rows*.82,big?156:112)));
+  board.style.position='';board.style.setProperty('--cw',cw+'px');board.style.setProperty('--gap',(big?14:gap)+'px');board.classList.toggle('tiny',cw<60);}
 function paint(){
-  $('score').innerHTML=players===1?'<span>Turns: '+moves+'</span>':'<span class="'+(turn===0?'turn':'')+'">Player 1: '+score[0]+'</span><span class="'+(turn===1?'turn':'')+'">Player 2: '+score[1]+'</span>';
-}
-function deal(){
-  var kids=KIDS.slice().sort(function(){return Math.random()-.5;}).slice(0,pairs),deck=kids.concat(kids).map(function(k,i){return {k:k,i:i};});
+  $('score').innerHTML=players===1?'<span class="chip">Turns: '+moves+'</span><span class="chip">Pairs: '+(pairs-left)+'/'+pairs+'</span>'
+    :'<span class="chip'+(turn===0&&left?' turn':'')+'">P1: '+score[0]+'</span><span class="chip'+(turn===1&&left?' turn':'')+'">P2: '+score[1]+'</span>';}
+function hint(){P.say(msg,players===1?'Find the pairs!':'Player '+(turn+1)+', your turn!');}
+function deal(){clearTimeout(tm);clearTimeout(tm2);clearTimeout(riseT);P.clearConfetti();
+  var kids=KIDS.slice().sort(function(){return Math.random()-.5;}).slice(0,pairs),deck=kids.concat(kids);
   for(var i=deck.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),x=deck[i];deck[i]=deck[j];deck[j]=x;}
-  turn=0;score=[0,0];moves=0;open=[];lock=false;left=pairs;$('title').textContent='Find each pair of friends';
-  $('board').innerHTML=deck.map(function(c){return '<button class="cardb" type="button" data-n="'+c.k.n+'" aria-label="Card, face down"><span class="f">'+face(c.k)+'<span>'+c.k.n+'</span></span></button>';}).join('');
-  paint();
-}
-$('board').addEventListener('click',function(e){
+  turn=0;score=[0,0];moves=0;open=[];lock=false;left=pairs;P.mood(bud,'ok');bud.classList.remove('bounce');
+  board.innerHTML=deck.map(function(k,i){return '<button class="cardb rise" style="--i:'+(i*.5)+'" type="button" data-n="'+k.n+'" data-i="'+(i+1)+'" aria-label="Card '+(i+1)+', face down"><span class="in"><span class="bk">'+P.icon('sparkle')+'</span><span class="f">'+face(k)+'<span>'+k.n+'</span></span></span></button>';}).join('');
+  fit();paint();hint();
+  /* once the cards have arrived, drop the entrance animation so a resize cannot replay it */
+  riseT=setTimeout(function(){P.all('.cardb').forEach(function(x){x.classList.remove('rise');});},1500);}
+board.addEventListener('click',function(e){
   var c=e.target.closest('.cardb');if(!c||lock||c.classList.contains('up'))return;
-  c.classList.add('up');c.setAttribute('aria-label',c.getAttribute('data-n'));tone(440,0,.08);open.push(c);
+  c.classList.add('up');c.setAttribute('aria-label',c.getAttribute('data-n'));P.sfx.tap();P.buzz(8);open.push(c);
   if(open.length<2)return;
   moves++;var a=open[0],b=open[1];open=[];
-  if(a.getAttribute('data-n')===b.getAttribute('data-n')){a.classList.add('got');b.classList.add('got');score[turn]++;left--;tone(523,0,.2);tone(784,.12,.3);
-    if(left===0){$('title').textContent=players===1?'You found them all in '+moves+' turns!':score[0]===score[1]?'A tie! Great game.':'Player '+(score[0]>score[1]?1:2)+' wins! Great game.';tone(659,.3,.2);tone(880,.45,.5);}
-    paint();
-  }else{lock=true;setTimeout(function(){a.classList.remove('up');b.classList.remove('up');a.setAttribute('aria-label','Card, face down');b.setAttribute('aria-label','Card, face down');
-    if(players===2)turn=1-turn;lock=false;paint();},1100);paint();}
+  if(a.getAttribute('data-n')===b.getAttribute('data-n')){score[turn]++;left--;lock=true;
+    tm=setTimeout(function(){a.classList.add('got');b.classList.add('got');P.sfx.good();P.burst(a,{n:7,r:44});P.burst(b,{n:7,r:44});P.mood(bud,'happy');P.react(bud,'hop');lock=false;
+      if(left===0){P.say(msg,players===1?'You found them all in '+moves+' turns!':score[0]===score[1]?'A tie! Great game.':'Player '+(score[0]>score[1]?1:2)+' wins! Great game.');
+        bud.classList.add('bounce');P.all('.cardb').forEach(function(x){x.classList.add('wave');});P.sfx.win();P.confetti();}
+      else P.say(msg,players===1?'A match! Hi, '+a.getAttribute('data-n')+'!':'A match! Player '+(turn+1)+' goes again.');
+      paint();},380);
+  }else{lock=true;P.mood(bud,'ok');
+    tm=setTimeout(function(){a.classList.add('no');b.classList.add('no');P.tone(200,0,.12,'sine',.08);},420);
+    tm2=setTimeout(function(){[a,b].forEach(function(x){x.classList.remove('up','no');x.setAttribute('aria-label','Card '+x.getAttribute('data-i')+', face down');});
+      if(players===2)turn=1-turn;lock=false;paint();P.say(msg,players===1?'Not a match. Try again!':'Player '+(turn+1)+', your turn!');},1250);}
+  paint();
 });
-[].forEach.call(d.querySelectorAll('.opts .pill-btn'),function(b){b.addEventListener('click',function(){
-  var key=b.hasAttribute('data-p')?'data-p':'data-n';[].forEach.call(d.querySelectorAll('.opts ['+key+']'),function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+P.all('.seg button').forEach(function(b){b.addEventListener('click',function(){P.sfx.tap();
+  var key=b.hasAttribute('data-p')?'data-p':'data-n';P.all('.seg ['+key+']').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
   if(key==='data-p')players=+b.getAttribute('data-p');else pairs=+b.getAttribute('data-n');deal();});});
-$('again').addEventListener('click',deal);
-deal();
+$('again').addEventListener('click',function(){P.sfx.tap();deal();});
+window.addEventListener('resize',fit);if(window.ResizeObserver)new ResizeObserver(fit).observe($('bw'));
+deal();window.addEventListener('load',fit);
 })();
 </script>
 </body>

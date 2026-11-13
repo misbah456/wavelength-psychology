@@ -17,57 +17,51 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="/games/play.css">
+<link rel="stylesheet" href="/games/play.css?v=3">
 <style>
-.screen{align-items:stretch;text-align:left;gap:16px}
-.hero{display:flex;align-items:center;gap:16px}
-.hero .buddy{width:96px;flex:none}
-.g{display:grid;grid-template-columns:72px minmax(0,1fr);gap:16px;align-items:center;padding:18px 20px;text-decoration:none;color:inherit}
-.g .ic{width:72px;height:72px;border-radius:20px;display:grid;place-items:center;font-size:2rem}
-.g h2{font-weight:800;font-size:1.25rem;letter-spacing:-.01em;color:var(--ink)}
-.g p{font-size:.9375rem;line-height:1.45;margin-top:2px}
-.g .tag{display:inline-block;margin-top:8px;font-size:.8125rem;font-weight:600}
-@media (min-width:900px){.list{display:grid;grid-template-columns:1fr 1fr;gap:16px}}
-.list{display:flex;flex-direction:column;gap:14px}
+.screen{align-items:stretch;gap:16px}
+.talk{min-height:clamp(150px,24vh,200px)}
+.glist{display:grid;gap:12px}
+.g{position:relative;display:grid;grid-template-columns:64px minmax(0,1fr) 20px;gap:14px;align-items:center;padding:16px 14px 16px 16px;text-align:left;text-decoration:none;color:inherit;transition:transform .12s,box-shadow .12s}
+.g .tile{width:64px;height:64px;border-radius:20px;background:var(--c);color:#fff;display:grid;place-items:center;font-size:36px;box-shadow:inset 0 2px 0 rgba(255,255,255,.25),0 4px 0 var(--cd)}
+.g h2{font-weight:800;font-size:1.1875rem;line-height:1.2;letter-spacing:-.015em;color:var(--ink)}
+.g p{margin-top:3px;font-size:.9375rem;line-height:1.4;color:var(--text)}
+.g .tag{display:inline-block;margin-top:7px;font-size:.8125rem;font-weight:700;color:var(--c)}
+.g .chev{font-size:20px;color:var(--muted);transform:rotate(180deg)}
+.g:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line),0 4px 12px var(--shadow)}
+@media (hover:hover){.g:hover{transform:translateY(-3px);box-shadow:0 1px 0 var(--line),0 18px 36px rgba(22,37,63,.14)}.g:hover .tile{animation:pop .4s var(--spring)}}
+.g.teal{--c:var(--teal);--cd:var(--teal-deep)}.g.coral{--c:var(--coral);--cd:var(--coral-deep)}.g.blue{--c:var(--blue);--cd:var(--blue-deep)}.g.sun{--c:#a36c00;--cd:var(--sun-deep)}.g.green{--c:#23805a;--cd:#165c40}
+.fine{max-width:none;text-align:left}
+@media (min-width:700px){.wrap{max-width:54rem}.glist{grid-template-columns:1fr 1fr;gap:16px}.g:last-child:nth-child(odd){grid-column:1/-1}.g{padding:20px 18px 20px 20px}}
 </style>
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <a class="back" href="/resources">‹ Resources</a>
+  <a class="back" href="/resources"><span data-icon="back"></span>Resources</a>
   <span class="name">Games</span>
 </div></header>
-<main><div class="wrap" style="flex:1;display:flex;flex-direction:column">
+<main><div class="wrap">
 <section class="screen">
-  <div class="hero">
-    <svg class="buddy" data-mood="happy" viewBox="0 0 120 138" aria-hidden="true"></svg>
-    <div><h1>Games</h1><p class="sub">Free to play, at home or in a session. Some build skills. Some are just for fun.</p></div>
+  <h1 class="sr">Games</h1>
+  <div class="scene talk">
+    <button class="bud-btn" id="budBtn" type="button" aria-label="Say hi to the buddy"><svg class="buddy" id="buddy" data-mood="happy" viewBox="0 0 120 138" aria-hidden="true"></svg></button>
+    <div class="talk-side"><p class="bubble" id="say" aria-live="polite">Hi! Pick a game. Some build skills, and some are just for fun.</p></div>
   </div>
-  <div class="list">
-    <a class="card g" href="/games/brain-buttons">
-      <span class="ic" style="background:var(--teal-soft)" aria-hidden="true">🍃</span>
-      <span><h2>Brain Buttons</h2><p>Help the worried little buddy feel calm with breathing, happy thoughts, a dance party, and the 5 senses.</p><span class="tag" style="color:var(--teal)">Calming skills · about 5 minutes</span></span>
-    </a>
-    <a class="card g" href="/games/stop-and-go">
-      <span class="ic" style="background:var(--coral-soft)" aria-hidden="true">🚦</span>
-      <span><h2>Stop and Go</h2><p>Tap on green. Hands off on red. Help the buddy reach the flag.</p><span class="tag" style="color:var(--coral)">Practice stopping · 1 minute</span></span>
-    </a>
-    <a class="card g" href="/games/copy-cat">
-      <span class="ic" style="background:var(--blue-soft)" aria-hidden="true">✨</span>
-      <span><h2>Copy Cat</h2><p>Watch the lights, then copy the pattern. Each round adds one more.</p><span class="tag" style="color:var(--blue)">Memory · 1 player</span></span>
-    </a>
-    <a class="card g" href="/games/friend-match">
-      <span class="ic" style="background:var(--sun-soft)" aria-hidden="true">🃏</span>
-      <span><h2>Friend Match</h2><p>Flip the cards and find each pair of friends. Play alone or take turns.</p><span class="tag" style="color:var(--sun)">Just for fun · 1 or 2 players</span></span>
-    </a>
-    <a class="card g" href="/games/three-in-a-row">
-      <span class="ic" style="background:var(--teal-soft)" aria-hidden="true">⭕</span>
-      <span><h2>Three in a Row</h2><p>The classic. Get three in a row. Play a friend, or play the buddy.</p><span class="tag" style="color:var(--teal)">Just for fun · 1 or 2 players</span></span>
-    </a>
+  <div class="glist">
+    <a class="card g teal rise" style="--i:1" href="/games/brain-buttons"><span class="tile" data-icon="wind"></span><span><h2>Brain Buttons</h2><p>Help the worried buddy feel calm with breathing, happy thoughts, a dance party, and the 5 senses.</p><span class="tag">Calming skills · 5 min</span></span><span class="chev" data-icon="back"></span></a>
+    <a class="card g coral rise" style="--i:2" href="/games/stop-and-go"><span class="tile" data-icon="light"></span><span><h2>Stop and Go</h2><p>Tap on green. Hands off on red. Help the buddy roll to the flag.</p><span class="tag">Practice stopping · 1 min</span></span><span class="chev" data-icon="back"></span></a>
+    <a class="card g blue rise" style="--i:3" href="/games/copy-cat"><span class="tile" data-icon="sparkle"></span><span><h2>Copy Cat</h2><p>Watch the lights, then copy the pattern. Each round adds one more.</p><span class="tag">Memory · 1 player</span></span><span class="chev" data-icon="back"></span></a>
+    <a class="card g sun rise" style="--i:4" href="/games/friend-match"><span class="tile" data-icon="cards"></span><span><h2>Friend Match</h2><p>Flip the cards and find each pair of friends. Play alone or take turns.</p><span class="tag">Just for fun · 1 or 2 players</span></span><span class="chev" data-icon="back"></span></a>
+    <a class="card g green rise" style="--i:5" href="/games/three-in-a-row"><span class="tile" data-icon="grid"></span><span><h2>Three in a Row</h2><p>The classic. Get three in a row. Play a friend, or play the buddy.</p><span class="tag">Just for fun · 1 or 2 players</span></span><span class="chev" data-icon="back"></span></a>
   </div>
   <p class="fine">These games have no accounts, no ads, and no tracking. Nothing a child does here is saved or sent anywhere. They are for practice and play, and are not therapy or medical advice.</p>
 </section>
 </div></main>
-<p class="foot wrap">From <a href="/">Wavelength Psychology</a> · Spring, TX</p>
-<script src="/games/buddy.js"></script>
+<p class="foot">From <a href="/">Wavelength Psychology</a> · Spring, TX</p>
+<script src="/games/play.js?v=3"></script>
+<script>
+(function(){var P=Play,$=P.$,HI=['Hee hee, that tickles!','I like playing with you.','Which game looks fun?','Hi! Pick a game. Some build skills, and some are just for fun.'],n=0;
+$('budBtn').addEventListener('click',function(){P.react($('buddy'),'hop');P.sfx.pop(n%4);P.burst($('buddy'),{n:9,r:64});P.say($('say'),HI[n++%HI.length]);});})();
+</script>
 </body>
 </html>
